@@ -1,0 +1,253 @@
+---
+import Base from '../layouts/Base.astro';
+import Unifilar from '../components/Unifilar.astro';
+import Cotizar from '../components/Cotizar.astro';
+import Icono from '../components/Icono.astro';
+import { PAGINAS, POSTS } from '../lib/paginas.js';
+import { LINEAS, SERVICIOS } from '../lib/nav.js';
+import { u, waCotizar, waOrientacion, PROD } from '../lib/site.js';
+import { tc } from '../lib/util.js';
+
+const home = PAGINAS['/'];
+const prio = LINEAS.slice(0, 3).map((l) => ({ ...l, media: PAGINAS[l.ruta]?.media }));
+const otras = LINEAS.slice(3);
+const eslabones = [
+  { n: 'Instalación eléctrica', r: '/servicios/instalacion-y-dimensionamiento/', t: 'El cimiento de todo. Desde la acometida hasta el último contacto, la continuidad y la seguridad deben ser confiables.' },
+  { n: 'Planta de emergencia', r: '/productos/plantas-de-emergencia/', t: 'Respaldo ante falla de red. Una segunda fuente de energía que controlas tú, a libre demanda.' },
+  { n: 'UPS', r: '/productos/ups/', t: 'Protección ante disturbios eléctricos. Servidores y equipos digitales reciben una senoidal pura, con o sin redundancia.' },
+  { n: 'Baterías', r: '/productos/baterias-industriales/', t: 'El momento de verdad. En una interrupción, todo depende de ellas: hay que mantenerlas y sustituirlas a tiempo.' },
+  { n: 'Aire acondicionado de precisión', r: '/productos/aire-de-precision/', t: 'Control térmico crítico. La integridad del site y la vida de las baterías dependen de la temperatura y la humedad.' },
+  { n: 'Factor humano', r: '/servicios/mantenimiento/', t: 'El eslabón que nadie revisa. Un sistema bien diseñado también necesita personal capacitado para operarlo.' },
+];
+const testimonios = [
+  { q: 'Sabemos que ante eventualidades y continuidad del negocio no cualquier proveedor es confiable. CBPS es uno de esos pocos confiables.', n: 'Verónica Rodríguez', c: 'Gerenta de Ventas, SYD México' },
+  { q: 'El mantenimiento de nuestras diferentes plantas de emergencia y UPS en sitio está en buenas manos con CBPS.', n: 'Ing. Oscar Aguirre', c: 'Gerente de Mantenimiento, Swissport' },
+  { q: 'El apoyo y asesoría de la empresa CBPS ha sido útil en varias ocasiones. Se trabaja libre de problemas.', n: 'Ing. Oscar Díaz', c: 'Ing. de Infraestructura, INEGI' },
+  { q: 'CBPS es una empresa seria y fiel con sus clientes. Hemos adquirido UPS y su apoyo ha sido incondicional.', n: 'Ing. Edwind Mancilla', c: 'Gerente de Mantenimiento e Infraestructura, Afianzadora Aserta' },
+];
+const marcas = [
+  ['Generac', '/productos/plantas-de-emergencia/generac/'], ['IGSA', '/productos/plantas-de-emergencia/igsa/'], ['PLANELEC', '/productos/plantas-de-emergencia/planelec/'],
+  ['Eaton', '/productos/ups/eaton/'], ['Vertiv', '/productos/ups/vertiv/'], ['CyberPower', '/productos/ups/cyberpower/'], ['ABB', '/productos/ups/abb/'], ['Industronic', '/productos/ups/industronic/'], ['Powest', '/productos/ups/powest/'],
+  ['CSB', '/productos/baterias-industriales/csb/'], ['C&D', '/productos/baterias-industriales/c-and-d/'], ['EnerSys', '/productos/baterias-industriales/enersys/'], ['Kaise', '/productos/baterias-industriales/kaise/'], ['Invermexa', '/productos/baterias-industriales/invermexa/'], ['LTH', '/productos/baterias-industriales/lth/'], ['América', '/productos/baterias-industriales/america/'], ['Trojan', '/productos/baterias-industriales/trojan/'], ['Crown', '/productos/baterias-industriales/crown/'],
+  ['STULZ', '/productos/aire-de-precision/stulz/'], ['HiRef', '/productos/aire-de-precision/hiref/'], ['VOGAR', '/productos/reguladores-de-voltaje/vogar/'], ['Power All', '/productos/reguladores-de-voltaje/power-all/'], ['RPSM', '/productos/reguladores-de-voltaje/rpsm/'],
+];
+const fecha = (iso) => iso ? new Date(iso).toLocaleDateString('es-MX', { month: 'long', year: 'numeric', timeZone: 'America/Mexico_City' }) : '';
+const recientes = POSTS.slice(0, 4);
+const schema = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: 'CBPS', url: `${PROD}/`, inLanguage: 'es-MX' }];
+---
+<Base title="CBPS | Plantas de emergencia, UPS y baterías industriales para cargas críticas" desc="CBPS diseña sistemas de protección para cargas críticas: suministro, dimensionamiento, instalación y mantenimiento de plantas de emergencia, UPS y baterías industriales en México." ruta="/" canon="/" schema={schema}>
+
+  <section class="hero" aria-labelledby="hero-t">
+    <div class="wrap hero__grid">
+      <div class="hero__txt">
+        <p class="kicker hero__k">Critical Business Power Systems</p>
+        <h1 id="hero-t">Protección de cargas críticas diseñada con ingeniería</h1>
+        <p class="lead">Plantas de emergencia, sistemas UPS y baterías industriales integrados en un solo sistema. Antes de recomendar un equipo, entendemos qué está realmente en riesgo en tu operación.</p>
+        <div class="btns">
+          <a class="btn btn--wa" href={waCotizar()} target="_blank" rel="noopener" data-ev="whatsapp"><Icono n="wa" />Cotizar por WhatsApp</a>
+          <a class="btn btn--ghost" href={waOrientacion()} target="_blank" rel="noopener" data-ev="whatsapp-orientacion">Pedir orientación técnica</a>
+        </div>
+        <ul class="hero__lines" aria-label="Líneas principales">
+          {prio.map((l) => <li><a href={u(l.ruta)}>{l.nombre}<Icono n="flecha" /></a></li>)}
+        </ul>
+      </div>
+      <div class="hero__fig"><Unifilar /></div>
+    </div>
+  </section>
+
+  <section class="band band--white" aria-labelledby="dolor-t">
+    <div class="wrap split">
+      <div class="rv">
+        <p class="kicker">¿Esto te suena familiar?</p>
+        <h2 id="dolor-t">El problema no es la falta de equipos. Es la falta de integración.</h2>
+      </div>
+      <div class="rv">
+        <ul class="asks">
+          <li>¿Dependes de energía continua para operar y cualquier interrupción puede traer consecuencias reales?</li>
+          <li>¿Has tenido fallas eléctricas sin saber con claridad la causa o su origen?</li>
+          <li>¿Tus soluciones actuales dependen de proveedores que no conocen tu operación completa?</li>
+        </ul>
+        <p>Hay operaciones donde un microcorte representa minutos de pérdida. En otras significa detener producción, comprometer información o poner en riesgo la continuidad. La diferencia entre una solución que parcha y un sistema que protege está en diseñarlo completo. Eso es lo que hacemos en CBPS.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--night chain-band" aria-labelledby="chain-t">
+    <div class="wrap">
+      <div class="chain-head rv">
+        <p class="kicker">Los 6 eslabones de la continuidad</p>
+        <h2 id="chain-t">Un sistema es tan fuerte como su eslabón más débil</h2>
+        <p>Cada eslabón tiene un rol específico. Ninguno protege solo. Todos protegen juntos.</p>
+      </div>
+      <ol class="chain">
+        {eslabones.map((e) => (
+          <li class="rv"><a href={u(e.r)}><strong>{e.n}</strong><span>{e.t}</span></a></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="lineas-t">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="kicker">Encuentra la solución que necesitas</p>
+        <h2 id="lineas-t">Plantas, UPS y baterías: las tres líneas que sostienen tu operación</h2>
+      </div>
+      <div class="prio">
+        {prio.map((l, i) => (
+          <article class={`prio__it rv${i === 0 ? ' prio__it--big' : ''}`}>
+            <a href={u(l.ruta)} class="prio__img" tabindex="-1" aria-hidden="true">{l.media && <img src={u('/img/' + l.media.src)} alt="" width={l.media.w} height={l.media.h} loading="lazy" decoding="async" />}</a>
+            <div class="prio__tx">
+              <h3><a href={u(l.ruta)}>{l.nombre}</a></h3>
+              <p>{l.resumen}</p>
+              <ul class="chips">{l.hijos.filter((h) => !h.grupo).slice(0, 6).map((h) => <li><a href={u(h.ruta)}>{h.nombre}</a></li>)}{l.hijos.filter((h) => h.grupo).map((h) => <li><a href={u(h.ruta)}>{h.nombre}</a></li>)}</ul>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div class="otras rv">
+        <h3>Otras líneas para proteger cargas críticas</h3>
+        <ul class="rows">{otras.map((l) => <li><a href={u(l.ruta)}><strong>{l.nombre}</strong><span>{l.resumen}</span><Icono n="flecha" /></a></li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--white" aria-labelledby="serv-t">
+    <div class="wrap split split--top">
+      <div class="rv">
+        <p class="kicker">Servicios</p>
+        <h2 id="serv-t">Actuamos como extensión técnica de nuestros clientes</h2>
+        <p>No somos una empresa que vende equipos y desaparece. Somos el equipo de ingeniería que muchas organizaciones no tienen internamente y necesitan para tomar decisiones correctas sobre su infraestructura crítica.</p>
+        <dl class="princ">
+          <div><dt>Ingeniería propia</dt><dd>El proceso siempre comienza con un diagnóstico técnico, no con un catálogo.</dd></div>
+          <div><dt>Diagnóstico antes de vender</dt><dd>Nunca recomendamos un equipo sin entender el sistema completo.</dd></div>
+          <div><dt>Acompañamiento real</dt><dd>Desde el diseño hasta la operación, el mantenimiento y la capacitación.</dd></div>
+        </dl>
+      </div>
+      <ul class="rows rv">
+        {SERVICIOS.map((s) => <li><a href={u(s.ruta)}><strong>{s.nombre}</strong><span>{s.resumen}</span><Icono n="flecha" /></a></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="test-t">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="kicker">Lo que dicen nuestros clientes</p>
+        <h2 id="test-t">Plantas y UPS en buenas manos</h2>
+      </div>
+      <div class="tests">
+        {testimonios.map((t, i) => (
+          <figure class={`test rv${i === 0 ? ' test--lead' : ''}`}>
+            <blockquote><p>{t.q}</p></blockquote>
+            <figcaption><strong>{t.n}</strong><span>{t.c}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--white" aria-labelledby="marcas-t">
+    <div class="wrap split split--top">
+      <div class="rv">
+        <p class="kicker">Marcas que manejamos</p>
+        <h2 id="marcas-t">Solo marcas comprometidas con sus clientes</h2>
+        <p>Existen decenas de marcas para cada segmento. En CBPS solo trabajamos con las que consideramos comprometidas con los clientes y que vale la pena recomendar por experiencia, calidad y servicio.</p>
+      </div>
+      <ul class="brands rv">{marcas.map(([n, r]) => <li><a href={u(r)}>{n}</a></li>)}</ul>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="blog-t">
+    <div class="wrap">
+      <div class="sec-head sec-head--row rv">
+        <div><p class="kicker">Blog Electric Leaders</p><h2 id="blog-t">Aprende a proteger tus cargas críticas</h2></div>
+        <a class="btn btn--ghost" href={u('/blog/')}>Ver todas las publicaciones</a>
+      </div>
+      <ul class="rows rv">{recientes.map((q) => <li><a href={u(q.ruta)}><strong>{tc(q.h1)}</strong><span>{fecha(q.published)}</span><Icono n="flecha" /></a></li>)}</ul>
+    </div>
+  </section>
+
+  <Cotizar titulo="¿Por dónde quieres empezar?" texto="No importa si apenas estás explorando o si ya tienes una urgencia concreta: hay un camino para ti. La consulta es gratuita; ignorar una falla puede resultar muy costoso." />
+</Base>
+
+<style>
+  .hero { padding-block: clamp(28px, 5vw, 64px) clamp(48px, 7vw, 96px); background: linear-gradient(180deg, var(--surface) 0%, var(--paper) 100%); border-bottom: 1px solid var(--line); overflow: hidden; }
+  .hero__grid { display: grid; gap: 40px; align-items: center; }
+  @media (min-width: 980px) { .hero__grid { grid-template-columns: 1fr 1.05fr; gap: 56px; } }
+  .hero h1 { font-size: clamp(2.3rem, 1.5rem + 3.4vw, 4.3rem); font-stretch: 112%; font-weight: 780; letter-spacing: -0.02em; line-height: 1.02; max-width: 14ch; }
+  .hero .lead { margin-bottom: 28px; max-width: 52ch; }
+  .hero__lines { list-style: none; padding: 0; margin: 32px 0 0; display: grid; border-top: 1px solid var(--line); }
+  .hero__lines a { display: flex; justify-content: space-between; align-items: center; padding: 14px 2px; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; font: 650 1.08rem var(--f-display); font-stretch: 106%; }
+  .hero__lines svg { width: 20px; height: 20px; color: var(--blue-deep); transition: transform 220ms var(--ease-out); }
+  @media (hover: hover) { .hero__lines a:hover svg { transform: translateX(4px); } .hero__lines a:hover { color: var(--blue-deep); } }
+  .hero__fig { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-l); padding: clamp(14px, 2.5vw, 26px); box-shadow: var(--shadow); }
+  /* entrada única y orquestada del héroe */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__txt > * { animation: up 700ms var(--ease-out) both; }
+    .hero__txt > *:nth-child(2) { animation-delay: 60ms; } .hero__txt > *:nth-child(3) { animation-delay: 120ms; } .hero__txt > *:nth-child(4) { animation-delay: 180ms; } .hero__txt > *:nth-child(5) { animation-delay: 240ms; }
+    .hero__fig { animation: up 800ms 160ms var(--ease-out) both; }
+  }
+  @keyframes up { from { opacity: 0; transform: translateY(14px); } }
+
+  .split { display: grid; gap: 32px; }
+  @media (min-width: 900px) { .split { grid-template-columns: 1fr 1.1fr; gap: 72px; align-items: center; } .split--top { align-items: start; } }
+  .asks { list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 14px; }
+  .asks li { position: relative; padding-left: 34px; font-size: var(--step-1); font-weight: 500; line-height: 1.4; }
+  .asks li::before { content: '?'; position: absolute; left: 0; top: 0; width: 24px; height: 24px; display: grid; place-items: center; font: 700 0.9rem var(--f-display); color: #fff; background: var(--blue-deep); border-radius: 4px; }
+
+  .chain-head { max-width: 760px; margin-bottom: 40px; }
+  .chain { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; counter-reset: c; position: relative; }
+  .chain li { position: relative; }
+  .chain a { display: grid; gap: 6px; padding: 20px 0 20px 44px; text-decoration: none; color: var(--on-night-2); border-bottom: 1px solid rgba(255,255,255,0.12); }
+  .chain a::before { content: ''; position: absolute; left: 6px; top: 26px; width: 16px; height: 10px; border: 2.5px solid #7cc4e8; border-radius: 6px; }
+  .chain li:not(:last-child) a::after { content: ''; position: absolute; left: 13px; top: 38px; bottom: -22px; width: 2.5px; background: rgba(124, 196, 232, 0.4); }
+  .chain strong { font: 650 var(--step-1) var(--f-display); color: #fff; font-stretch: 106%; }
+  .chain span { max-width: 56ch; }
+  @media (hover: hover) { .chain a:hover strong { text-decoration: underline; text-underline-offset: 4px; } }
+  @media (min-width: 980px) {
+    .chain { grid-template-columns: repeat(6, 1fr); gap: 0; }
+    .chain a { padding: 52px 18px 0 0; border: 0; height: 100%; }
+    .chain a::before { left: 0; top: 0; width: 34px; height: 20px; border-radius: 10px; }
+    .chain li:not(:last-child) a::after { left: 34px; right: 0; top: 9px; bottom: auto; width: auto; height: 2.5px; }
+    .chain strong { font-size: 1.12rem; }
+    .chain span { font-size: 0.95rem; }
+  }
+
+  .sec-head { max-width: 760px; margin-bottom: 36px; }
+  .sec-head--row { max-width: none; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; }
+  .prio { display: grid; gap: 20px; }
+  @media (min-width: 900px) { .prio { grid-template-columns: 1.25fr 1fr; grid-template-rows: auto auto; } .prio__it--big { grid-row: span 2; } }
+  .prio__it { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-l); overflow: hidden; display: grid; }
+  .prio__img { display: grid; place-items: center; background: #fff; padding: 20px; border-bottom: 1px solid var(--line); aspect-ratio: 16 / 8; }
+  .prio__it--big .prio__img { aspect-ratio: 16 / 10; }
+  .prio__img { overflow: hidden; } .prio__img img { width: 100%; height: 100%; object-fit: contain; transition: transform 500ms var(--ease-out); }
+  @media (hover: hover) { .prio__it:hover .prio__img img { transform: scale(1.03); } }
+  .prio__tx { padding: 22px 24px 26px; }
+  .prio__tx h3 { font-size: var(--step-2); font-stretch: 108%; margin-bottom: 8px; }
+  .prio__tx h3 a { color: var(--ink); text-decoration: none; }
+  .prio__tx h3 a:hover { color: var(--blue-deep); text-decoration: underline; }
+  .prio__tx p { color: var(--steel); }
+  .otras { margin-top: 56px; }
+  .otras h3 { font-size: var(--step-1); margin-bottom: 12px; }
+
+  .princ { display: grid; gap: 16px; margin: 28px 0 0; }
+  .princ div { padding-left: 16px; border-left: 2px solid var(--line); }
+  .princ dt { font-weight: 600; }
+  .princ dd { margin: 2px 0 0; color: var(--steel); }
+
+  .tests { display: grid; gap: 16px; }
+  @media (min-width: 900px) { .tests { grid-template-columns: 1.3fr 1fr 1fr; } .test--lead { grid-row: span 2; } }
+  .test { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-l); padding: 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 18px; }
+  .test blockquote { margin: 0; }
+  .test blockquote p { font-size: 1.05rem; line-height: 1.55; margin: 0; }
+  .test--lead { background: var(--blue-deep); border-color: var(--blue-deep); color: #fff; }
+  .test--lead blockquote p { font: 600 var(--step-2) var(--f-display); font-stretch: 104%; line-height: 1.22; color: #fff; }
+  .test figcaption { display: grid; font-size: 0.93rem; color: var(--steel); }
+  .test figcaption strong { color: var(--ink); }
+  .test--lead figcaption, .test--lead figcaption strong { color: #fff; }
+
+  .brands { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  .brands a { display: inline-flex; align-items: center; min-height: 48px; padding: 10px 16px; border: 1px solid var(--line); border-radius: var(--r-s); background: #fff; color: var(--ink); text-decoration: none; font: 650 1.02rem var(--f-display); font-stretch: 110%; transition: border-color 200ms ease, color 200ms ease; }
+  .brands a:hover { border-color: var(--blue); color: var(--blue-deep); }
+</style>

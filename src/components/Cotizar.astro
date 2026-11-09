@@ -1,0 +1,44 @@
+---
+// Formulario sin servidor: valida en la página y abre un modal propio con dos salidas
+// (WhatsApp o correo). Al lanzar se conecta al servicio de formularios del hosting.
+import { NEGOCIO, waCotizar } from '../lib/site.js';
+import Icono from './Icono.astro';
+const { tema = '', titulo = 'Cuéntanos qué necesitas proteger', texto = 'La consulta es gratuita; ignorar una falla puede salir mucho más caro. Un ingeniero de CBPS revisa tu caso y te responde con una propuesta técnica, no con un catálogo.' } = Astro.props;
+const divisiones = ['Plantas de emergencia', 'Sistemas UPS', 'Mantenimiento de UPS', 'Baterías industriales', 'Aire acondicionado de precisión', 'Reguladores de voltaje', 'Supresores de picos', 'Convertidores de frecuencia', 'Renta de equipos', 'Otro / no estoy seguro'];
+const pre = divisiones.find((d) => tema && d.toLowerCase().includes(tema.toLowerCase())) || '';
+---
+<section class="band band--night" id="cotizar" aria-labelledby="cot-t">
+  <div class="wrap cot">
+    <div class="rv">
+      <p class="kicker">Cotización y orientación técnica</p>
+      <h2 id="cot-t">{titulo}</h2>
+      <p>{texto}</p>
+      <div class="btns" style="margin-top:24px">
+        <a class="btn btn--wa" href={waCotizar(tema)} target="_blank" rel="noopener" data-ev="whatsapp"><Icono n="wa" />Escribir por WhatsApp</a>
+        <a class="btn btn--ghost-light" href={`tel:${NEGOCIO.tel}`} data-ev="telefono"><Icono n="tel" />{NEGOCIO.telVisible}</a>
+      </div>
+    </div>
+    <form class="form rv" novalidate data-form data-correo={NEGOCIO.correo} data-wa={NEGOCIO.whatsapp}>
+      <div class="two">
+        <div class="fld"><label for="f-nombre">Nombre</label><input id="f-nombre" name="nombre" autocomplete="name" required /><span class="err">escribe tu nombre.</span></div>
+        <div class="fld"><label for="f-empresa">Empresa</label><input id="f-empresa" name="empresa" autocomplete="organization" required /><span class="err">escribe el nombre de tu empresa.</span></div>
+      </div>
+      <div class="two">
+        <div class="fld"><label for="f-tel">Teléfono o WhatsApp</label><input id="f-tel" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required pattern="[0-9 +()-]{8,}" /><span class="err">usa al menos 8 dígitos.</span></div>
+        <div class="fld"><label for="f-correo">Correo</label><input id="f-correo" name="correo" type="email" autocomplete="email" required /><span class="err">el correo debe tener el formato nombre@empresa.com.</span></div>
+      </div>
+      <div class="fld">
+        <label for="f-div">¿Sobre qué es tu consulta?</label>
+        <select id="f-div" name="division" required>
+          <option value="">Elige una línea</option>
+          {divisiones.map((d) => <option selected={d === pre}>{d}</option>)}
+        </select>
+        <span class="hint">Así tu solicitud llega directo al área que la atiende.</span>
+        <span class="err">elige una opción.</span>
+      </div>
+      <div class="fld"><label for="f-msg">Equipo, capacidad o falla</label><textarea id="f-msg" name="mensaje" required placeholder="Ej.: UPS trifásico de 30 kVA sin respaldo; necesitamos cambiar el banco de baterías."></textarea><span class="err">cuéntanos brevemente qué necesitas.</span></div>
+      <p class="legal">Al enviar aceptas la <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/politica-privacidad/`}>política de privacidad</a>.</p>
+      <button class="btn" type="submit" data-ev="formulario">Preparar solicitud</button>
+    </form>
+  </div>
+</section>

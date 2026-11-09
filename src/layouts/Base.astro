@@ -1,0 +1,141 @@
+---
+import '../styles/global.css';
+import { u, PREVIEW, PROD, NEGOCIO } from '../lib/site.js';
+import Cabecera from '../components/Cabecera.astro';
+import Pie from '../components/Pie.astro';
+import Icono from '../components/Icono.astro';
+import fontA from '../assets/fonts/archivo-wdth.woff2?url';
+import fontB from '../assets/fonts/plex-400.woff2?url';
+
+const { title, desc = '', ruta = '/', canon = null, schema = [], ogImage = '/og-cbps.jpg', tipo = 'website' } = Astro.props;
+const fullTitle = ruta === '/' ? title : `${title} | CBPS`;
+// Vista previa: canonical a la URL equivalente que existe HOY en cbps.com.mx.
+// Al lanzar (PREVIEW=false): canonical a la URL nueva del propio sitio.
+const canonical = PREVIEW ? `${PROD}${canon || ruta}` : `${PROD}${ruta}`;
+const org = {
+  '@context': 'https://schema.org', '@type': 'LocalBusiness', '@id': `${PROD}/#negocio`,
+  name: 'CBPS', alternateName: 'Critical Business Power Systems', url: `${PROD}/`,
+  logo: `${PROD}/logo-cbps.webp`, image: `${PROD}/logo-cbps.webp`,
+  description: 'Suministro, dimensionamiento, instalación y mantenimiento de plantas de emergencia, sistemas UPS y baterías industriales para la protección de cargas críticas.',
+  telephone: NEGOCIO.tel,
+  address: { '@type': 'PostalAddress', streetAddress: NEGOCIO.calle, addressLocality: NEGOCIO.ciudad, addressRegion: NEGOCIO.estado, postalCode: NEGOCIO.cp, addressCountry: 'MX' },
+  areaServed: { '@type': 'Country', name: 'México' },
+  contactPoint: { '@type': 'ContactPoint', telephone: NEGOCIO.tel, contactType: 'sales', availableLanguage: 'es' },
+};
+const graphs = [org, ...schema];
+---
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={desc} />
+  {PREVIEW && <meta name="robots" content="noindex,nofollow" />}
+  <link rel="canonical" href={canonical} />
+  <meta property="og:type" content={tipo} />
+  <meta property="og:locale" content="es_MX" />
+  <meta property="og:site_name" content="CBPS" />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={desc} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL(u(ogImage), Astro.site).href} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#0c1b26" />
+  <link rel="icon" href={u('/favicon.png')} type="image/png" />
+  <link rel="apple-touch-icon" href={u('/apple-touch-icon.png')} />
+  <link rel="preload" href={fontA} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={fontB} as="font" type="font/woff2" crossorigin />
+  <script is:inline>document.documentElement.classList.add('js');</script>
+  {graphs.map((g) => <script type="application/ld+json" set:html={JSON.stringify(g)} />)}
+</head>
+<body>
+  <a class="skip" href="#main">Saltar al contenido</a>
+  <Cabecera ruta={ruta} />
+  <main id="main"><slot /></main>
+  <Pie />
+
+  <dialog class="modal" id="modal-envio" aria-labelledby="modal-t">
+    <div class="modal__in">
+      <button class="x" type="button" data-close aria-label="Cerrar"><Icono n="x" width="22" height="22" /></button>
+      <h2 id="modal-t">Tu solicitud está lista</h2>
+      <p>Elige cómo enviarla. Por WhatsApp suele responderse más rápido.</p>
+      <div class="sum" data-sum></div>
+      <div class="btns">
+        <a class="btn btn--wa" data-send-wa target="_blank" rel="noopener" href="#"><Icono n="wa" />Enviar por WhatsApp</a>
+        <a class="btn btn--ghost" data-send-mail href="#"><Icono n="mail" />Enviar por correo</a>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    const $ = (s, c = document) => c.querySelector(s);
+    const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+
+    // ----- mega menú (escritorio) -----
+    const btns = $$('[data-mega]');
+    const close = () => { btns.forEach((b) => b.setAttribute('aria-expanded', 'false')); $$('.mega').forEach((m) => m.classList.remove('is-open')); };
+    btns.forEach((b) => {
+      const panel = document.getElementById(`mega-${b.dataset.mega}`);
+      b.addEventListener('click', (e) => { e.stopPropagation(); const open = b.getAttribute('aria-expanded') === 'true'; close(); if (!open) { b.setAttribute('aria-expanded', 'true'); panel.classList.add('is-open'); } });
+    });
+    document.addEventListener('click', (e) => { if (!e.target.closest('.mega')) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { const o = btns.find((b) => b.getAttribute('aria-expanded') === 'true'); close(); o?.focus(); closeSheet(); } });
+
+    // ----- menú móvil -----
+    const burger = $('.burger'); const sheet = $('#sheet');
+    function closeSheet() { if (!sheet.classList.contains('is-open')) return; sheet.classList.remove('is-open'); burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', 'Abrir menú'); document.body.classList.remove('no-scroll'); sheet.inert = true; }
+    sheet.inert = true;
+    burger.addEventListener('click', () => {
+      const open = !sheet.classList.contains('is-open');
+      if (!open) return closeSheet();
+      sheet.classList.add('is-open'); sheet.inert = false; burger.setAttribute('aria-expanded', 'true'); burger.setAttribute('aria-label', 'Cerrar menú'); document.body.classList.add('no-scroll');
+    });
+    $$('a', sheet).forEach((a) => a.addEventListener('click', closeSheet));
+    matchMedia('(min-width: 1080px)').addEventListener('change', closeSheet);
+
+    // ----- aparición al hacer scroll -----
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((ents) => ents.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -8% 0px' });
+      $$('.rv').forEach((el) => io.observe(el));
+      // índice lateral: resalta la sección visible
+      const toc = $$('.toc a');
+      if (toc.length) {
+        const map = new Map(toc.map((a) => [a.getAttribute('href').slice(1), a]));
+        const io2 = new IntersectionObserver((ents) => ents.forEach((en) => { if (en.isIntersecting) { toc.forEach((a) => a.classList.remove('is-on')); map.get(en.target.id)?.classList.add('is-on'); } }), { rootMargin: '-20% 0px -70% 0px' });
+        map.forEach((_, id) => { const s = document.getElementById(id); if (s) io2.observe(s); });
+      }
+    } else { $$('.rv').forEach((el) => el.classList.add('is-in')); }
+
+    // ----- barra de contacto móvil: aparece tras el primer pantallazo -----
+    const mbar = $('#mbar');
+    if (mbar) {
+      const sentinel = document.createElement('div'); sentinel.style.cssText = 'position:absolute;top:0;height:85vh;width:1px;pointer-events:none';
+      document.body.prepend(sentinel);
+      new IntersectionObserver(([en]) => mbar.classList.toggle('is-on', !en.isIntersecting)).observe(sentinel);
+    }
+
+    // ----- formulario: validación propia + modal (sin diálogos nativos del navegador) -----
+    const modal = $('#modal-envio');
+    $$('[data-form]').forEach((f) => {
+      f.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let ok = true;
+        $$('.fld', f).forEach((fl) => { const i = $('input,select,textarea', fl); const bad = !i.checkValidity() || !i.value.trim(); fl.classList.toggle('is-bad', bad); i.setAttribute('aria-invalid', bad ? 'true' : 'false'); if (bad && ok) { i.focus(); ok = false; } });
+        if (!ok) return;
+        const d = Object.fromEntries(new FormData(f));
+        const txt = `Hola, vi su sitio www.cbps.com.mx y quiero solicitar una cotización.\n\nNombre: ${d.nombre}\nEmpresa: ${d.empresa}\nTeléfono: ${d.telefono}\nCorreo: ${d.correo}\nLínea: ${d.division}\nNecesidad: ${d.mensaje}`;
+        $('[data-sum]', modal).textContent = txt;
+        $('[data-send-wa]', modal).href = `https://wa.me/${f.dataset.wa}?text=${encodeURIComponent(txt)}`;
+        $('[data-send-mail]', modal).href = `mailto:${f.dataset.correo}?subject=${encodeURIComponent('Solicitud de cotización: ' + d.division)}&body=${encodeURIComponent(txt)}`;
+        window.dataLayer?.push({ event: 'form_listo', division: d.division });
+        modal.showModal();
+      });
+      $$('input,select,textarea', f).forEach((i) => i.addEventListener('input', () => { const fl = i.closest('.fld'); if (fl.classList.contains('is-bad') && i.checkValidity() && i.value.trim()) { fl.classList.remove('is-bad'); i.setAttribute('aria-invalid', 'false'); } }));
+    });
+    modal?.addEventListener('click', (e) => { if (e.target === modal || e.target.closest('[data-close]')) modal.close(); });
+    // medición lista para GTM: cada clic de contacto empuja un evento
+    document.addEventListener('click', (e) => { const a = e.target.closest('[data-ev]'); if (a) (window.dataLayer = window.dataLayer || []).push({ event: 'contacto_' + a.dataset.ev, pagina: location.pathname }); });
+  </script>
+</body>
+</html>

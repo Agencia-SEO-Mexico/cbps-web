@@ -1,0 +1,97 @@
+---
+import { u, waCotizar, NEGOCIO } from '../lib/site.js';
+import { LINEAS, SERVICIOS, MENU } from '../lib/nav.js';
+import Icono from './Icono.astro';
+const { ruta = '/' } = Astro.props;
+const sec = ruta.startsWith('/productos/') ? 'productos' : ruta.startsWith('/servicios/') ? 'servicios' : null;
+---
+<header class="hdr" id="top">
+  <div class="wrap hdr__in">
+    <a class="logo" href={u('/')} aria-label="CBPS, ir al inicio"><img src={u('/logo-cbps.webp')} alt="CBPS Critical Business Power Systems" width="128" height="51" /></a>
+    <nav class="nav" aria-label="Principal">
+      <ul>
+        {MENU.map((m) => m.tipo ? (
+          <li>
+            <button class={`nav__a${sec === m.tipo ? ' is-sec' : ''}`} type="button" aria-expanded="false" aria-controls={`mega-${m.tipo}`} data-mega={m.tipo}>{m.nombre}<Icono n="abajo" /></button>
+          </li>
+        ) : (
+          <li><a class="nav__a" href={u(m.ruta)} aria-current={ruta === m.ruta || (m.ruta === '/blog/' && ruta.startsWith('/blog/')) ? 'page' : undefined}>{m.nombre}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="hdr__cta">
+      <a class="btn btn--wa" href={waCotizar()} target="_blank" rel="noopener" data-ev="whatsapp"><Icono n="wa" />Cotizar por WhatsApp</a>
+    </div>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="sheet" aria-label="Abrir menú"><span></span></button>
+
+    <div class="mega" id="mega-productos" data-panel="productos">
+      <div class="wrap">
+        <div class="mega__grid">
+          {LINEAS.slice(0, 3).map((l) => (
+            <div>
+              <h3><a href={u(l.ruta)}>{l.nombre}</a></h3>
+              <p>{l.resumen}</p>
+              <ul>{l.hijos.map((h) => (<li><a href={u(h.ruta)}>{h.nombre}</a>{h.hijos && <ul>{h.hijos.map((k) => <li><a href={u(k.ruta)}>{k.nombre}</a></li>)}</ul>}</li>))}</ul>
+            </div>
+          ))}
+          <div>
+            <h3><a href={u('/productos/')}>Otras líneas</a></h3>
+            <ul style="display:grid;gap:2px">
+              {LINEAS.slice(3).map((l) => <li><a href={u(l.ruta)}>{l.nombre}</a></li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="wrap mega__foot"><span>¿No sabes qué equipo necesitas? Un ingeniero revisa tu caso.</span><a href={u('/contacto/')}>Hablar con un ingeniero</a></div>
+    </div>
+    <div class="mega" id="mega-servicios" data-panel="servicios">
+      <div class="wrap">
+        <div class="mega__grid mega__grid--serv">
+          {SERVICIOS.map((s) => (
+            <div>
+              <h3><a href={u(s.ruta)}>{s.nombre}</a></h3>
+              <p>{s.resumen}</p>
+              {s.hijos.length > 0 && <ul>{s.hijos.map((h) => <li><a href={u(h.ruta)}>{h.nombre}</a></li>)}</ul>}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="wrap mega__foot"><span>Todos los servicios parten de un diagnóstico técnico.</span><a href={u('/servicios/')}>Ver todos los servicios</a></div>
+    </div>
+  </div>
+</header>
+
+<div class="sheet" id="sheet" aria-label="Menú">
+  <ul>
+    <li><a href={u('/')}>Inicio</a></li>
+    <li>
+      <details>
+        <summary>Productos<Icono n="abajo" /></summary>
+        <div class="sub"><ul>
+          <li><a class="sub-h" href={u('/productos/')}>Todos los productos</a></li>
+          {LINEAS.map((l) => (
+            <li><a class="sub-h" href={u(l.ruta)}>{l.nombre}</a>
+              {l.hijos.length > 0 && <ul>{l.hijos.map((h) => <li><a href={u(h.ruta)}>{h.nombre}</a></li>)}</ul>}
+            </li>
+          ))}
+        </ul></div>
+      </details>
+    </li>
+    <li>
+      <details>
+        <summary>Servicios<Icono n="abajo" /></summary>
+        <div class="sub"><ul>
+          <li><a class="sub-h" href={u('/servicios/')}>Todos los servicios</a></li>
+          {SERVICIOS.map((s) => (<li><a class="sub-h" href={u(s.ruta)}>{s.nombre}</a>{s.hijos.length > 0 && <ul>{s.hijos.map((h) => <li><a href={u(h.ruta)}>{h.nombre}</a></li>)}</ul>}</li>))}
+        </ul></div>
+      </details>
+    </li>
+    <li><a href={u('/nosotros/')}>Nosotros</a></li>
+    <li><a href={u('/blog/')}>Blog</a></li>
+    <li><a href={u('/contacto/')}>Contacto</a></li>
+  </ul>
+  <div class="sheet__cta">
+    <a class="btn btn--wa" href={waCotizar()} target="_blank" rel="noopener" data-ev="whatsapp"><Icono n="wa" />Cotizar por WhatsApp</a>
+    <a class="btn btn--ghost" href={`tel:${NEGOCIO.tel}`} data-ev="telefono"><Icono n="tel" />Llamar al {NEGOCIO.telVisible}</a>
+  </div>
+</div>

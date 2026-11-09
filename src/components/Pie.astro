@@ -1,0 +1,49 @@
+---
+import { u, NEGOCIO, waCotizar } from '../lib/site.js';
+import { LINEAS, SERVICIOS } from '../lib/nav.js';
+import Icono from './Icono.astro';
+const anio = 2026;
+---
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__grid">
+      <div>
+        <span style="display:inline-block;background:#fbfcfd;border-radius:8px;padding:10px 12px;margin-bottom:16px"><img src={u('/logo-cbps.webp')} alt="CBPS Critical Business Power Systems" width="150" height="60" loading="lazy" style="width:150px" /></span>
+        <p style="max-width:34ch">No solo vendemos productos: diseñamos sistemas de protección para cargas críticas.</p>
+        <address>
+          {NEGOCIO.calle}<br />{NEGOCIO.ciudad}, {NEGOCIO.estado}, CP {NEGOCIO.cp}<br />
+          <a href={`tel:${NEGOCIO.tel}`} data-ev="telefono">{NEGOCIO.telVisible}</a><br />
+          <a href={waCotizar()} target="_blank" rel="noopener" data-ev="whatsapp">WhatsApp {NEGOCIO.telVisible}</a>
+        </address>
+      </div>
+      <div>
+        <h2>Productos</h2>
+        <ul>{LINEAS.map((l) => <li><a href={u(l.ruta)}>{l.nombre}</a></li>)}<li><a href={u('/productos/tableros-de-transferencia/')}>Tableros de transferencia</a></li></ul>
+      </div>
+      <div>
+        <h2>Servicios</h2>
+        <ul>{SERVICIOS.map((s) => <li><a href={u(s.ruta)}>{s.corto}</a></li>)}</ul>
+      </div>
+      <div>
+        <h2>CBPS</h2>
+        <ul>
+          <li><a href={u('/nosotros/')}>Nosotros</a></li>
+          <li><a href={u('/contacto/')}>Contacto</a></li>
+          <li><a href={u('/blog/')}>Blog Electric Leaders</a></li>
+          <li><a href={u('/promociones/')}>Promociones</a></li>
+          <li><a href={u('/alianza-estrategica/')}>Alianza estratégica</a></li>
+          <li><a href={u('/libro-gratis/')}>Libro gratis</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ftr__base">
+      <span>© {anio} CBPS · Critical Business Power Systems</span>
+      <span><a href={u('/politica-privacidad/')}>Política de privacidad</a> &nbsp; <a href={u('/terminos-y-condiciones/')}>Términos y condiciones</a></span>
+    </div>
+  </div>
+</footer>
+<div class="mbar" id="mbar" aria-label="Contacto rápido">
+  <a class="btn btn--wa" href={waCotizar()} target="_blank" rel="noopener" data-ev="whatsapp"><Icono n="wa" />WhatsApp</a>
+  <a class="btn btn--ghost" href={`tel:${NEGOCIO.tel}`} data-ev="telefono"><Icono n="tel" />Llamar</a>
+  <a class="btn" href="#cotizar" data-ev="ir-formulario"><Icono n="doc" />Cotizar</a>
+</div>

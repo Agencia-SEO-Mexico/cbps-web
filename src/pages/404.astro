@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/site.js';
+import { LINEAS } from '../lib/nav.js';
+---
+<Base title="Página no encontrada" desc="La página que buscas no existe o cambió de dirección." ruta="/404/">
+  <section class="wrap" style="padding-block:72px 96px">
+    <p class="kicker">Error 404</p>
+    <h1>Esta página no existe o cambió de dirección</h1>
+    <p class="lead">Revisa la dirección o entra por una de las líneas principales.</p>
+    <ul class="chips" style="margin-top:24px">
+      <li><a href={u('/')}>Inicio</a></li>
+      {LINEAS.slice(0, 3).map((l) => <li><a href={u(l.ruta)}>{l.nombre}</a></li>)}
+      <li><a href={u('/servicios/')}>Servicios</a></li>
+      <li><a href={u('/contacto/')}>Contacto</a></li>
+    </ul>
+  </section>
+</Base>

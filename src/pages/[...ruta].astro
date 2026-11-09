@@ -1,0 +1,147 @@
+---
+import Base from '../layouts/Base.astro';
+import Secciones from '../components/Secciones.astro';
+import Cotizar from '../components/Cotizar.astro';
+import Icono from '../components/Icono.astro';
+import { PAGINAS, POSTS, VIEJAS } from '../lib/paginas.js';
+import { ARBOL, migas, hermanos, hijos, LINEAS, SERVICIOS } from '../lib/nav.js';
+import { u, PROD, waCotizar, waOrientacion } from '../lib/site.js';
+import { slug, tc } from '../lib/util.js';
+
+export function getStaticPaths() {
+  const paths = Object.keys(PAGINAS).filter((r) => r !== '/').map((r) => ({ params: { ruta: r.replace(/^\/|\/$/g, '') }, props: { ruta: r } }));
+  const nuevas = new Set(Object.keys(PAGINAS));
+  for (const [vieja, nueva] of Object.entries(VIEJAS)) if (!nuevas.has(vieja)) paths.push({ params: { ruta: vieja.replace(/^\/|\/$/g, '') }, props: { ruta: vieja, puente: nueva } });
+  return paths;
+}
+const { ruta, puente } = Astro.props;
+const p = puente ? null : PAGINAS[ruta];
+const esBlog = ruta === '/blog/';
+const esPost = !puente && ruta.startsWith('/blog/') && !esBlog;
+const crumbs = puente ? [] : esPost ? [{ ruta: '/', nombre: 'Inicio' }, { ruta: '/blog/', nombre: 'Blog' }, { ruta, nombre: p.h1 }] : migas(ruta, p?.h1);
+const linea = LINEAS.find((l) => ruta.startsWith(l.ruta)) || SERVICIOS.find((s) => ruta.startsWith(s.ruta));
+const tema = linea?.corto || (ruta.includes('bateria') ? 'Baterías' : '');
+const nombreCorto = ARBOL[ruta]?.nombre || p?.h1;
+const kids = puente || esBlog ? [] : hijos(ruta).map((k) => ({ ...k, resumen: PAGINAS[k.ruta]?.desc || k.resumen }));
+const bros = puente || esPost ? [] : hermanos(ruta).filter((b) => !b.ruta.startsWith('/blog/')).slice(0, 12);
+const relacionados = (p?.related || []).map((r) => ({ ruta: r, nombre: ARBOL[r]?.nombre || PAGINAS[r]?.h1 || r }));
+const toc = (p?.sections || []).filter((s) => s.h).map((s) => ({ id: slug(s.h), h: tc(s.h) }));
+const esProducto = ruta.startsWith('/productos/');
+const esServicio = ruta.startsWith('/servicios/');
+// servicios que se cruzan con cada línea de producto (y al revés)
+const cruces = esProducto
+  ? (ruta.includes('plantas') || ruta.includes('tableros') ? ['/servicios/mantenimiento/plantas-de-emergencia/', '/servicios/instalacion-y-dimensionamiento/plantas-de-emergencia/', '/servicios/renta-de-plantas-de-emergencia/']
+    : ruta.includes('/ups/') ? ['/servicios/mantenimiento/ups/', '/servicios/reparacion-y-modernizacion/ups/', '/servicios/renta-y-financiamiento-de-ups-trifasico/']
+    : ruta.includes('bateria') ? ['/servicios/sustitucion-de-bancos-de-baterias/', '/servicios/mantenimiento/ups/'] : ['/servicios/', '/servicios/instalacion-y-dimensionamiento/'])
+  : esServicio ? (ruta.includes('plantas') ? ['/productos/plantas-de-emergencia/', '/productos/tableros-de-transferencia/'] : ruta.includes('ups') ? ['/productos/ups/', '/productos/baterias-industriales/baterias-para-ups/'] : ruta.includes('bateria') ? ['/productos/baterias-industriales/baterias-para-ups/', '/productos/baterias-industriales/'] : ['/productos/plantas-de-emergencia/', '/productos/ups/', '/productos/baterias-industriales/'])
+  : [];
+const crucesL = cruces.filter((r) => r !== ruta).map((r) => ({ ruta: r, nombre: ARBOL[r]?.nombre || PAGINAS[r]?.h1 }));
+
+const faqs = (p?.faqs || []).filter((f) => f.a?.length);
+const schema = [];
+if (!puente) {
+  schema.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.nombre, item: `${PROD}${c.ruta}` })) });
+  if (faqs.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a.map((a) => a.x || (a.items || []).join('; ')).join(' ') } })) });
+  if (esProducto || esServicio) schema.push({ '@context': 'https://schema.org', '@type': 'Service', name: p.h1, description: p.desc, serviceType: nombreCorto, provider: { '@id': `${PROD}/#negocio` }, areaServed: { '@type': 'Country', name: 'México' }, url: `${PROD}${ruta}` });
+  if (esPost) schema.push({ '@context': 'https://schema.org', '@type': 'BlogPosting', headline: p.h1, description: p.desc, datePublished: p.published || undefined, dateModified: p.modified || p.published || undefined, author: { '@type': 'Organization', name: 'CBPS' }, publisher: { '@id': `${PROD}/#negocio` }, mainEntityOfPage: `${PROD}${ruta}` });
+}
+const fecha = (iso) => iso ? new Date(iso).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Mexico_City' }) : '';
+const etiqueta = esPost ? 'Blog Electric Leaders' : esProducto ? (linea && linea.ruta !== ruta ? linea.nombre : 'Productos') : esServicio ? 'Servicios' : 'CBPS';
+---
+{puente ? (
+  <html lang="es-MX">
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Esta página cambió de dirección | CBPS</title>
+      <meta name="robots" content="noindex,nofollow" />
+      <link rel="canonical" href={`${PROD}${ruta}`} />
+      <meta http-equiv="refresh" content={`0; url=${u(puente)}`} />
+      <style>body{font:16px/1.6 system-ui,sans-serif;background:#f3f6f8;color:#15212b;display:grid;place-items:center;min-height:100vh;margin:0;padding:16px}a{color:#0b5f8a}</style>
+    </head>
+    <body><p>Esta página ahora está en <a href={u(puente)}>{`${PROD}${puente}`}</a>.</p></body>
+  </html>
+) : (
+<Base title={p.title} desc={p.desc} ruta={ruta} canon={p.canon} schema={schema} tipo={esPost ? 'article' : 'website'}>
+  <div class="phero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Migas de pan"><ol>{crumbs.map((c, i) => <li>{i < crumbs.length - 1 ? <a href={u(c.ruta)}>{c.nombre}</a> : <span aria-current="page">{c.nombre}</span>}</li>)}</ol></nav>
+      <div class={`phero__grid${p.media ? '' : ' solo'}`}>
+        <div>
+          <p class="phero__tag">{etiqueta}{esPost && p.published && <> · <time datetime={p.published}>{fecha(p.published)}</time></>}</p>
+          <h1>{tc(p.h1)}</h1>
+          {p.lead && <p class="lead">{p.lead}</p>}
+          {!esBlog && (
+            <div class="btns" style="margin-top:24px">
+              <a class="btn btn--wa" href={waCotizar(nombreCorto)} target="_blank" rel="noopener" data-ev="whatsapp"><Icono n="wa" />Cotizar por WhatsApp</a>
+              <a class="btn btn--ghost" href={waOrientacion(nombreCorto)} target="_blank" rel="noopener" data-ev="whatsapp-orientacion">Pedir orientación técnica</a>
+            </div>
+          )}
+        </div>
+        {p.media && <div class="phero__media"><img src={u('/img/' + p.media.src)} alt={p.media.alt || p.h1} width={p.media.w} height={p.media.h} fetchpriority="high" decoding="async" /></div>}
+      </div>
+    </div>
+  </div>
+
+  {kids.length > 0 && (
+    <section class="band band--white" aria-labelledby="k-t" style="padding-block:48px 56px">
+      <div class="wrap">
+        <h2 id="k-t" class="rv" style="font-size:var(--step-2)">{esServicio ? 'Servicios en esta sección' : ruta === '/productos/' ? 'Líneas de producto' : 'Marcas y opciones'}</h2>
+        <ul class="rows">
+          {kids.map((k) => (
+            <li><a href={u(k.ruta)}><strong>{k.nombre}</strong>{k.resumen && <span>{k.resumen}</span>}<Icono n="flecha" /></a></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {esBlog ? (
+    <section class="wrap" style="padding-block:48px 72px" aria-label="Artículos">
+      <ul class="rows">
+        {POSTS.map((q) => (
+          <li><a href={u(q.ruta)}><strong>{tc(q.h1)}</strong><span>{fecha(q.published)}{q.desc ? ' · ' + q.desc : ''}</span><Icono n="flecha" /></a></li>
+        ))}
+      </ul>
+    </section>
+  ) : (
+    <div class="wrap doc">
+      <article>
+        <Secciones secciones={p.sections} />
+        {esPost && (p.words || 0) < 120 && (
+          <aside class="sec" aria-label="Más información">
+            <h2 style="font-size:var(--step-2)">¿Necesitas aplicarlo en tu instalación?</h2>
+            <p>Este artículo resume un tema técnico. Si tienes una duda concreta sobre tu equipo o tu instalación, un ingeniero de CBPS te orienta sin costo.</p>
+          </aside>
+        )}
+        {(relacionados.length > 0 || crucesL.length > 0) && (
+          <section class="sec" aria-labelledby="rel-t">
+            <h2 id="rel-t" style="font-size:var(--step-2)">{esProducto ? 'Servicios para este equipo' : esServicio ? 'Equipos relacionados' : 'Te puede interesar'}</h2>
+            <ul class="chips">{[...relacionados, ...crucesL].map((r) => <li><a href={u(r.ruta)}>{r.nombre}</a></li>)}</ul>
+          </section>
+        )}
+        {bros.length > 0 && (
+          <section class="sec" aria-labelledby="her-t">
+            <h2 id="her-t" style="font-size:var(--step-2)">{esProducto ? 'También en ' + (ARBOL[ARBOL[ruta]?.padre]?.nombre || 'productos') : 'Otras páginas de esta sección'}</h2>
+            <ul class="chips">{bros.map((b) => <li><a href={u(b.ruta)}>{b.nombre}</a></li>)}</ul>
+          </section>
+        )}
+      </article>
+      <aside class="aside" aria-label="Contacto y contenido">
+        <div class="quote">
+          <h2>{esPost ? '¿Tienes una duda técnica?' : `Cotiza ${nombreCorto && nombreCorto.length < 34 ? nombreCorto : 'con CBPS'}`}</h2>
+          <p>Respuesta de un ingeniero, con propuesta técnica para tu operación.</p>
+          <div class="btns">
+            <a class="btn btn--wa" href={waCotizar(nombreCorto)} target="_blank" rel="noopener" data-ev="whatsapp"><Icono n="wa" />WhatsApp</a>
+            <a class="btn btn--light" href="#cotizar">Formulario de cotización</a>
+          </div>
+        </div>
+        {toc.length >= 3 && (
+          <nav class="toc" aria-label="En esta página"><h2>En esta página</h2><ol>{toc.map((t) => <li><a href={`#${t.id}`}>{t.h}</a></li>)}</ol></nav>
+        )}
+      </aside>
+    </div>
+  )}
+  <Cotizar tema={tema} />
+</Base>
+)}
