@@ -1,7 +1,7 @@
 ---
 import { slug, tc, agrupar } from '../lib/util.js';
 import { u } from '../lib/site.js';
-const { secciones = [] } = Astro.props;
+const { secciones = [], titulo = '' } = Astro.props;
 const lineas = (x) => x.split('\n');
 ---
 {secciones.map((s, i) => (
@@ -14,8 +14,8 @@ const lineas = (x) => x.split('\n');
         : b.t === 'ul' ? <ul class={b.items.length > 5 && b.items.every((x) => x.length < 48) ? 'cols' : undefined}>{b.items.map((x) => <li>{x}</li>)}</ul>
         : b.t === 'table' ? <div class="tbl" role="region" aria-label="Tabla" tabindex="0"><table><tbody>{b.rows.map((r) => <tr>{r.map((c) => <td>{c}</td>)}</tr>)}</tbody></table></div>
         : b.t === 'imgs' ? (b.items.length === 1
-            ? <figure class="fig"><img src={u('/img/' + b.items[0].src)} alt={b.items[0].alt || ''} width={b.items[0].w} height={b.items[0].h} loading="lazy" decoding="async" /></figure>
-            : <div class="figrow">{b.items.map((im) => <figure class="fig"><img src={u('/img/' + im.src)} alt={im.alt || ''} width={im.w} height={im.h} loading="lazy" decoding="async" /></figure>)}</div>)
+            ? <figure class="fig"><img src={u('/img/' + b.items[0].src)} alt={b.items[0].alt || titulo} width={b.items[0].w} height={b.items[0].h} loading="lazy" decoding="async" /></figure>
+            : <div class="figrow">{b.items.map((im) => <figure class="fig"><img src={u('/img/' + im.src)} alt={im.alt || titulo} width={im.w} height={im.h} loading="lazy" decoding="async" /></figure>)}</div>)
         : b.t === 'faqs' ? <div class="faq">{b.items.map((q) => (
             <details><summary>{q.q}<i aria-hidden="true"></i></summary><div class="ans">{q.a.map((a) => a.t === 'ul' ? <ul>{a.items.map((x) => <li>{x}</li>)}</ul> : <p>{a.x}</p>)}</div></details>
           ))}</div>

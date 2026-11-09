@@ -300,3 +300,8 @@ body.no-scroll { overflow: hidden; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
 @media (max-width: 899px) { .phero__media { min-height: 0; } .phero__media img { max-height: 230px; } }
+/* revisión 360: sin desborde en móvil y zonas de toque */
+@media (max-width: 1079px) { .mega { display: none; } }
+.doc > *, .cot > *, .split > *, .phero__grid > * { min-width: 0; }
+.crumbs a { display: inline-block; padding: 8px 0; }
+.ftr address a { display: inline-block; padding: 8px 0; }
