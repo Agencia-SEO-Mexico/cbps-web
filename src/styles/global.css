@@ -305,3 +305,6 @@ body.no-scroll { overflow: hidden; }
 .doc > *, .cot > *, .split > *, .phero__grid > * { min-width: 0; }
 .crumbs a { display: inline-block; padding: 8px 0; }
 .ftr address a { display: inline-block; padding: 8px 0; }
+.ftr__base a { display: inline-block; padding: 12px 0; }
+h1, h2 { overflow-wrap: break-word; hyphens: auto; -webkit-hyphens: auto; }
+@media (max-width: 380px) { .phero h1 { font-size: 1.85rem; } }

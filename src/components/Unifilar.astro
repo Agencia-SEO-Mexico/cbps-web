@@ -26,7 +26,7 @@ const L = [
     <rect x="0" y="0" width="600" height="400" fill="url(#grid)" class="uni__grid" />
     {L.map((l) => (<g class={`ln ${l.id}`}><path class="ln__base" d={l.d} /><path class="ln__flow" d={l.d} /></g>))}
     {N.map((n) => (
-      <a href={u(n.href)} class={`nd nd--${n.id}`}>
+      <a href={u(n.href)} class={`nd nd--${n.id}`} aria-label={`${n.t1} ${n.t2}`}>
         <rect x={n.x} y={n.y} width="172" height="60" rx="6" />
         <text x={n.x + 16} y={n.y + 26} class="nd__t">{n.t1}</text>
         <text x={n.x + 16} y={n.y + 46} class="nd__t">{n.t2}</text>
