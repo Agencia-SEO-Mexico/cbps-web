@@ -33,6 +33,27 @@ for (const [ruta, e] of Object.entries(ESCRITAS)) {
   PAGINAS[ruta] = { ruta, canon: e.canon, olds: PAGINAS[ruta]?.olds || [], title: e.title, desc: e.desc, h1: e.h1, lead: e.lead, media: null,
     sections, faqs: e.faqs, related: e.related || [], nueva: true };
 }
+// ajustes de contenido sobre lo rescatado
+const fix = (x) => x.replace(/\s*\|\s*/g, ': ').replace(/\.$/, '');
+for (const p of Object.values(PAGINAS)) p.h1 = fix(p.h1);
+if (PAGINAS['/contacto/']) {
+  const c = PAGINAS['/contacto/'];
+  c.h1 = 'Habla con un ingeniero especialista en protección de cargas críticas';
+  c.lead = 'Cuéntanos tu proyecto, falla o necesidad de respaldo eléctrico. Un ingeniero de CBPS analizará tu operación y te orientará con una solución real, no con un catálogo genérico.';
+  const q = (t, a) => ({ t: 'faq', q: t, a: [{ t: 'p', x: a }] });
+  c.faqs = [
+    q('¿Qué productos ofrecen para la protección de cargas críticas?', 'Plantas de emergencia, sistemas UPS, baterías industriales, aire acondicionado de precisión, reguladores de voltaje, supresores de picos y convertidores de frecuencia, además de servicios de instalación, mantenimiento y renta.'),
+    q('¿Cómo puedo saber qué producto es el adecuado para mi empresa?', 'Nuestro equipo te asesora en la selección según las necesidades específicas de tu operación. Escríbenos por WhatsApp o llena el formulario con el equipo, la capacidad o la falla.'),
+    q('¿Ofrecen servicios de instalación y mantenimiento?', 'Sí. CBPS ofrece instalación y mantenimiento para que tus sistemas de protección de energía funcionen correctamente en todo momento.'),
+    q('¿Qué garantías tienen sus productos?', 'La garantía varía según el tipo de equipo y el fabricante. Te la indicamos por escrito en cada cotización.'),
+    q('¿Cómo contacto al soporte técnico?', 'Por WhatsApp al 55 2171 0020 o con el formulario de esta página.'),
+  ];
+  c.sections = [
+    { h: 'Dónde estamos', body: [ { t: 'p', x: 'Av. Churubusco 303, int. 8, Ciudad de México, CDMX, CP 03340.' }, { t: 'p', x: 'WhatsApp y teléfono: 55 2171 0020.' } ] },
+    { h: 'Qué puedes esperar', body: [ { t: 'h3', x: 'Soluciones personalizadas' }, { t: 'p', x: 'Ofrecemos soluciones adaptadas a las necesidades específicas de tu industria.' }, { t: 'h3', x: 'Soporte técnico' }, { t: 'p', x: 'Contamos con un equipo de expertos para brindarte soporte técnico.' } ] },
+    { h: 'Preguntas frecuentes sobre CBPS', body: c.faqs },
+  ];
+}
 // nombre corto para menús y migas
 for (const r of Object.keys(PAGINAS)) if (!ARBOL[r] && !r.startsWith('/blog/')) ARBOL[r] = { nombre: PAGINAS[r].h1, padre: '/' };
 

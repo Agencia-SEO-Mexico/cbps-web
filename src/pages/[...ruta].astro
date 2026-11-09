@@ -23,7 +23,7 @@ const linea = LINEAS.find((l) => ruta.startsWith(l.ruta)) || SERVICIOS.find((s) 
 const tema = linea?.corto || (ruta.includes('bateria') ? 'Baterías' : '');
 const nombreCorto = ARBOL[ruta]?.nombre || p?.h1;
 const kids = puente || esBlog ? [] : hijos(ruta).map((k) => ({ ...k, resumen: PAGINAS[k.ruta]?.desc || k.resumen }));
-const bros = puente || esPost ? [] : hermanos(ruta).filter((b) => !b.ruta.startsWith('/blog/')).slice(0, 12);
+const bros = puente || esPost || (ARBOL[ruta]?.padre || '/') === '/' ? [] : hermanos(ruta).filter((b) => !b.ruta.startsWith('/blog/')).slice(0, 12);
 const relacionados = (p?.related || []).map((r) => ({ ruta: r, nombre: ARBOL[r]?.nombre || PAGINAS[r]?.h1 || r }));
 const toc = (p?.sections || []).filter((s) => s.h).map((s) => ({ id: slug(s.h), h: tc(s.h) }));
 const esProducto = ruta.startsWith('/productos/');
