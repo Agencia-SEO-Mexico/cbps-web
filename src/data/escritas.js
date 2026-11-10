@@ -123,7 +123,7 @@ export const ESCRITAS = {
     title: 'Reparación y modernización de UPS',
     desc: 'Reparación de UPS con diagnóstico técnico y modernización del sistema de respaldo cuando la carga o la tecnología del equipo ya no corresponden.',
     h1: 'Reparación y modernización de UPS',
-    lead: 'CBPS diagnostica el UPS, sus baterías y su instalación para decidir si conviene repararlo, modernizarlo o sustituirlo. La decisión parte de la carga real que necesitas proteger.',
+    lead: 'Antes de la reparación de UPS, CBPS diagnostica el equipo, sus baterías y su instalación para decidir si conviene repararlo, modernizarlo o sustituirlo. La decisión parte de la carga real que necesitas proteger.',
     sections: [
       { h: 'Por qué fallan los UPS', body: [
         p('La mayoría de las fallas de un UPS se relacionan con las baterías: bancos subdimensionados para la carga real, baterías que pasaron su vida útil o mezcla de baterías nuevas con viejas en el mismo banco. También influyen la temperatura del cuarto y la calidad de la instalación eléctrica.'),

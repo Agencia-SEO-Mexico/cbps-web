@@ -1571,8 +1571,8 @@
    "/home/electricas/ultimas-3-plantas-de-emergencia-premium/",
    "/proteccion-cargas-criticas-plantas-de-emergencia-venta/"
   ],
-  "title": "Plantas de Emergencia para Empresas",
-  "desc": "Plantas de emergencia para empresas e industria. Te ayudamos a seleccionar la capacidad y solución adecuada para proteger tu operación ante cortes de energía.",
+  "title": "Plantas de emergencia y plantas eléctricas para empresas",
+  "desc": "Plantas de emergencia y plantas eléctricas diésel para empresas e industria. Te ayudamos a elegir la capacidad adecuada para proteger tu operación ante cortes de energía.",
   "h1": "Plantas de Emergencia para Empresas",
   "sections": [
    {
@@ -2980,9 +2980,9 @@
   "olds": [
    "/home/electricas/plantas-de-emergencia/plantas-generac/"
   ],
-  "title": "Plantas de Emergencia Generac | Cotiza con CBPS",
+  "title": "Plantas de emergencia Generac para empresas",
   "desc": "Cotiza plantas de emergencia Generac con CBPS. Recibe asesoría para elegir la capacidad y solución de respaldo eléctrico adecuada para tu empresa.",
-  "h1": "PLANTAS DE EMERGENCIA GENERAC PARA EMPRESAS E INDUSTRIA",
+  "h1": "Plantas de emergencia Generac para empresas e industria",
   "sections": [
    {
     "h": null,
@@ -5042,16 +5042,16 @@
   "olds": [
    "/home/electricas/sistemas-ups/"
   ],
-  "title": "Sistemas UPS | Respaldo y Protección de Energía",
-  "desc": "Sistemas UPS para proteger equipos y cargas críticas. Asesoría técnica, diferentes tecnologías y marcas para elegir la solución adecuada.",
-  "h1": "Sistemas UPS | Respaldo y Protección de Energía | CBPS",
+  "title": "UPS industrial: sistemas de respaldo y protección de energía",
+  "desc": "UPS industrial (no break industrial) para proteger cargas críticas. Asesoría técnica, tecnologías y marcas como Eaton, Vertiv y ABB para elegir la solución adecuada.",
+  "h1": "UPS industrial: sistemas de respaldo y protección de energía",
   "sections": [
    {
     "h": null,
     "body": [
      {
       "t": "p",
-      "x": "Diseñamos y recomendamos soluciones UPS de acuerdo con la criticidad de tu carga, capacidad requerida, autonomía y condiciones de operación"
+      "x": "Diseñamos y recomendamos soluciones de UPS industrial de acuerdo con la criticidad de tu carga, capacidad requerida, autonomía y condiciones de operación"
      },
      {
       "t": "p",
@@ -6635,7 +6635,7 @@
    "/home/electricas/sistemas-ups/ups-abb/"
   ],
   "title": "UPS ABB | Sistemas de Respaldo y Protección",
-  "desc": "Meta description: UPS ABB para industria, centros de datos e infraestructura crítica. Te ayudamos a elegir, dimensionar y cotizar la solución adecuada para tu instalación.",
+  "desc": "UPS ABB para industria, centros de datos e infraestructura crítica. Te ayudamos a elegir, dimensionar y cotizar la solución adecuada para tu instalación.",
   "h1": "Sistemas UPS ABB para aplicaciones críticas",
   "sections": [
    {
@@ -7982,17 +7982,13 @@
   "olds": [
    "/home/electricas/baterias-industriales/"
   ],
-  "title": "Baterías industriales",
+  "title": "Baterías industriales y bancos de baterías",
   "desc": "Elegir mal la batería de respaldo puede costarle miles. Aprenda a seleccionar la correcta y garantice continuidad eléctrica de su operación.",
-  "h1": "Baterías industriales: tipos, funcionamiento y aplicaciones en sistemas críticos",
+  "h1": "Baterías industriales y bancos de baterías: tipos y aplicaciones en sistemas críticos",
   "sections": [
    {
     "h": null,
     "body": [
-     {
-      "t": "p",
-      "x": "Baterías de Respaldo: Cómo Elegir la Correcta para su Sistema | CBPS"
-     },
      {
       "t": "p",
       "x": "Las baterías son el componente mas critico —y el mas frecuentemente fallido— en cualquier sistema de continuidad eléctrica. Elegir el tipo correcto no es opcional: determina si su operación sobrevive un corte."
@@ -8412,9 +8408,9 @@
   "olds": [
    "/home/electricas/baterias-industriales/respaldo/"
   ],
-  "title": "Baterías de Respaldo",
+  "title": "Baterías para UPS y no break: cómo elegir la correcta",
   "desc": "Las baterías de respaldo son todas parecidas por fuera. Las diferencias que importan están adentro: la química, el ciclo de vida esperado, la compatibilidad",
-  "h1": "Baterías de Respaldo para UPS: cómo elegir la correcta.",
+  "h1": "Baterías para UPS: cómo elegir la correcta",
   "sections": [
    {
     "h": "GUIA DE DECISIÓN ◊ BATERÍAS PARA UPS",
