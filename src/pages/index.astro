@@ -36,6 +36,8 @@ const marcas = [
   ['CSB', '/productos/baterias-industriales/csb/'], ['C&D', '/productos/baterias-industriales/c-and-d/'], ['EnerSys', '/productos/baterias-industriales/enersys/'], ['Kaise', '/productos/baterias-industriales/kaise/'], ['Invermexa', '/productos/baterias-industriales/invermexa/'], ['LTH', '/productos/baterias-industriales/lth/'], ['América', '/productos/baterias-industriales/america/'], ['Trojan', '/productos/baterias-industriales/trojan/'], ['Crown', '/productos/baterias-industriales/crown/'],
   ['STULZ', '/productos/aire-de-precision/stulz/'], ['HiRef', '/productos/aire-de-precision/hiref/'], ['VOGAR', '/productos/reguladores-de-voltaje/vogar/'], ['Power All', '/productos/reguladores-de-voltaje/power-all/'], ['RPSM', '/productos/reguladores-de-voltaje/rpsm/'],
 ];
+// logos recortados en /marcas/ (alto 96 px); IGSA, Invermexa, LTH, América y Trojan siguen con su nombre porque no hay logo limpio
+const LOGOS = { 'Generac': ['generac', 431], 'PLANELEC': ['planelec', 617], 'Eaton': ['eaton', 343], 'Vertiv': ['vertiv', 388], 'CyberPower': ['cyberpower', 515], 'ABB': ['abb', 250], 'Industronic': ['industronic', 392], 'Powest': ['powest', 386], 'CSB': ['csb', 180], 'C&D': ['c-and-d', 205], 'EnerSys': ['enersys', 186], 'Kaise': ['kaise', 197], 'Crown': ['crown', 126], 'STULZ': ['stulz', 205], 'HiRef': ['hiref', 461], 'VOGAR': ['vogar', 331], 'Power All': ['power-all', 269], 'RPSM': ['rpsm', 98] };
 const filaA = marcas.slice(0, 12), filaB = marcas.slice(12);
 const problema = 'Hay operaciones donde un microcorte representa minutos de pérdida. En otras significa detener producción, comprometer información o poner en riesgo la continuidad. La diferencia entre una solución que parcha y un sistema que protege está en diseñarlo completo. Eso es lo que hacemos en CBPS.';
 const fecha = (iso) => iso ? new Date(iso).toLocaleDateString('es-MX', { month: 'long', year: 'numeric', timeZone: 'America/Mexico_City' }) : '';
@@ -68,12 +70,12 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: 'C
       <p>Existen decenas de marcas para cada segmento. En CBPS solo trabajamos con las que consideramos comprometidas con los clientes y que vale la pena recomendar por experiencia, calidad y servicio.</p>
     </div>
     <div class="marq" style="--dur:46s">
-      <ul class="marq__track">{filaA.map(([n, r]) => <li><a href={u(r)}>{n}</a></li>)}</ul>
-      <ul class="marq__track" aria-hidden="true">{filaA.map(([n]) => <li><span>{n}</span></li>)}</ul>
+      <ul class="marq__track">{filaA.map(([n, r]) => <li><a href={u(r)} class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/${LOGOS[n][0]}.webp`)} alt={n} width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</a></li>)}</ul>
+      <ul class="marq__track" aria-hidden="true">{filaA.map(([n]) => <li><span class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/${LOGOS[n][0]}.webp`)} alt="" width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</span></li>)}</ul>
     </div>
     <div class="marq marq--rev" style="--dur:40s">
-      <ul class="marq__track">{filaB.map(([n, r]) => <li><a href={u(r)}>{n}</a></li>)}</ul>
-      <ul class="marq__track" aria-hidden="true">{filaB.map(([n]) => <li><span>{n}</span></li>)}</ul>
+      <ul class="marq__track">{filaB.map(([n, r]) => <li><a href={u(r)} class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/${LOGOS[n][0]}.webp`)} alt={n} width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</a></li>)}</ul>
+      <ul class="marq__track" aria-hidden="true">{filaB.map(([n]) => <li><span class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/${LOGOS[n][0]}.webp`)} alt="" width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</span></li>)}</ul>
     </div>
   </section>
 
@@ -225,8 +227,10 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: 'C
   .marq--rev .marq__track { animation-direction: reverse; }
   .marq:hover .marq__track, .marq:focus-within .marq__track { animation-play-state: paused; }
   @keyframes marq { to { transform: translateX(calc(-100% - var(--gap))); } }
-  .marq a, .marq span { display: inline-flex; align-items: center; min-height: 54px; padding: 10px 22px; border: 1px solid var(--line); border-radius: var(--r-s); background: var(--paper); color: var(--ink); text-decoration: none; white-space: nowrap; font: 700 1.08rem var(--f-display); font-stretch: 116%; letter-spacing: 0.01em; transition: border-color 200ms ease, color 200ms ease, background-color 200ms ease, transform 260ms var(--ease-out); }
+  .marq a, .marq span { display: inline-flex; align-items: center; min-height: 72px; padding: 10px 22px; border: 1px solid var(--line); border-radius: var(--r-s); background: #fff; color: var(--ink); text-decoration: none; white-space: nowrap; font: 700 1.08rem var(--f-display); font-stretch: 116%; letter-spacing: 0.01em; transition: border-color 200ms ease, color 200ms ease, background-color 200ms ease, transform 260ms var(--ease-out); }
   .marq a:hover, .marq a:focus-visible { border-color: var(--blue); color: var(--blue-deep); background: #fff; transform: translateY(-2px); }
+  .marq .is-logo { min-height: 72px; padding: 14px 26px; background: #fff; }
+  .marq .is-logo img { display: block; height: 38px; width: auto; max-width: 170px; object-fit: contain; }
   .marq + .marq { margin-top: 6px; }
   @media (prefers-reduced-motion: reduce) {
     .marq { -webkit-mask: none; mask: none; padding-inline: var(--gutter); max-width: var(--max); margin-inline: auto; }
