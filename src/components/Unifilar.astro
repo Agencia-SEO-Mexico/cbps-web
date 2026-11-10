@@ -1,6 +1,8 @@
 ---
-// Diagrama unifilar del sistema de respaldo. Cada bloque enlaza a su página.
-// El botón recorre tres estados reales: red normal, falla de red (baterías) y planta en operación.
+// Diagrama unifilar del sistema de respaldo, sobre fondo de tablero. Cada bloque enlaza a su página.
+// Recorre solo tres estados reales (red normal → falla de red → planta en operación) mientras está
+// en pantalla; si la persona pulsa el botón, el ciclo automático se detiene y manda ella.
+// Con «reducir movimiento» no hay ciclo automático.
 import { u } from '../lib/site.js';
 const N = [
   { id: 'red', x: 16, y: 26, t1: 'Red eléctrica', t2: 'suministro', href: '/servicios/instalacion-y-dimensionamiento/' },
@@ -19,73 +21,93 @@ const L = [
 ];
 ---
 <figure class="uni" data-state="normal" aria-labelledby="uni-cap">
+  <div class="uni__bar" aria-hidden="true">
+    <div><span>Fuente</span><b data-src>Red eléctrica</b></div>
+    <div><span>Carga crítica</span><b class="ok">Alimentada</b></div>
+    <div><span>Corte en la carga</span><b class="ok">0 ms</b></div>
+  </div>
   <svg viewBox="0 0 600 400" role="group" aria-label="Diagrama del sistema de respaldo de CBPS">
     <defs>
-      <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.18" /></pattern>
+      <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
     </defs>
-    <rect x="0" y="0" width="600" height="400" fill="url(#grid)" class="uni__grid" />
-    {L.map((l) => (<g class={`ln ${l.id}`}><path class="ln__base" d={l.d} /><path class="ln__flow" d={l.d} /></g>))}
+    {L.map((l) => (<g class={`ln ${l.id}`}><path class="ln__base" d={l.d} /><path class="ln__flow" d={l.d} filter="url(#glow)" /></g>))}
     {N.map((n) => (
       <a href={u(n.href)} class={`nd nd--${n.id}`} aria-label={`${n.t1} ${n.t2}`}>
-        <rect x={n.x} y={n.y} width="172" height="60" rx="6" />
+        <rect x={n.x} y={n.y} width="172" height="60" rx="8" />
         <text x={n.x + 16} y={n.y + 26} class="nd__t">{n.t1}</text>
         <text x={n.x + 16} y={n.y + 46} class="nd__t">{n.t2}</text>
-        <circle class="nd__led" cx={n.x + 154} cy={n.y + 18} r="5" />
+        <circle class="nd__halo" cx={n.x + 152} cy={n.y + 18} r="10" />
+        <circle class="nd__led" cx={n.x + 152} cy={n.y + 18} r="5" />
       </a>
     ))}
   </svg>
   <figcaption id="uni-cap">
-    <span class="uni__st" aria-live="polite" data-st>Red normal: la carga crítica se alimenta de la red a través del UPS y las baterías se mantienen cargadas.</span>
-    <button class="btn btn--ghost uni__btn" type="button" data-sim>Simular falla de la red</button>
+    <span class="uni__st" aria-live="off" data-st>Red normal: la carga crítica se alimenta de la red a través del UPS y las baterías se mantienen cargadas.</span>
+    <button class="btn btn--ghost-light uni__btn" type="button" data-sim>Simular falla de la red</button>
   </figcaption>
 </figure>
 
 <style>
-  .uni { margin: 0; color: var(--blue-deep); }
-  .uni svg { width: 100%; height: auto; display: block; overflow: visible; }
-  .uni__grid { color: var(--blue); }
-  .ln__base { fill: none; stroke: #9fb0bd; stroke-width: 3; stroke-dasharray: 2 7; stroke-linecap: round; transition: stroke 300ms ease; }
-  .ln__flow { fill: none; stroke: var(--blue); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 10 14; opacity: 0; transition: opacity 300ms ease; }
-  .ln.on .ln__base { stroke: var(--blue); stroke-dasharray: none; }
-  .ln.on .ln__flow { opacity: 1; stroke: var(--amber); animation: flow 900ms linear infinite; }
+  .uni { margin: 0; }
+  .uni svg { width: 100%; height: auto; display: block; overflow: visible; margin-block: 6px 4px; }
+  .uni__bar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: rgba(143, 208, 240, 0.16); border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
+  .uni__bar div { background: rgba(10, 26, 40, 0.75); padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
+  .uni__bar span { font-size: 0.78rem; color: var(--on-night-2); }
+  .uni__bar b { font: 650 0.98rem var(--f-display); font-stretch: 104%; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 300ms ease; }
+  .uni__bar b.ok::before { content: ''; display: inline-block; width: 7px; height: 7px; margin-right: 7px; vertical-align: 2px; border-radius: 50%; background: #5fd17f; }
+  .uni[data-state='falla'] [data-src] { color: var(--amber); }
+  .ln__base { fill: none; stroke: var(--wire); stroke-width: 3; stroke-dasharray: 2 8; stroke-linecap: round; transition: stroke 400ms ease; }
+  .ln__flow { fill: none; stroke: var(--amber); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 10 14; opacity: 0; transition: opacity 400ms ease; }
+  .ln.on .ln__base { stroke: #3d8fbf; stroke-dasharray: none; }
+  .ln.on .ln__flow { opacity: 1; animation: flow 900ms linear infinite; }
   .ln.rev .ln__flow { animation-direction: reverse; }
-  .ln.slow .ln__flow { animation-duration: 2.4s; stroke-dasharray: 4 20; }
+  .ln.slow .ln__flow { animation-duration: 2.4s; stroke-dasharray: 4 20; opacity: 0.75; }
   @keyframes flow { to { stroke-dashoffset: -24; } }
-  .nd rect { fill: #fff; stroke: #9fb0bd; stroke-width: 1.5; transition: stroke 250ms ease, fill 250ms ease; }
-  .nd__t { font: 600 15px var(--f-body); fill: var(--ink); }
-  .nd__led { fill: #fff; stroke: #6b7c89; stroke-width: 2; transition: fill 250ms ease, stroke 250ms ease; }
-  .nd.on rect { stroke: var(--blue); stroke-width: 2; }
-  .nd.on .nd__led { fill: var(--green); stroke: var(--green-deep); }
-  .nd.off rect { fill: #eef2f5; stroke-dasharray: 5 4; }
-  .nd:focus-visible rect, .nd:hover rect { stroke: var(--blue-deep); stroke-width: 2.5; }
+  .nd rect { fill: #13304a; stroke: #3a5b78; stroke-width: 1.5; transition: stroke 300ms ease, fill 300ms ease, opacity 300ms ease; }
+  .nd__t { font: 600 15px var(--f-body); fill: #eaf1f6; transition: opacity 300ms ease; }
+  .nd__led { fill: #0e2233; stroke: #6f8ba3; stroke-width: 2; transition: fill 300ms ease, stroke 300ms ease; }
+  .nd__halo { fill: #5fd17f; opacity: 0; transform-box: fill-box; transform-origin: center; }
+  .nd.on rect { stroke: #5fb3df; stroke-width: 2; fill: #163a57; }
+  .nd.on .nd__led { fill: #5fd17f; stroke: #2fa356; }
+  .nd.on .nd__halo { animation: halo 2.2s ease-out infinite; }
+  .nd.off rect { fill: transparent; stroke-dasharray: 5 5; stroke: #4b6b86; }
+  .nd.off .nd__t { opacity: 0.62; }
+  .nd:focus-visible rect, .nd:hover rect { stroke: #fff; stroke-width: 2.5; }
   .nd:focus { outline: none; }
-  .uni figcaption { display: grid; gap: 12px; margin-top: 14px; }
-  .uni__st { font-size: 0.95rem; color: var(--steel); min-height: 3.2em; }
-  .uni__btn { justify-self: start; }
-  /* estados: qué líneas llevan energía */
-  .uni[data-state='normal'] :is(.l-red, .l-tab, .l-carga) { }
-  @media (max-width: 620px) { .nd__t { font-size: 21px; } .nd__led { r: 6px; } }
-  @media (prefers-reduced-motion: reduce) { .ln.on .ln__flow { animation: none; stroke-dasharray: none; stroke: var(--blue); } }
+  @keyframes halo { 0% { opacity: 0.55; transform: scale(0.5); } 70%, 100% { opacity: 0; transform: scale(1.6); } }
+  .uni figcaption { display: grid; gap: 14px; margin-top: 8px; }
+  .uni__st { font-size: 0.95rem; color: var(--on-night-2); min-height: 3.2em; }
+  .uni__btn { justify-self: start; min-height: 46px; }
+  @media (max-width: 620px) { .nd__t { font-size: 21px; } .uni__bar div { padding: 8px 9px; } .uni__bar b { font-size: 0.86rem; } .uni__bar span { font-size: 0.72rem; } }
+  @media (prefers-reduced-motion: reduce) { .ln.on .ln__flow { animation: none; stroke-dasharray: none; } .nd.on .nd__halo { animation: none; } }
 </style>
 
 <script>
   const ESTADOS = {
-    normal: { on: ['l-red', 'l-tab', 'l-carga', 'l-bat'], slow: ['l-bat'], rev: [], nodos: ['red', 'tab', 'ups', 'bat', 'carga'], off: ['planta'],
-      txt: 'Red normal: la carga crítica se alimenta de la red a través del UPS y las baterías se mantienen cargadas.', btn: 'Simular falla de la red' },
-    falla: { on: ['l-carga', 'l-bat'], slow: [], rev: ['l-bat'], nodos: ['ups', 'bat', 'carga'], off: ['red', 'tab', 'planta'],
-      txt: 'Falla de la red: el UPS toma la energía de las baterías sin cortar la carga, mientras la planta arranca.', btn: 'Continuar: arranca la planta' },
-    planta: { on: ['l-planta', 'l-tab', 'l-carga', 'l-bat'], slow: ['l-bat'], rev: [], nodos: ['planta', 'tab', 'ups', 'bat', 'carga'], off: ['red'],
-      txt: 'Planta en operación: el tablero transfirió la carga a la planta y el UPS vuelve a cargar las baterías.', btn: 'Restablecer la red' },
+    normal: { on: ['l-red', 'l-tab', 'l-carga', 'l-bat'], slow: ['l-bat'], rev: [], nodos: ['red', 'tab', 'ups', 'bat', 'carga'], off: ['planta'], src: 'Red eléctrica',
+      txt: 'Red normal: la carga crítica se alimenta de la red a través del UPS y las baterías se mantienen cargadas.', btn: 'Simular falla de la red', ms: 5200 },
+    falla: { on: ['l-carga', 'l-bat'], slow: [], rev: ['l-bat'], nodos: ['ups', 'bat', 'carga'], off: ['red', 'tab', 'planta'], src: 'Baterías',
+      txt: 'Falla de la red: el UPS toma la energía de las baterías sin cortar la carga, mientras la planta arranca.', btn: 'Continuar: arranca la planta', ms: 4200 },
+    planta: { on: ['l-planta', 'l-tab', 'l-carga', 'l-bat'], slow: ['l-bat'], rev: [], nodos: ['planta', 'tab', 'ups', 'bat', 'carga'], off: ['red'], src: 'Planta',
+      txt: 'Planta en operación: el tablero transfirió la carga a la planta y el UPS vuelve a cargar las baterías.', btn: 'Restablecer la red', ms: 5200 },
   };
   const orden = ['normal', 'falla', 'planta'];
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.querySelectorAll('.uni').forEach((fig) => {
+    let timer = null, manual = calm, visible = false;
     const pinta = (k) => {
       const e = ESTADOS[k]; fig.dataset.state = k;
       fig.querySelectorAll('.ln').forEach((l) => { const id = [...l.classList].find((c) => c.startsWith('l-')); l.classList.toggle('on', e.on.includes(id)); l.classList.toggle('slow', e.slow.includes(id)); l.classList.toggle('rev', e.rev.includes(id)); });
       fig.querySelectorAll('.nd').forEach((n) => { const id = [...n.classList].find((c) => c.startsWith('nd--')).slice(4); n.classList.toggle('on', e.nodos.includes(id)); n.classList.toggle('off', e.off.includes(id)); });
+      fig.querySelector('[data-src]').textContent = e.src;
       fig.querySelector('[data-st]').textContent = e.txt; fig.querySelector('[data-sim]').textContent = e.btn;
     };
+    const sig = () => orden[(orden.indexOf(fig.dataset.state) + 1) % 3];
+    const auto = () => { clearTimeout(timer); if (manual || !visible || document.hidden) return; timer = setTimeout(() => { pinta(sig()); auto(); }, ESTADOS[fig.dataset.state].ms); };
     pinta('normal');
-    fig.querySelector('[data-sim]').addEventListener('click', () => pinta(orden[(orden.indexOf(fig.dataset.state) + 1) % 3]));
+    // el ciclo automático no se anuncia al lector de pantalla; solo los cambios que pide la persona
+    fig.querySelector('[data-sim]').addEventListener('click', () => { manual = true; clearTimeout(timer); fig.querySelector('[data-st]').setAttribute('aria-live', 'polite'); pinta(sig()); });
+    new IntersectionObserver(([en]) => { visible = en.isIntersecting; auto(); }, { threshold: 0.35 }).observe(fig);
+    document.addEventListener('visibilitychange', auto);
   });
 </script>
