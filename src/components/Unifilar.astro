@@ -78,7 +78,9 @@ const L = [
   .uni figcaption { display: grid; gap: 14px; margin-top: 8px; }
   .uni__st { font-size: 0.95rem; color: var(--on-night-2); min-height: 3.2em; }
   .uni__btn { justify-self: start; min-height: 46px; }
-  @media (max-width: 620px) { .nd__t { font-size: 21px; } .uni__bar div { padding: 8px 9px; } .uni__bar b { font-size: 0.86rem; } .uni__bar span { font-size: 0.72rem; } }
+  @media (max-width: 620px) { .nd__t { font-size: 19px; } .nd__led, .nd__halo { display: none; } .uni__bar div { padding: 8px 9px; } .uni__bar b { font-size: 0.86rem; } .uni__bar span { font-size: 0.72rem; } }
+  @media (max-width: 420px) { .uni__bar b { white-space: normal; font-size: 0.82rem; line-height: 1.25; } .uni__bar b.ok::before { display: none; } }
+  @media (max-width: 360px) { .uni__bar div { padding: 8px 6px; } .uni__bar b { font-size: 0.74rem; text-overflow: clip; } }
   @media (prefers-reduced-motion: reduce) { .ln.on .ln__flow { animation: none; stroke-dasharray: none; } .nd.on .nd__halo { animation: none; } }
 </style>
 
