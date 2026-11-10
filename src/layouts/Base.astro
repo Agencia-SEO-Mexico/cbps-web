@@ -7,8 +7,9 @@ import Icono from '../components/Icono.astro';
 import fontA from '../assets/fonts/archivo-wdth.woff2?url';
 import fontB from '../assets/fonts/plex-400.woff2?url';
 
-const { title, desc = '', ruta = '/', canon = null, schema = [], ogImage = '/og-cbps.jpg', tipo = 'website' } = Astro.props;
-const fullTitle = ruta === '/' ? title : `${title} | CBPS`;
+const { title, desc = '', ruta = '/', canon = null, schema = [], ogImage = '/og-cbps.jpg', tipo = 'website', noindex = false } = Astro.props;
+// la marca solo una vez: si el título ya dice CBPS no se repite
+const fullTitle = ruta === '/' || /\bCBPS\b/.test(title) ? title : `${title} | CBPS`;
 // Vista previa: canonical a la URL equivalente que existe HOY en cbps.com.mx.
 // Al lanzar (PREVIEW=false): canonical a la URL nueva del propio sitio.
 const canonical = PREVIEW ? `${PROD}${canon || ruta}` : `${PROD}${ruta}`;
@@ -31,14 +32,14 @@ const graphs = [org, ...schema];
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>{fullTitle}</title>
   <meta name="description" content={desc} />
-  {PREVIEW && <meta name="robots" content="noindex,nofollow" />}
-  <link rel="canonical" href={canonical} />
+  {(PREVIEW || noindex) && <meta name="robots" content={PREVIEW ? 'noindex,nofollow' : 'noindex'} />}
+  {!noindex && <link rel="canonical" href={canonical} />}
   <meta property="og:type" content={tipo} />
   <meta property="og:locale" content="es_MX" />
   <meta property="og:site_name" content="CBPS" />
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={desc} />
-  <meta property="og:url" content={canonical} />
+  {!noindex && <meta property="og:url" content={canonical} />}
   <meta property="og:image" content={new URL(u(ogImage), Astro.site).href} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#0c1b26" />

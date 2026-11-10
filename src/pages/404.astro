@@ -1,9 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import Cotizar from '../components/Cotizar.astro';
 import { u } from '../lib/site.js';
 import { LINEAS, SERVICIOS } from '../lib/nav.js';
 ---
-<Base title="Página no encontrada" desc="La página que buscas no existe o cambió de dirección." ruta="/404/">
+<Base title="Página no encontrada" desc="La página que buscas no existe o cambió de dirección." ruta="/404/" noindex>
   <section class="wrap" style="padding-block:72px 96px">
     <p class="kicker">Error 404</p>
     <h1>Esta página no existe o cambió de dirección</h1>
@@ -15,4 +16,5 @@ import { LINEAS, SERVICIOS } from '../lib/nav.js';
       <li><a href={u('/contacto/')}>Contacto</a></li>
     </ul>
   </section>
+  <Cotizar />
 </Base>

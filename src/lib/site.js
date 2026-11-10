@@ -11,7 +11,7 @@ export const NEGOCIO = {
   telVisible: '55 2171 0020',
   tel: '+525521710020',
   correo: 'javier.galindo@cbps.com.mx',
-  calle: 'Av. Churubusco 303, int. 8',
+  calle: 'Churubusco 303, int. 8', // tal cual en cbps.com.mx/contacto (NAP idéntico)
   ciudad: 'Ciudad de México',
   estado: 'CDMX',
   cp: '03340',
