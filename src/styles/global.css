@@ -121,9 +121,9 @@ ul { padding-left: 1.2em; margin: 0 0 1em; }
 .mega__grid > div { opacity: 0; transform: translateY(8px); transition: opacity 300ms var(--ease-out), transform 400ms var(--ease-out); }
 .mega.is-open .mega__grid > div { opacity: 1; transform: none; }
 .mega.is-open .mega__grid > div:nth-child(2) { transition-delay: 40ms; } .mega.is-open .mega__grid > div:nth-child(3) { transition-delay: 80ms; } .mega.is-open .mega__grid > div:nth-child(4) { transition-delay: 120ms; }
-.mega h3 { font-size: 1.02rem; margin: 0 0 6px; padding-top: 12px; border-top: 2px solid var(--blue); }
-.mega h3 a { color: var(--ink); text-decoration: none; }
-.mega h3 a:hover { color: var(--blue-deep); text-decoration: underline; }
+.mega .mega__h { font-family: var(--f-display); font-weight: 650; line-height: 1.2; letter-spacing: 0; font-size: 1.02rem; margin: 0 0 6px; padding-top: 12px; border-top: 2px solid var(--blue); }
+.mega .mega__h a { color: var(--ink); text-decoration: none; }
+.mega .mega__h a:hover { color: var(--blue-deep); text-decoration: underline; }
 .mega p { font-size: var(--step--1); color: var(--steel); margin: 0 0 8px; line-height: 1.45; }
 .mega ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.93rem; }
 .mega ul ul { width: 100%; padding-left: 12px; border-left: 1px solid var(--line); margin: 2px 0 6px; }
@@ -237,6 +237,8 @@ details[open]::details-content { block-size: auto; }
 .figrow { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 26px 0; }
 .figrow .fig { margin: 0; aspect-ratio: 4 / 3; }
 .figrow .fig img { max-height: 100%; }
+.embed { margin: 26px 0; border: 1px solid var(--line); border-radius: var(--r-l); overflow: hidden; background: #fff; }
+.embed iframe { display: block; width: 100%; height: min(85vh, 1100px); border: 0; }
 .tbl { overflow-x: auto; margin: 22px 0; border: 1px solid var(--line); border-radius: var(--r-m); background: #fff; -webkit-overflow-scrolling: touch; }
 .tbl table { border-collapse: collapse; width: 100%; font-size: 0.95rem; min-width: 480px; }
 .tbl th, .tbl td { padding: 11px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }

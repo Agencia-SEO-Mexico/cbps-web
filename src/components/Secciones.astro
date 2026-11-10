@@ -19,6 +19,7 @@ const lineas = (x) => x.split('\n');
         : b.t === 'faqs' ? <div class="faq">{b.items.map((q) => (
             <details><summary>{q.q}<i aria-hidden="true"></i></summary><div class="ans">{q.a.map((a) => a.t === 'ul' ? <ul>{a.items.map((x) => <li>{x}</li>)}</ul> : <p>{a.x}</p>)}</div></details>
           ))}</div>
+        : b.t === 'embed' ? <div class="embed"><iframe src={b.src} title={b.title || titulo || 'Documento'} loading="lazy" allowfullscreen></iframe></div>
         : null
       ))}
     </div>
