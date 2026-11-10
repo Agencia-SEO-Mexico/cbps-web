@@ -22,7 +22,7 @@ Mientras `PREVIEW` no sea `false` (por defecto es vista previa):
    ```
    Con eso desaparece el `noindex`, `robots.txt` pasa a `Allow: /` con el sitemap y el
    `canonical` apunta a la URL nueva de cada página.
-2. Borrar del build las páginas puente y sustituirlas por 301 de servidor: copiar
+2. Con `PREVIEW=false` las páginas puente ya no se generan; las URLs viejas pasan a 301 de servidor: copiar
    `lanzamiento/_redirects` a `public/_redirects` (Netlify y Cloudflare Pages lo leen tal cual).
    El detalle URL por URL está en `lanzamiento/redirecciones-301-cbps.csv`.
 3. Conectar el formulario al servicio del hosting (Netlify Forms u otro) con un buzón por división
