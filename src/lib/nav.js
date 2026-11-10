@@ -1,15 +1,6 @@
 // Árbol del sitio: menú, migas, hubs y páginas relacionadas salen de aquí.
 const P = '/productos', S = '/servicios', BI = '/productos/baterias-industriales';
 export const LINEAS = [
-  { ruta: `${P}/plantas-de-emergencia/`, nombre: 'Plantas de emergencia', corto: 'Plantas', prioridad: 1,
-    resumen: 'Respaldo ante fallas totales o prolongadas de la red: suministro, dimensionamiento, instalación y mantenimiento.',
-    hijos: [
-      { ruta: `${P}/plantas-de-emergencia/generac/`, nombre: 'Generac' },
-      { ruta: `${P}/plantas-de-emergencia/igsa/`, nombre: 'IGSA' },
-      { ruta: `${P}/plantas-de-emergencia/planelec/`, nombre: 'PLANELEC' },
-      { ruta: `${P}/plantas-de-emergencia/cbps/`, nombre: 'Plantas CBPS' },
-      { ruta: `${P}/tableros-de-transferencia/`, nombre: 'Tableros de transferencia' },
-    ] },
   { ruta: `${P}/ups/`, nombre: 'Sistemas UPS', corto: 'UPS', prioridad: 2,
     resumen: 'Protección instantánea ante microcortes, variaciones de voltaje y picos: suministro, mantenimiento, reparación y modernización.',
     hijos: [
@@ -35,6 +26,8 @@ export const LINEAS = [
   { ruta: `${P}/aire-de-precision/`, nombre: 'Aire acondicionado de precisión', corto: 'Aire de precisión',
     resumen: 'Control de temperatura y humedad para sites, centros de datos y bancos de baterías.',
     hijos: [ { ruta: `${P}/aire-de-precision/vertiv/`, nombre: 'Vertiv' }, { ruta: `${P}/aire-de-precision/stulz/`, nombre: 'STULZ' }, { ruta: `${P}/aire-de-precision/hiref/`, nombre: 'HiRef' } ] },
+  { ruta: `${P}/tableros-de-transferencia/`, nombre: 'Tableros de transferencia', corto: 'Tableros',
+    resumen: 'Transferencia automática entre la red y la planta de emergencia, sin intervención manual.', hijos: [] },
   { ruta: `${P}/reguladores-de-voltaje/`, nombre: 'Reguladores de voltaje', corto: 'Reguladores',
     resumen: 'Alimentación estable ante variaciones de voltaje de la red.',
     hijos: [ { ruta: `${P}/reguladores-de-voltaje/industronic/`, nombre: 'Industronic' }, { ruta: `${P}/reguladores-de-voltaje/vogar/`, nombre: 'VOGAR' },
@@ -48,6 +41,14 @@ export const LINEAS = [
   { ruta: `${P}/magic-battery/`, nombre: 'Magic Battery', corto: 'Magic Battery', resumen: 'Respaldo de energía para el hogar y pequeños negocios.', hijos: [] },
 ];
 export const SERVICIOS = [
+  { ruta: `${S}/plantas-de-emergencia/`, nombre: 'Plantas de emergencia', corto: 'Plantas',
+    resumen: 'Respaldo ante fallas totales o prolongadas de la red: suministro, dimensionamiento, instalación y mantenimiento.',
+    hijos: [
+      { ruta: `${S}/plantas-de-emergencia/generac/`, nombre: 'Generac' },
+      { ruta: `${S}/plantas-de-emergencia/igsa/`, nombre: 'IGSA' },
+      { ruta: `${S}/plantas-de-emergencia/planelec/`, nombre: 'PLANELEC' },
+      { ruta: `${S}/plantas-de-emergencia/cbps/`, nombre: 'Plantas CBPS' },
+    ] },
   { ruta: `${S}/mantenimiento/`, nombre: 'Mantenimiento preventivo y correctivo', corto: 'Mantenimiento',
     resumen: 'Plantas de emergencia y UPS revisados en sitio para que respondan el día que falla la red.',
     hijos: [ { ruta: `${S}/mantenimiento/plantas-de-emergencia/`, nombre: 'Mantenimiento de plantas de emergencia' }, { ruta: `${S}/mantenimiento/ups/`, nombre: 'Mantenimiento de UPS' } ] },

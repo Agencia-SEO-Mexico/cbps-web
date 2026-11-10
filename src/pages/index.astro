@@ -10,15 +10,15 @@ import { tc } from '../lib/util.js';
 
 // fotos reales del sitio de CBPS para las tres líneas principales (sus páginas no traen imagen propia)
 const FOTOS = {
-  '/productos/plantas-de-emergencia/': { src: '2026_07_whatsapp-image-2026-01-15-at-8-26-48-pm-e1790788687806.webp', w: 1028, h: 696, alt: 'Planta de emergencia CBPS en caseta acústica instalada en exterior' },
+  '/servicios/plantas-de-emergencia/': { src: '2026_07_whatsapp-image-2026-01-15-at-8-26-48-pm-e1790788687806.webp', w: 1028, h: 696, alt: 'Planta de emergencia CBPS en caseta acústica instalada en exterior' },
   '/productos/ups/': { src: '2024_08_todas-las-bateria-facebook-ad-1.webp', w: 1100, h: 576, alt: 'Gabinetes de sistemas UPS de distintas capacidades' },
   '/productos/baterias-industriales/': { src: '2026_07_cbps-31-jul-2026-12_12_49-p-m.webp', w: 1100, h: 733, alt: 'Batería sellada VRLA para respaldo de UPS' },
 };
-const prio = LINEAS.slice(0, 3).map((l) => ({ ...l, media: FOTOS[l.ruta] || PAGINAS[l.ruta]?.media }));
-const otras = LINEAS.slice(3);
+const prio = [SERVICIOS[0], LINEAS[0], LINEAS[1]].map((l) => ({ ...l, media: FOTOS[l.ruta] || PAGINAS[l.ruta]?.media }));
+const otras = LINEAS.slice(2);
 const eslabones = [
   { n: 'Instalación eléctrica', r: '/servicios/instalacion-y-dimensionamiento/', t: 'El cimiento de todo. Desde la acometida hasta el último contacto, la continuidad y la seguridad deben ser confiables.' },
-  { n: 'Planta de emergencia', r: '/productos/plantas-de-emergencia/', t: 'Respaldo ante falla de red. Una segunda fuente de energía que controlas tú, a libre demanda.' },
+  { n: 'Planta de emergencia', r: '/servicios/plantas-de-emergencia/', t: 'Respaldo ante falla de red. Una segunda fuente de energía que controlas tú, a libre demanda.' },
   { n: 'UPS', r: '/productos/ups/', t: 'Protección ante disturbios eléctricos. Servidores y equipos digitales reciben una senoidal pura, con o sin redundancia.' },
   { n: 'Baterías', r: '/productos/baterias-industriales/', t: 'El momento de verdad. En una interrupción, todo depende de ellas: hay que mantenerlas y sustituirlas a tiempo.' },
   { n: 'Aire acondicionado de precisión', r: '/productos/aire-de-precision/', t: 'Control térmico crítico. La integridad del site y la vida de las baterías dependen de la temperatura y la humedad.' },
@@ -31,7 +31,7 @@ const testimonios = [
   { q: 'CBPS es una empresa seria y fiel con sus clientes. Hemos adquirido UPS y su apoyo ha sido incondicional.', n: 'Ing. Edwind Mancilla', c: 'Gerente de Mantenimiento e Infraestructura, Afianzadora Aserta' },
 ];
 const marcas = [
-  ['Generac', '/productos/plantas-de-emergencia/generac/'], ['IGSA', '/productos/plantas-de-emergencia/igsa/'], ['PLANELEC', '/productos/plantas-de-emergencia/planelec/'],
+  ['Generac', '/servicios/plantas-de-emergencia/generac/'], ['IGSA', '/servicios/plantas-de-emergencia/igsa/'], ['PLANELEC', '/servicios/plantas-de-emergencia/planelec/'],
   ['Eaton', '/productos/ups/eaton/'], ['Vertiv', '/productos/ups/vertiv/'], ['CyberPower', '/productos/ups/cyberpower/'], ['ABB', '/productos/ups/abb/'], ['Industronic', '/productos/ups/industronic/'], ['Powest', '/productos/ups/powest/'],
   ['CSB', '/productos/baterias-industriales/csb/'], ['C&D', '/productos/baterias-industriales/c-and-d/'], ['EnerSys', '/productos/baterias-industriales/enersys/'], ['Kaise', '/productos/baterias-industriales/kaise/'], ['Invermexa', '/productos/baterias-industriales/invermexa/'], ['LTH', '/productos/baterias-industriales/lth/'], ['América', '/productos/baterias-industriales/america/'], ['Trojan', '/productos/baterias-industriales/trojan/'], ['Crown', '/productos/baterias-industriales/crown/'],
   ['STULZ', '/productos/aire-de-precision/stulz/'], ['HiRef', '/productos/aire-de-precision/hiref/'], ['VOGAR', '/productos/reguladores-de-voltaje/vogar/'], ['Power All', '/productos/reguladores-de-voltaje/power-all/'], ['RPSM', '/productos/reguladores-de-voltaje/rpsm/'],

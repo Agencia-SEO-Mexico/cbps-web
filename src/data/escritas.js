@@ -172,7 +172,7 @@ export const ESCRITAS = {
         p('Trabajamos con controladores DeepSea para automatizar la transferencia de carga y con tableros de transferencia ASCO para pasar de una fuente a otra de forma rápida y confiable.'),
       ] },
     ],
-    related: ['/productos/plantas-de-emergencia/', '/productos/tableros-de-transferencia/', '/blog/adquirir-una-planta-de-emergencia/'],
+    related: ['/servicios/plantas-de-emergencia/', '/productos/tableros-de-transferencia/', '/blog/adquirir-una-planta-de-emergencia/'],
     faqs: [
       faq('¿Una planta de emergencia puede respaldar toda una empresa?', 'Sí, siempre que su capacidad y configuración se hayan dimensionado correctamente para las cargas que se desean mantener operativas.'),
       faq('¿Se puede integrar la planta con un UPS?', 'Sí. La integración entre UPS y planta debe hacerse con ingeniería adecuada, coordinación de protecciones y pruebas controladas, para que la transferencia de carga sea estable.'),
@@ -215,7 +215,7 @@ export const ESCRITAS = {
         p('Por eso la transferencia se dimensiona junto con la planta y, cuando hay UPS, se coordina con él mediante pruebas controladas.'),
       ] },
     ],
-    related: ['/productos/plantas-de-emergencia/', '/servicios/instalacion-y-dimensionamiento/plantas-de-emergencia/'],
+    related: ['/servicios/plantas-de-emergencia/', '/servicios/instalacion-y-dimensionamiento/plantas-de-emergencia/'],
     faqs: [
       faq('¿Las plantas CBPS funcionan automáticamente?', 'Podemos integrar soluciones de operación automática según las características del proyecto y el sistema de transferencia requerido. La configuración se define para cada instalación.'),
     ],
