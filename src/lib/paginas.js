@@ -57,6 +57,14 @@ if (PAGINAS['/contacto/']) {
 // nombre corto para menús y migas
 for (const r of Object.keys(PAGINAS)) if (!ARBOL[r] && !r.startsWith('/blog/')) ARBOL[r] = { nombre: PAGINAS[r].h1, padre: '/' };
 
+// artículo sin documento ni texto (roto también en el sitio actual): noindex y fuera del sitemap hasta que CBPS mande el contenido
+for (const p of Object.values(PAGINAS)) {
+  if (!p.ruta.startsWith('/blog/') || p.ruta === '/blog/') continue;
+  const bloques = (p.sections || []).flatMap((s) => s.body || []);
+  const palabras = bloques.reduce((n, b) => n + (b.x || '').split(/\s+/).filter(Boolean).length, 0);
+  if (!bloques.some((b) => b.t === 'embed') && palabras < 60) p.noindex = true;
+}
+
 export const POSTS = Object.values(PAGINAS).filter((p) => p.ruta.startsWith('/blog/') && p.ruta !== '/blog/')
   .sort((a, b) => (b.published || '').localeCompare(a.published || ''));
 

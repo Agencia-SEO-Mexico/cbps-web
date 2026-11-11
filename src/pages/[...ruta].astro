@@ -64,7 +64,7 @@ const etiqueta = esPost ? 'Blog Electric Leaders' : esProducto ? (linea && linea
     <body><p>Esta página ahora está en <a href={u(puente)}>{`${PROD}${puente}`}</a>.</p></body>
   </html>
 ) : (
-<Base title={p.title} desc={p.desc} ruta={ruta} canon={p.canon} schema={schema} tipo={esPost ? 'article' : 'website'}>
+<Base title={p.title} desc={p.desc} ruta={ruta} canon={p.canon} schema={schema} tipo={esPost ? 'article' : 'website'} noindex={!!p.noindex}>
   <div class="phero">
     <div class="wrap">
       <nav class="crumbs" aria-label="Migas de pan"><ol>{crumbs.map((c, i) => <li>{i < crumbs.length - 1 ? <a href={u(c.ruta)}>{c.nombre}</a> : <span aria-current="page">{c.nombre}</span>}</li>)}</ol></nav>
