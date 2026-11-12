@@ -15,8 +15,8 @@ for (const [de, [a, cod]] of unicas) ht += `RewriteRule ^${esc(de.replace(/^\//,
 ht += '</IfModule>\n';
 writeFileSync(new URL('.htaccess', dir), ht);
 
-let nx = cab + '# Nginx: incluir el bloque map en http {} y la línea if dentro del server {} de www.cbps.com.mx.\nmap $uri $cbps_301 {\n  default "";\n';
+let nx = cab + '# Nginx: incluir este fichero dentro de http {} y la línea if dentro del server {} de www.cbps.com.mx.\n# Si el nginx.conf principal ya fija map_hash_*, borrar estas dos líneas y poner allí valores >= estos.\nmap_hash_bucket_size 128;\nmap_hash_max_size 4096;\nmap $uri $cbps_301 {\n  default "";\n';
 for (const [de, [a]] of unicas) { nx += `  ${de} ${a};\n`; if (de !== '/') nx += `  ${de}/ ${a};\n`; }
-nx += '}\n# dentro de server { ... }:\n# if ($cbps_301) { return 301 $cbps_301; }\n';
+nx += '}\n# dentro de server { ... } (conserva ?gclid/utm):\n# if ($cbps_301) { return 301 $cbps_301$is_args$args; }\n';
 writeFileSync(new URL('nginx-redirecciones.conf', dir), nx);
 console.log(`${unicas.size} rutas → .htaccess y nginx-redirecciones.conf`);
