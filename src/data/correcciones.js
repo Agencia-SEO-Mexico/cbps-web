@@ -4,6 +4,7 @@
 
 // 1) Erratas y siglas: se aplican a todo el texto visible (title, desc, H1, encabezados, párrafos, listas, FAQ y tablas).
 export const REEMPLAZOS = [
+  [/[\uE000-\uF8FF]/g, ''], // glifos de la fuente de iconos de Divi que quedaron en el texto
   [/finaciamiento/g, 'financiamiento'],
   [/POWESTE/g, 'POWEST'],
   [/Telecomuni-caciones/g, 'Telecomunicaciones'],
@@ -67,7 +68,7 @@ export const BLOQUES_FUERA = [
   /^Your content goes here/i,
   /^Más de 15 años en soluciones de energía/i, // 15 / 10 / 17 años: la home actual no da cifra → pendiente de CBPS
   /^\.$/,
-  /^(Solicitar asesoría para mi planta\s*)?Ver plantas disponibles/i, // etiquetas de botones sueltas de la promo caducada
+  /^(Solicitar asesoría para mi planta[\s\S]*?)?Ver plantas disponibles/i, // etiquetas de botones sueltas de la promo caducada
 ];
 
 // 3) Por página: secciones o bloques fuera, y H1/title/desc completos (keyword del pen de Diego, sección 3).
