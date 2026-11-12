@@ -1,6 +1,10 @@
-import fuente from '../data/fuente.json';
+import fuenteRescatada from '../data/fuente.json';
+import { corregirFuente, ajustesFinales } from '../data/correcciones.js';
 import { ESCRITAS } from '../data/escritas.js';
 import { ARBOL } from './nav.js';
+
+// contenido rescatado + correcciones de la revisión del 12-nov (src/data/correcciones.js)
+const fuente = corregirFuente(fuenteRescatada);
 
 const titulo = (t) => t.replace(/\s*\|\s*CBPS.*$/i, '').replace(/\s*-\s*CBPS$/i, '').trim();
 
@@ -34,8 +38,9 @@ for (const [ruta, e] of Object.entries(ESCRITAS)) {
     sections, faqs: e.faqs, related: e.related || [], nueva: true };
 }
 // ajustes de contenido sobre lo rescatado
-const fix = (x) => x.replace(/\s*\|\s*/g, ': ').replace(/\.$/, '');
+const fix = (x) => x.replace(/\s*\|\s*CBPS\s*$/i, '').replace(/\s*\|\s*/g, ': ').replace(/\.$/, '');
 for (const p of Object.values(PAGINAS)) p.h1 = fix(p.h1);
+ajustesFinales(PAGINAS);
 if (PAGINAS['/contacto/']) {
   const c = PAGINAS['/contacto/'];
   c.h1 = 'Habla con un ingeniero especialista en protección de cargas críticas';
@@ -65,7 +70,8 @@ for (const p of Object.values(PAGINAS)) {
   if (!bloques.some((b) => b.t === 'embed') && palabras < 60) p.noindex = true;
 }
 
-export const POSTS = Object.values(PAGINAS).filter((p) => p.ruta.startsWith('/blog/') && p.ruta !== '/blog/')
+// los artículos noindex (sin texto todavía) no se listan ni se enlazan hasta que llegue su contenido
+export const POSTS = Object.values(PAGINAS).filter((p) => p.ruta.startsWith('/blog/') && p.ruta !== '/blog/' && !p.noindex)
   .sort((a, b) => (b.published || '').localeCompare(a.published || ''));
 
 // rutas viejas -> nuevas (para las páginas puente de la vista previa)
