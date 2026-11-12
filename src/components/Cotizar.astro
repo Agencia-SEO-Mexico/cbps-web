@@ -1,6 +1,6 @@
 ---
-// Formulario sin servidor: valida en la página y abre un modal propio con dos salidas
-// (WhatsApp o correo). Al lanzar se conecta al servicio de formularios del hosting.
+// Formulario: valida en la página y envía a la API de leads (contrato del 12-nov). Si la API responde ok,
+// el modal confirma y deja WhatsApp; si falla, el modal ofrece WhatsApp o correo para no perder el lead.
 import { NEGOCIO, waCotizar } from '../lib/site.js';
 import Icono from './Icono.astro';
 const { tema = '', ruta = '', titulo = 'Cuéntanos qué necesitas proteger', texto = 'La consulta es gratuita; ignorar una falla puede salir mucho más caro. Un ingeniero de CBPS revisa tu caso y te responde con una propuesta técnica, no con un catálogo.' } = Astro.props;
@@ -37,7 +37,7 @@ const pre = DIVISION_POR_RUTA.find(([r]) => ruta.startsWith(r))?.[1] || '';
         <a class="btn btn--ghost-light" href={`tel:${NEGOCIO.tel}`} data-ev="telefono"><Icono n="tel" />{NEGOCIO.telVisible}</a>
       </div>
     </div>
-    <form class="form rv" novalidate data-form data-correo={NEGOCIO.correo} data-wa={NEGOCIO.whatsapp}>
+    <form class="form rv" novalidate data-form data-api="https://cbps-leads.josegaspard.dev/api/lead" data-correo={NEGOCIO.correo} data-wa={NEGOCIO.whatsapp}>
       <div class="two">
         <div class="fld"><label for="f-nombre">Nombre</label><input id="f-nombre" name="nombre" autocomplete="name" required /><span class="err">escribe tu nombre.</span></div>
         <div class="fld"><label for="f-empresa">Empresa</label><input id="f-empresa" name="empresa" autocomplete="organization" required /><span class="err">escribe el nombre de tu empresa.</span></div>
@@ -56,8 +56,9 @@ const pre = DIVISION_POR_RUTA.find(([r]) => ruta.startsWith(r))?.[1] || '';
         <span class="err">elige una opción.</span>
       </div>
       <div class="fld"><label for="f-msg">Equipo, capacidad o falla</label><textarea id="f-msg" name="mensaje" required placeholder="Ej.: UPS trifásico de 30 kVA sin respaldo; necesitamos cambiar el banco de baterías."></textarea><span class="err">cuéntanos brevemente qué necesitas.</span></div>
+      <div class="hp" aria-hidden="true"><label for="f-hp">No llenar</label><input id="f-hp" name="hp" tabindex="-1" autocomplete="off" /></div>
       <p class="legal">Al enviar aceptas la <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/politica-privacidad/`}>política de privacidad</a>.</p>
-      <button class="btn" type="submit">Preparar solicitud</button>
+      <button class="btn" type="submit">Enviar solicitud</button>
     </form>
   </div>
 </section>

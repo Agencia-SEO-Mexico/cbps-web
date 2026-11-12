@@ -24,12 +24,15 @@ const org = {
   contactPoint: { '@type': 'ContactPoint', telephone: NEGOCIO.tel, contactType: 'sales', availableLanguage: 'es' },
 };
 const graphs = [org, ...schema];
+// GTM solo en producción (PREVIEW=false); la vista previa no mide nada
+const GTM = 'GTM-TDQRDQCG';
 ---
 <!doctype html>
 <html lang="es-MX">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  {!PREVIEW && <script is:inline set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM}');`} />}
   <title>{fullTitle}</title>
   <meta name="description" content={desc} />
   {(PREVIEW || noindex) && <meta name="robots" content={PREVIEW ? 'noindex,nofollow' : 'noindex'} />}
@@ -51,6 +54,7 @@ const graphs = [org, ...schema];
   {graphs.map((g) => <script type="application/ld+json" set:html={JSON.stringify(g)} />)}
 </head>
 <body>
+  {!PREVIEW && <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>}
   <a class="skip" href="#main">Saltar al contenido</a>
   <div class="prog" aria-hidden="true"></div>
   <Cabecera ruta={ruta} />
@@ -60,8 +64,8 @@ const graphs = [org, ...schema];
   <dialog class="modal" id="modal-envio" aria-labelledby="modal-t">
     <div class="modal__in">
       <button class="x" type="button" data-close aria-label="Cerrar"><Icono n="x" width="22" height="22" /></button>
-      <h2 id="modal-t">Tu solicitud está lista</h2>
-      <p>Elige cómo enviarla. Por WhatsApp suele responderse más rápido.</p>
+      <h2 id="modal-t" data-m-t>Tu solicitud está lista</h2>
+      <p data-m-p>Elige cómo enviarla.</p>
       <div class="sum" data-sum></div>
       <div class="btns">
         <a class="btn btn--wa" data-send-wa data-ev="form_whatsapp" target="_blank" rel="noopener" href="#"><Icono n="wa" />Enviar por WhatsApp</a>
@@ -152,7 +156,12 @@ const graphs = [org, ...schema];
       new IntersectionObserver(([en]) => mbar.classList.toggle('is-on', !en.isIntersecting)).observe(sentinel);
     }
 
-    // ----- formulario: validación propia + modal (sin diálogos nativos del navegador) -----
+    // ----- origen de la visita: UTM y gclid de la URL se guardan en la sesión para el formulario -----
+    const CAMPOS = ['utm_source', 'utm_medium', 'utm_campaign', 'gclid'];
+    try { const q = new URLSearchParams(location.search); if (CAMPOS.some((k) => q.get(k))) sessionStorage.setItem('cbps_origen', JSON.stringify(Object.fromEntries(CAMPOS.map((k) => [k, q.get(k) || ''])))); } catch {}
+    const utm = () => { let o = {}; try { o = JSON.parse(sessionStorage.getItem('cbps_origen') || '{}'); } catch {} return Object.fromEntries(CAMPOS.map((k) => [k, o[k] || ''])); };
+
+    // ----- formulario: validación propia + envío a la API de leads; si falla, modal con WhatsApp o correo -----
     const modal = $('#modal-envio');
     $$('[data-form]').forEach((f) => {
       f.addEventListener('submit', (e) => {
@@ -166,7 +175,22 @@ const graphs = [org, ...schema];
         $('[data-send-wa]', modal).href = `https://wa.me/${f.dataset.wa}?text=${encodeURIComponent(txt)}`;
         $('[data-send-mail]', modal).href = `mailto:${f.dataset.correo}?subject=${encodeURIComponent('Solicitud de cotización: ' + d.division)}&body=${encodeURIComponent(txt)}`;
         window.dataLayer?.push({ event: 'form_listo', division: d.division });
-        modal.showModal();
+        const btn = $('button[type=submit]', f); const etiqueta = btn.textContent;
+        btn.disabled = true; btn.textContent = 'Enviando…';
+        const muestra = (ok) => {
+          btn.disabled = false; btn.textContent = etiqueta;
+          $('[data-m-t]', modal).textContent = ok ? 'Recibimos tu solicitud' : 'Tu solicitud está lista';
+          $('[data-m-p]', modal).textContent = ok ? 'Un ingeniero de CBPS revisará tu caso y te contactará. Si lo prefieres, también puedes escribirnos por WhatsApp.' : 'No pudimos enviarla desde aquí. Elige cómo enviarla para no perderla.';
+          $('[data-send-mail]', modal).hidden = ok;
+          if (ok) { (window.dataLayer = window.dataLayer || []).push({ event: 'lead_enviado', division: d.division, pagina: location.pathname }); f.reset(); }
+          modal.showModal();
+        };
+        const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 12000);
+        fetch(f.dataset.api, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl.signal,
+          body: JSON.stringify({ nombre: d.nombre, empresa: d.empresa, correo: d.correo, telefono: d.telefono, division: d.division, mensaje: d.mensaje,
+            pagina: location.href, referer: document.referrer, hp: d.hp || '', ...utm() }),
+        }).then((r) => r.ok ? r.json() : { ok: false }).then((j) => muestra(j?.ok === true)).catch(() => muestra(false)).finally(() => clearTimeout(t));
       });
       $$('input,select,textarea', f).forEach((i) => i.addEventListener('input', () => { const fl = i.closest('.fld'); if (fl.classList.contains('is-bad') && i.checkValidity() && i.value.trim()) { fl.classList.remove('is-bad'); i.setAttribute('aria-invalid', 'false'); } }));
     });
