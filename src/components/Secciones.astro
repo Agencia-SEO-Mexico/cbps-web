@@ -12,7 +12,8 @@ const lineas = (x) => x.split('\n');
         b.t === 'p' ? <p>{lineas(b.x).map((l, k) => <>{k > 0 && <br />}{l}</>)}</p>
         : b.t === 'h3' ? <h3>{tc(b.x)}</h3>
         : b.t === 'ul' ? <ul class={b.items.length > 5 && b.items.every((x) => x.length < 48) ? 'cols' : undefined}>{b.items.map((x) => <li>{x}</li>)}</ul>
-        : b.t === 'table' ? <div class="tbl" role="region" aria-label="Tabla" tabindex="0"><table><tbody>{b.rows.map((r) => <tr>{r.map((c) => <td>{c}</td>)}</tr>)}</tbody></table></div>
+        : b.t === 'table' ? <div class="tbl" role="region" aria-label="Tabla" tabindex="0"><table>{b.head && <thead><tr>{b.rows[0].map((c) => <th scope="col">{c}</th>)}</tr></thead>}<tbody>{(b.head ? b.rows.slice(1) : b.rows).map((r) => <tr>{r.map((c) => <td>{c}</td>)}</tr>)}</tbody></table></div>
+        : b.t === 'enlace' ? <p><a href={b.href} target="_blank" rel="noopener">{b.x}</a></p>
         : b.t === 'imgs' ? (b.items.length === 1
             ? <figure class="fig"><Foto src={b.items[0].src} alt={b.items[0].alt || titulo} w={b.items[0].w} h={b.items[0].h} sizes="(min-width: 900px) 720px, 92vw" /></figure>
             : <div class="figrow">{b.items.map((im) => <figure class="fig"><Foto src={im.src} alt={im.alt || titulo} w={im.w} h={im.h} sizes="(min-width: 900px) 360px, 46vw" /></figure>)}</div>)

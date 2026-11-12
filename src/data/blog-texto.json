@@ -1,0 +1,2560 @@
+{
+ "/blog/tiempo-de-respaldo-de-los-ups/": {
+  "fuente": "designrr",
+  "original": "https://designrr.page?id=154852&token=854197942&h=9168",
+  "sections": [
+   {
+    "h": "Largos tiempos de respaldo en los UPS",
+    "body": [
+     {
+      "t": "h3",
+      "x": "Necesito un UPS con tiempo de respaldo de al menos dos horas…"
+     },
+     {
+      "t": "p",
+      "x": "Es frecuente en nuestro medio recibir este tipo de requerimientos de los clientes. La primera reacción que esto me causa es curiosidad, ya que no es algo sencillo de cumplir y más allá de eso me habla de un cliente con una necesidad importante que no ha recibido suficiente información de lo que existe en el mercado para poder tomar la mejor opción para su necesidad en particular."
+     },
+     {
+      "t": "p",
+      "x": "De aquí la creación de este documento para informar y explicar con detalle por qué una solución de este tipo NO es usual ni necesariamente conveniente."
+     }
+    ]
+   },
+   {
+    "h": "Limitación de un UPS",
+    "body": [
+     {
+      "t": "p",
+      "x": "Ingenuamente podríamos creer por el simple hecho de contar con un UPS, éste me podrá dar el tiempo de respaldo que yo desee al simplemente agregar bancos de baterías adicionales. Pero lo que no nos llega a la mente de primera instancia es el hecho de que cada equipo cuenta con un cargador, el cual está limitado para la carga de cierta cantidad de baterías."
+     },
+     {
+      "t": "h3",
+      "x": "Anécdota"
+     },
+     {
+      "t": "p",
+      "x": "Hace poco me contactó un cliente con un UPS y buscaba una batería de más de 100 amperes. Al investigar un poco más, descubrí que el equipo al que lo tenían conectado era tan solo de 450 VA; muy pequeño, y me comentaban que les daba un gran tiempo de respaldo."
+     },
+     {
+      "t": "p",
+      "x": "Pero que las baterías les funcionaban tan solo un par de meses máximo. De ahí que querían unas baterías de mayor amperaje (el cual determina el tiempo de autonomía del sistema)."
+     },
+     {
+      "t": "p",
+      "x": "Terminé explicándole al cliente que las baterías no dejaban de funcionar por un exceso de carga o por ser de baja calidad, sino por el hecho de incurrir en descargas profundas continuas sin la posibilidad de que ese UPS pequeñito pudiera cargarla de nuevo."
+     }
+    ]
+   },
+   {
+    "h": "Tiempos de respaldo extendidos",
+    "body": [
+     {
+      "t": "p",
+      "x": "Los tiempos de respaldo extendidos son viables en prácticamente todas las marcas."
+     },
+     {
+      "t": "h3",
+      "x": "Precauciones"
+     },
+     {
+      "t": "p",
+      "x": "Debido a que los equipos vienen de manera usual configurados para un tiempo de respaldo standard (de 4 a 5 minutos). Es importante considerar que si se desea un tiempo mayor de respaldo, en el futuro o desde un inicio, el UPS debe ser configurado para ello."
+     },
+     {
+      "t": "p",
+      "x": "Esto con el objetivo de que el equipo venga con un cargador adecuado para poder cargar bancos de baterías más adelante. El hecho de no tomar esto en cuenta puede resultar en la necesidad de comprar bancos de baterías adicionales y, reemplazar el equipo adicional aumentando los gastos $$$$."
+     }
+    ]
+   },
+   {
+    "h": "Cálculo para el tiempo de respaldo de un equipo std en el mercado",
+    "body": [
+     {
+      "t": "p",
+      "x": "Vale la pena recordar que una batería al ser un acumulador se comporta en la forma de cargarse y descargarse de una manera parecida a un capacitor."
+     },
+     {
+      "t": "p",
+      "x": "Para aquellas personas que no están familiarizados con el tema, la conclusión es que: ni la carga, o la descarga tienen un comportamiento lineal. Lo que esto quiere decir es que un comportamiento lineal, lo tenderíamos a pensar de, si un sistema, al 100% de su capacidad, nos da una autonomía de 10 minutos. Entonces, al 50% de su capacidad, nos daría el doble de tiempo."
+     },
+     {
+      "t": "p",
+      "x": "Sin embargo, no funciona de esa manera. A continuación, anexo un ejemplo el cual es bastante parecido a la realidad de un equipo para ayudar a ejemplificar tal realidad."
+     },
+     {
+      "t": "table",
+      "rows": [
+       [
+        "Equipo",
+        "Capacidad",
+        "Tiempo de respaldo"
+       ],
+       [
+        "UPS",
+        "100%",
+        "10 minutos"
+       ],
+       [
+        "",
+        "50%",
+        "22 minutos"
+       ],
+       [
+        "",
+        "25%",
+        "47 minutos"
+       ],
+       [
+        "",
+        "10%",
+        "100 minutos"
+       ]
+      ]
+     },
+     {
+      "t": "p",
+      "x": "*Como pueden observar, el tiempo de autonomía siempre es ligeramente mayor al doble y un poquito más que lo esperado en un comportamiento lineal."
+     },
+     {
+      "t": "p",
+      "x": "Ejemplo de una gráfica de tiempo de autonomía de equipos Vertiv:"
+     }
+    ]
+   },
+   {
+    "h": "Soluciones propuestas",
+    "body": [
+     {
+      "t": "p",
+      "x": "Estas soluciones son sugeridas por el Ingeniero autor de este documento y podrían no necesariamente ser compartidas por otras instancias, empresas o profesionales de las mismas áreas."
+     },
+     {
+      "t": "p",
+      "x": "Situación de Ejemplo: Para poder mostrar de manera práctica como solucionar una situación de este tipo, atenderemos una situación ficticia donde un cliente nos pide un tiempo de respaldo de 2 horas para una carga de 1.9 Kwatts."
+     },
+     {
+      "t": "h3",
+      "x": "Primera aproximación de la solución"
+     },
+     {
+      "t": "p",
+      "x": "Sabiendo que el cliente está buscando un tiempo de 120 minutos a una carga de 1,900 Watts. Nuestra primera solución será: INTENTAR RESOLVER CON LA CAPACIDAD MÁS PRÓXIMA."
+     },
+     {
+      "t": "p",
+      "x": "El equipo más próximo en línea doble conversión (es decir un UPS profesional) será de 2 Kvas. (Considerando un factor de potencia unitario, lo que refiere un equipo moderno sin pérdidas de eficiencia)."
+     },
+     {
+      "t": "p",
+      "x": "Conclusión: Sabemos que un equipo de 2 kvas de manera std traerá un tiempo de respaldo aproximadamente de solo 4-5 minutos."
+     },
+     {
+      "t": "h3",
+      "x": "Segunda aproximación de la solución"
+     },
+     {
+      "t": "p",
+      "x": "Busquemos la opción de añadir bancos de baterías adicionales."
+     },
+     {
+      "t": "p",
+      "x": "Conclusión: Para un equipo de esta capacidad y revisando con el fabricante obtenemos como resultado una autonomía de aproximadamente 13 a 23 minutos como máxima, por lo que esta solución TAMPOCO RESUELVE el requerimiento."
+     },
+     {
+      "t": "h3",
+      "x": "Tercera aproximación de la solución"
+     },
+     {
+      "t": "p",
+      "x": "Una forma económica y que garantiza en muchos casos aumentar el tiempo de autonomía del equipo es SOBREDIMENSIONAR el equipo, ya que aun cuando su tiempo de respaldo pueda parecer bajo a plena carga, puede solucionarnos considerando que solo utilicemos una fracción de su capacidad."
+     },
+     {
+      "t": "p",
+      "x": "Sabiendo que el cliente está buscando un tiempo de 120 minutos a una carga de 1,900 Watts."
+     },
+     {
+      "t": "p",
+      "x": "Consideremos entonces sobredimensionar un equipo QUE SIGA OPERANDO BAJO LOS MISMOS CRITERIOS ELÉCTRICOS CON LOS QUE CUENTA EL CLIENTE. Lo que esto quiere decir, es que en esa capacidad sabemos que el equipo es monofásico, por lo que revisemos la situación con el equipo más grande, aún monofásico."
+     },
+     {
+      "t": "table",
+      "rows": [
+       [
+        "Equipo",
+        "Capacidad %",
+        "Capacidad Watts",
+        "Tiempo de respaldo"
+       ],
+       [
+        "UPS de 3 Kvas",
+        "100%",
+        "3,000",
+        "5 minutos"
+       ],
+       [
+        "",
+        "50%",
+        "1,500",
+        "12 minutos"
+       ]
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Conclusión: Podemos ver que seguimos aún lejos de la solución, por lo que igual en el caso anterior podríamos intentar aumentar baterías al equipo sobredimensionado."
+     },
+     {
+      "t": "table",
+      "rows": [
+       [
+        "Equipo",
+        "Capacidad %",
+        "Capacidad Watts",
+        "Tiempo de respaldo"
+       ],
+       [
+        "UPS de 3 Kvas",
+        "100%",
+        "3,000",
+        "25 minutos"
+       ],
+       [
+        "",
+        "50%",
+        "1,500",
+        "60 minutos"
+       ]
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Cuarta aproximación de la solución"
+     },
+     {
+      "t": "p",
+      "x": "Sabiendo que el cliente está buscando un tiempo de 120 minutos a una carga de 1,900 Watts."
+     },
+     {
+      "t": "p",
+      "x": "Es en realidad la misma que la anterior tomando la precaución, de que los equipos mayores 3 kvas, ya no serán monofásicos y requeriremos contar con una acometida al menos bifásica."
+     },
+     {
+      "t": "p",
+      "x": "CONSIDERACIONES: Voltajes de Acometida"
+     },
+     {
+      "t": "table",
+      "rows": [
+       [
+        "Equipo",
+        "Capacidad %",
+        "Capacidad Watts",
+        "Tiempo de respaldo"
+       ],
+       [
+        "UPS de 6 Kvas",
+        "100%",
+        "6,000",
+        "5 minutos"
+       ],
+       [
+        "",
+        "50%",
+        "3,000",
+        "12 minutos"
+       ],
+       [
+        "",
+        "25%",
+        "1,500",
+        "27 minutos"
+       ]
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Solicitando nuevamente baterías adicionales para esta solución, digamos a 20 minutos."
+     },
+     {
+      "t": "table",
+      "rows": [
+       [
+        "Equipo",
+        "Capacidad %",
+        "Capacidad Watts",
+        "Tiempo de respaldo"
+       ],
+       [
+        "UPS de 6 Kvas",
+        "100%",
+        "6,000",
+        "20 minutos"
+       ],
+       [
+        "",
+        "50%",
+        "3,000",
+        "45 minutos"
+       ],
+       [
+        "",
+        "25%",
+        "1,500",
+        "93 minutos"
+       ]
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Quinta aproximación de la solución"
+     },
+     {
+      "t": "p",
+      "x": "Sabiendo que el cliente está buscando un tiempo de 120 minutos a una carga de 1,900 Watts y viendo que las soluciones anteriores no dieron el tiempo requerido, busquemos una alternativa más, en esta ocasión con un equipo de capacidad superior."
+     },
+     {
+      "t": "p",
+      "x": "CONSIDERACIONES: Voltajes de Acometida"
+     },
+     {
+      "t": "p",
+      "x": "Ya que en este ejemplo el equipo de 6 Kvas no resolvió el asunto iremos a 10 Kvas, donde seguramente el tiempo de respaldo será muy diferente, sin embargo, podríamos llegar a la situación de encontrarnos (no necesariamente) con un equipo trifásico, y la viabilidad de nuestra acometida podría bien no permitirlo. Para fin de terminar el ejercicio, consideremos que es viable tal opción."
+     },
+     {
+      "t": "table",
+      "rows": [
+       [
+        "Equipo",
+        "Capacidad %",
+        "Capacidad Watts",
+        "Tiempo de respaldo"
+       ],
+       [
+        "UPS de 10 Kvas",
+        "100%",
+        "10,000",
+        "5 minutos"
+       ],
+       [
+        "",
+        "50%",
+        "5,000",
+        "12 minutos"
+       ],
+       [
+        "",
+        "25%",
+        "2,500",
+        "27 minutos"
+       ],
+       [
+        "",
+        "12.%",
+        "1,250",
+        "60 minutos"
+       ]
+      ]
+     },
+     {
+      "t": "p",
+      "x": "E igual que en los anteriores, probemos 10 Kvas con 20 minutos de respaldo…."
+     },
+     {
+      "t": "table",
+      "rows": [
+       [
+        "Equipo",
+        "Capacidad %",
+        "Capacidad Watts",
+        "Tiempo de respaldo"
+       ],
+       [
+        "UPS de 10 Kvas",
+        "100%",
+        "10,000",
+        "20 minutos"
+       ],
+       [
+        "",
+        "50%",
+        "5,000",
+        "50 minutos"
+       ],
+       [
+        "",
+        "25%",
+        "2,500",
+        "110 minutos"
+       ],
+       [
+        "",
+        "12.%",
+        "1,250",
+        "240 minutos"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "h": "Conclusiones",
+    "body": [
+     {
+      "t": "p",
+      "x": "Como pudimos descubrir de los ejercicios arriba, finalmente pudimos encontrar una solución, sin embargo, el equipo que lo resolvió resultó ser 5 veces la capacidad de la carga a proteger, por lo que vale la pena evaluar los siguientes puntos:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1. ¿En realidad necesitamos tanto tiempo de respaldo?",
+       "2. ¿Podemos separar las cargas que realmente requieren autonomía al mayor tiempo de respaldo posible vs las que no?",
+       "3. ¿En qué momento vale la pena considerar una planta de emergencia?"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Este y otro tipo de preguntas nos llevarán a establecer criterios por lo que realicé los siguientes pasos para que sean considerados."
+     },
+     {
+      "t": "h3",
+      "x": "Receta rápida"
+     },
+     {
+      "t": "p",
+      "x": "Para una referencia rápida de su solución en particular, sugiero ir directamente a ésta."
+     }
+    ]
+   },
+   {
+    "h": "Evaluación y solución de casos",
+    "body": [
+     {
+      "t": "h3",
+      "x": "1.- Considerar el tamaño de la carga."
+     },
+     {
+      "t": "p",
+      "x": "Diferentes cargas deben resolverse de diferentes maneras ya que varían cosas muy importantes tales como la acometida (monofásica, bifásica, trifásica), el espacio físico para colocar los equipos, capacidades internas de los equipos y sus cargadores, y por supuesto los precios tanto de adquisición como de instalación."
+     },
+     {
+      "t": "p",
+      "x": "Para fines prácticos consideraré el tamaño de las cargas de la siguiente manera:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Muy pequeña: Inferior a los 3 Kvas",
+       "Pequeña: 6 Kvas a 10 Kvas",
+       "Mediana: De 10 a 100 Kvas",
+       "Grande: Superior a los 100 Kvas"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "2.- Considerar el tiempo de respaldo necesitado."
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Tiempos inferiores a 15 minutos: Tiempos Estándar",
+       "Tiempos alrededor de los 30 minutos: Tiempos razonables",
+       "Tiempos mayores a 60 minutos: Tiempos de atención especial"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Conclusión"
+     },
+     {
+      "t": "p",
+      "x": "Con ambas consideraciones arriba mencionadas, podemos usar la siguiente tabla de sugerencias."
+     },
+     {
+      "t": "table",
+      "rows": [
+       [
+        "Tamaño de Cargas",
+        "Tiempo de Respaldo (mins): 15",
+        "30",
+        ">60"
+       ],
+       [
+        "Muy pequeña: (Menor a 3 Kvas)",
+        "Baterías adicionales",
+        "Baterías adicionales ó Sobredimensionar",
+        "Sobredimensionar ó Considerar planta de Emergencia (Gasolina)"
+       ],
+       [
+        "Mediana: (De 10 a 100 KVas)",
+        "Baterías adicionales",
+        "Baterías adicionales ó Sobredimensionar",
+        "Sobredimensionar ó Considerar planta de Emergencia (Diesel)"
+       ],
+       [
+        "Grande: Superior a los 100 Kvas",
+        "Baterías adicionales",
+        "Baterías adicionales ó Planta de Emergencia Diesel",
+        "Baterías adicionales ó Planta de Emergencia Diesel"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "h": "Consideraciones que se tomaron para estas respuestas",
+    "body": [
+     {
+      "t": "ul",
+      "items": [
+       "1.- Aumentar el número de baterías, puede resultar más costoso que sobredimensionar un equipo.",
+       "2.- Tener más baterías implica más mantenimientos y la sustitución de éstas en 3 ó 5 años. (Costo más alto)",
+       "3.- Contar con más bancos de baterías también implica cargadores más grandes, y mayor espacio en el área del UPS así como mayor carga térmica a disipar y mayores puntos de falla en el sistema. (No solo por la batería en sí misma sino por los conectores de las mismas)."
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Ing. Javier Galindo"
+     }
+    ]
+   }
+  ],
+  "correcciones": [
+   "Encabezados con mayúsculas/minúsculas alternadas por la tipografía de designrr normalizados (p. ej. «LimITacIóN de un UPs» → «Limitación de un UPS»)",
+   "Ligaduras fi/fl/ff perdidas en la extracción del PDF restauradas (p. ej. «de nición» → «definición», «con guración» → «configuración»)",
+   "«explicar con detalle porque una solución» → «por qué una solución»",
+   "«el tiempo de respaldo que yo deseé» → «desee»",
+   "«debe ser conﬁguarado» → «configurado»",
+   "«CAPACIDAD MÁS PROXIMA» → «PRÓXIMA»",
+   "«resulto ser 5 veces» → «resultó ser»",
+   "Espacios antes de «,», «:» y «?» eliminados (p. ej. «UPS , éste» → «UPS, éste»; «¿ En realidad … ?» → «¿En realidad…?»)",
+   "Tabla final: celdas partidas por el maquetador («Baterí as adicio nales», «Sobredimensiona r») unidas; leída de la imagen de la página 17",
+   "Omitido: portada, cabecera/pie repetidos «TIEMPOS DE RESPALDO EN LOS UPS / Javier Galindo», puntos sueltos y bloque de contacto (web, teléfono, correo)",
+   "La gráfica de autonomía Vertiv es imagen (solo se conserva la frase que la introduce)"
+  ]
+ },
+ "/blog/tierras-fisicas/": {
+  "fuente": "designrr",
+  "original": "https://designrr.page?id=164118&token=3132802799&h=3180",
+  "sections": [
+   {
+    "h": "",
+    "body": [
+     {
+      "t": "p",
+      "x": "Por Ing. Javier Galindo"
+     },
+     {
+      "t": "p",
+      "x": "Una guía sencilla para el cuidado y conocimiento de los diferentes sistemas de tierras"
+     }
+    ]
+   },
+   {
+    "h": "¿Qué es un sistema de tierras y para qué sirve?",
+    "body": [
+     {
+      "t": "p",
+      "x": "Es un conjunto de elementos diseñados y calculados para soportar una corriente de falla o una descarga atmosférica (rayo)."
+     },
+     {
+      "t": "p",
+      "x": "Sirve para proteger la vida humana y también equipos electrónicos."
+     }
+    ]
+   },
+   {
+    "h": "¿Qué tipos de sistemas de tierras existen?",
+    "body": [
+     {
+      "t": "h3",
+      "x": "1. Físicas"
+     },
+     {
+      "t": "p",
+      "x": "Convencionales: Dentro de estos se encuentran las varillas tipo Copperwell"
+     },
+     {
+      "t": "p",
+      "x": "Estos son los más comunes, está fabricado por medio de un redondo de 5/8” x 3 metros de longitud fabricado de acero pulido y cobrizado por proceso electrolítico."
+     },
+     {
+      "t": "p",
+      "x": "Normalmente lo encontramos en las acometidas residenciales o comerciales como el requerimiento mínimo solicitado por CFE. Con este, tenemos la existencia de un sistema de tierras básico, el cual no garantiza la seguridad de los equipos eléctricos y/o electrónicos."
+     },
+     {
+      "t": "p",
+      "x": "Su vida puede variar dependiendo de la situación del terreno. El cobre tenderá a perder su componente de cobre, y su longitud se irá restando con los años"
+     },
+     {
+      "t": "p",
+      "x": "Electrodos minerales: Tienen la característica de soportar cualquier tipo de terreno, ya sea corrosivo, o salino. Su vida útil es bastante larga la cual puede variar entre 25 y 30 años, porque no hay una degradación del material."
+     },
+     {
+      "t": "h3",
+      "x": "2. Electrónicas"
+     },
+     {
+      "t": "p",
+      "x": "Tecnología magneto activo: Diseñados para la protección de equipos eléctricos o electrónicos, los cuales son sensibles a sobretensiones y sobre corrientes generadas por los efectos secundarios de una descarga atmosférica."
+     },
+     {
+      "t": "p",
+      "x": "Consideremos que una tarjeta electrónica puede resultar dañada por la pura carga estática de tocarla con la mano."
+     },
+     {
+      "t": "h3",
+      "x": "El éxito de estos sistemas con un electrodo magneto activo consisten en:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Constituido por una bobina de desacoplamiento",
+       "El electrodo formado por una estructura fabricada en cobre electrolítico con una pureza de 99.9",
+       "Caja de baja impedancia: La cual va a evitar que la corriente llegue a nuestra barra bus electrónica. Las conexiones alternas van en cable forrado THW color verde."
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Tipos de Arreglos:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Delta: 3 electrodos. La distancia debe ser el doble de la longitud del electrodo a instalar (para barras). Para electrodos minerales altamente conductivos a una distancia de 2 metros",
+       "En línea: Con cero grados de alineación entre uno y otro",
+       "En anillo: 4, 6, 8 en una configuración redonda",
+       "En malla: 4 electrodos"
+      ]
+     }
+    ]
+   },
+   {
+    "h": "Elementos requeridos a considerar para un sistema de tierras",
+    "body": [
+     {
+      "t": "ul",
+      "items": [
+       "Electrodos",
+       "Conectores para cable: Soldables, Ponchables, Mecánicos",
+       "Mejorador de terreno ó intensificador: Baja la resistencia del terreno Copperplus (son minerales conductivos)",
+       "Conductor: Cable de cobre / acero cobre 50 mm como mínimo: 2/0 según J-549",
+       "1 registro por cada 3 electrodos",
+       "Zanja de por lo menos 60 cms de profundidad con una capa de intensificador",
+       "Barra Bus"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Cuáles son las normas que hacen referencia a estos sistemas:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1 para su uso: NOM 022 de la STPS – 2015: Electricidad estática en centros de trabajo y/o condiciones de seguridad.",
+       "2.- La norma NMX-J-549-ANCE-2005 De sistemas de protección contra corrientes eléctricas, especificaciones, materiales y métodos de medición.",
+       "3.- La NOM-001-ANCE-2012 desde el capítulo 250 comienza todo lo de tierras."
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Patentes de: Desionizante y electrodos minerales"
+     }
+    ]
+   },
+   {
+    "h": "Pasos por seguir para la selección de un sistema de tierras",
+    "body": [
+     {
+      "t": "h3",
+      "x": "La forma práctica: Funciona para donde no hay acometidas propias"
+     },
+     {
+      "t": "p",
+      "x": "1. Conocer la naturaleza de las cargas"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1. Electrónicos (No lineales)",
+       "2. Electromecánicos (Inductivos)",
+       "3. Capacidades de acometida"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "2. Clasificar el Tipo de Terreno:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1. Muy seco",
+       "2. Mucha piedra",
+       "3. Húmedo",
+       "4. Arenoso"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Seleccionar el tipo de electrodos:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Varilla, con electrodos para deltas",
+       "Terreno con demasiada piedra, preferir el mayor contacto natural (mineral)",
+       "Uso de anclajes a tubería, o estructuras existentes"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "NOTA: En todos los casos los electrodos minerales son los mejores para todo tipo de terreno."
+     },
+     {
+      "t": "h3",
+      "x": "La forma teórica: Aplica para todas las acometidas propias (Subestación o transformador), es decir que contamos con un transformador."
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1.- Estudio de resistividad del terreno: Para conocer el número de electrodos, tipo de electrodo, cantidad y configuración del arreglo.",
+       "2.- Nivel freático muy alto: Evitar el tipo de tierras con varilla",
+       "3.- Mediciones con un terrómetro o telurómetro de 3 picas por el método de Wenner con certificado de calibración vigente.",
+       "4.- Reporte general de lo instalado con galería fotográfica"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Consecuencia de NO contar con un sistema de tierras:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Choque eléctrico en personas, muerte.",
+       "Baja de equipos electrónicos y/o tarjetas electrónicas."
+      ]
+     }
+    ]
+   },
+   {
+    "h": "Instalación de los electrodos",
+    "body": [
+     {
+      "t": "p",
+      "x": "Se requerirán los siguientes elementos básicos para la instalación de un sistema de tierras"
+     },
+     {
+      "t": "p",
+      "x": "El pozo; El tamaño del pozo dependerá por supuesto del tamaño del electrodo. Como un ejemplo, pensemos en un electrodo tipo Cooper Cilíndrico, en donde tendremos un electrodo con dimensiones de: 10 CMS diámetro x 75 CMS de longitud."
+     },
+     {
+      "t": "p",
+      "x": "El pozo recomendado sería de: 15 a 20 CMS de diámetro x 1 metro de altura. Nota: Abajo del nivel de piso, debe encontrarse la punta de la varilla a una distancia de 5 a 10 centímetros."
+     },
+     {
+      "t": "p",
+      "x": "La Zanja; El tamaño de la zanja para el conductor de cobre será de unos 5 CMS de ancho (lo que dé el pico) x 25 CMS de profundidad."
+     },
+     {
+      "t": "p",
+      "x": "Desarrollo: Ya preparados los pozos y la zanja seguir los siguientes pasos:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1.- Verter dentro de toda la trayectoria una capa de unos 4 a 5 CMS de altura de intensificador al fondo de las excavaciones.",
+       "2.- Hincar los electrodos y generar las conexiones entre la delta o configuración seleccionada. No hay una especificación con referencia a qué altura de la varilla del electrodo deban instalarse los conectores para el acoplamiento con el conductor de cobre, puede seleccionarse la altura que sea conveniente.",
+       "3.- Colocar registro",
+       "4.- Rellenar con producto de la excavación tierra natural 50% tierra natural y 50% intensificador",
+       "5.- Compactar al 80% y agregar 2 botes de 20 lts de agua y volver a compactar"
+      ]
+     }
+    ]
+   },
+   {
+    "h": "Recomendaciones para la compra de un sistema de tierras",
+    "body": [
+     {
+      "t": "ul",
+      "items": [
+       "1.- Proveedores con MARCAS confiables: Desde mi opinión la mayoría de los fabricantes conocidos en el mercado son en realidad confiables. Puede ser que algunos cuenten con una u otra característica ligeramente superior, sin embargo, en general las marcas posicionadas en el mercado cumplen bien con sus funciones.",
+       "2.- La calidad del Servicio de la empresa que efectúe la instalación del sistema de tierras.",
+       "3.- Es preferible utilizar marcas reconocidas en el mercado, por su calidad comprobada, información disponible, así como consumibles del sistema y reacciones para su sustitución.",
+       "4.- Utilizar las nuevas tecnologías que nos permitan:"
+      ]
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Mayor eficiencia",
+       "Fácil transportación",
+       "Mayor tiempo de vida o durabilidad",
+       "Facilidad de instalación"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Ejemplos de Electrodos minerales serían:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Modelo Copper Cilíndrico: 10 cms diámetro x 75 cms de longitud",
+       "Electrodo tipo pila / hexagonal: 25 x 90 longitud (cms.)",
+       "Electrodo triangular: 25 x 25 x 25 (cms.)"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Electrodos Magneto activo"
+     },
+     {
+      "t": "p",
+      "x": "Se determinan de acuerdo con la suma de las corrientes de los equipos a proteger y físicamente van desde: los 15x15 cms x 65 de altura, hasta los equipos en delta de 3.10 metros x 2.50 entre arista y arista."
+     }
+    ]
+   },
+   {
+    "h": "¿Dónde posicionar el sistema de tierras?",
+    "body": [
+     {
+      "t": "ul",
+      "items": [
+       "En lugares de bajo tránsito (no paso continuo de gente), en caso de que haya tránsito 1 solo registro con un letrero de NO TOCAR",
+       "Plancha de concreto de 10 cms o 15 cms de grava"
+      ]
+     }
+    ]
+   },
+   {
+    "h": "En qué consisten los mantenimientos de un sistema de tierras",
+    "body": [
+     {
+      "t": "h3",
+      "x": "I Predictivo o preventivo:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1. De obligado cumplimiento cada 12 meses generando un reporte del estado actual",
+       "2. Revisión física, que no falten elementos",
+       "3. Reapriete de terminales en su caso",
+       "4. Limpieza del registro",
+       "5. Mediciones de continuidad",
+       "6. Mediciones de resistencia",
+       "7. Pintar los registros de color verde con su logo normalizado en amarillo"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "II Mantenimiento Correctivo:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Complementar partes faltantes",
+       "Adicionar electrolitos en caso de ser necesario (sales para bajar la resistividad)"
+      ]
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Máximo 10 ohms para sistemas eléctricos",
+       "Máximo 25 Ohms para sistemas de pararrayos"
+      ]
+     }
+    ]
+   },
+   {
+    "h": "Fallas comunes en sistemas de tierras",
+    "body": [
+     {
+      "t": "ul",
+      "items": [
+       "1.- Varillas fuera de cumplimiento",
+       "2.- Un sistema ineficiente por falta de conocimiento, mediciones y selecciones inadecuada de tecnología",
+       "3.- La falta de existencia de sistemas de tierras"
+      ]
+     }
+    ]
+   }
+  ],
+  "correcciones": [
+   "Ligaduras fi/fl/ff perdidas en la extracción del PDF restauradas (p. ej. «de nición» → «definición», «con guración» → «configuración»)",
+   "«Nivel friático» → «Nivel freático»",
+   "«método de Wanner» → «método de Wenner»",
+   "«Se determinar de acuerdo» → «Se determinan de acuerdo»",
+   "Numeración «1. Físicas / 1. Electrónicas» rehecha como «1. Físicas / 2. Electrónicas» (el maquetador reinició la numeración); sublistas «1.» sin número",
+   "Omitido: portada, pie repetido «tierrasfsicas», rótulos de imagen («Registro c/tapa», «Electrodo cooper cilíndrico») y bloque «¿Cómo contactarnos?» (web, correo, teléfonos)"
+  ]
+ },
+ "/blog/como-instalar-un-ups-monofasico/": {
+  "fuente": "designrr",
+  "original": "https://designrr.page?id=162331&token=2050823506&h=3010",
+  "sections": [
+   {
+    "h": "",
+    "body": [
+     {
+      "t": "p",
+      "x": "Lo primero en que debemos estar de acuerdo es en la definición de lo que significa un equipo de cada uno de los tipos mencionados."
+     }
+    ]
+   },
+   {
+    "h": "Los equipos monofásicos",
+    "body": [
+     {
+      "t": "p",
+      "x": "Se refieren a aquellos que funcionan con solo una línea eléctrica activa, la cual puede variar en voltajes según el país en el que nos encontramos."
+     },
+     {
+      "t": "p",
+      "x": "Para mí la forma más profesional para evitar errores se explica de la siguiente manera."
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Entrada del equipo: 1H + N + G",
+       "Salida del equipo: 1H + N + G"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Nomenclatura:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "H = hilo",
+       "N = neutro",
+       "G = tierra física"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Dentro de los equipos monofásicos se encuentran las capacidades pequeñas las cuales van desde los 150VA hasta los 3000VA típicamente."
+     },
+     {
+      "t": "h3",
+      "x": "Alimentación del UPS monofásico (Entrada del equipo)"
+     },
+     {
+      "t": "p",
+      "x": "Normalmente todas las marcas en estas capacidades cuentan para su alimentación con un cable y una clavija, la cual varía en el TIPO DE NEMA y que va de acuerdo con el amperaje máximo del equipo."
+     },
+     {
+      "t": "p",
+      "x": "Para los equipos Inferiores a 1 Kva, la clavija habitual es la que conocemos de forma típica para nuestra casa con una capacidad de 15 amperes, 5-15P (P=Clavija) y entra en un contacto 5-15R (R=receptáculo)."
+     },
+     {
+      "t": "p",
+      "x": "Los equipos de 2 Kvas normalmente utilizarán a su vez: 5-20P y 5-20R respectivamente."
+     },
+     {
+      "t": "p",
+      "x": "Los equipos de 3 Kvas normalmente pueden utilizar una clavija L5-30"
+     },
+     {
+      "t": "p",
+      "x": "NOTA IMPORTANTE: Las personas que NO son especialistas en el tema pueden llegar a pensar que solo con cambiar la clavija ES SUFICIENTE, sin embargo, hay que recordar que la clavija está lista para cierto amperaje, de la misma forma que debe contar con el cableado del tipo y calibre correcto, así como de su correcta protección termomagnética. Lo que resume que toda la infraestructura atrás de la clavija importa. NUNCA DEBE PENSARSE QUE UNA CLAVIJA ES UN ADAPTADOR."
+     },
+     {
+      "t": "h3",
+      "x": "Alimentación de salida del UPS monofásico (Salida del equipo)"
+     },
+     {
+      "t": "p",
+      "x": "Es importante considerar que el uso de tablillas se debiera pensar más como en una extensión del equipo que otra cosa, ya que conectar más cargas de las apropiadas, puede resultar en sobrecargar el circuito dañando al UPS."
+     },
+     {
+      "t": "p",
+      "x": "Nota: Para capacidades de 3 Kvas, puede resultar adecuado en caso de que lo consideren necesario (no muy común), conectar la potencia de salida completa a un tablero eléctrico para su distribución a contactos naranjas (regulados)."
+     }
+    ]
+   },
+   {
+    "h": "Los equipos bifásicos",
+    "body": [
+     {
+      "t": "h3",
+      "x": "Alimentación del UPS bifásico (Entrada del equipo)"
+     },
+     {
+      "t": "p",
+      "x": "Los equipos bifásicos, se refieren a aquellos que funcionan con solo dos líneas eléctricas activas, donde el voltaje puede variar según el país en el que nos encontramos."
+     },
+     {
+      "t": "p",
+      "x": "Dentro de los equipos bifásicos se encuentran las capacidades un poco más grandes, pero aún pequeñas, los cuales típicamente van desde los 5 Kvas hasta 20 Kvas."
+     },
+     {
+      "t": "p",
+      "x": "*Diferentes marcas cuentan con más o menos opciones para estas capacidades. Mientras algunos solo los fabrican hasta 10 Kvas, otros los extienden hasta 20 Kvas."
+     },
+     {
+      "t": "h3",
+      "x": "Configuración delta-delta"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Entrada del equipo: 2H + G",
+       "Salida del equipo: 2H + G"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "NOTA: Este es el caso donde tenemos una entrada y salida en configuración DELTA. (Es decir que no existe un neutro), y se debe a que las cargas no lo requieren."
+     },
+     {
+      "t": "h3",
+      "x": "Configuración estrella-estrella"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Entrada del equipo: 2H + N + G",
+       "Salida del equipo: 2H + N + G"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "NOTA: Este es el caso donde tenemos una entrada en Delta (Es decir que no existe un neutro) y una salida en configuración estrella. El sistema sigue siendo bifásico, sin embargo, de manera tácita podemos concluir que existe un transformador de aislamiento a la salida del sistema. Esto se utiliza para los casos donde la carga requiere alimentarse con una conexión monofásica."
+     },
+     {
+      "t": "h3",
+      "x": "Configuración delta-estrella"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Entrada del equipo: 2H + G",
+       "Salida del equipo: 2H + N + G"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "NOTA: Este es el caso donde tenemos una entrada en Delta (Es decir que no existe un neutro) y una salida en configuración estrella. El sistema sigue siendo bifásico, sin embargo, de manera tácita podemos concluir que existe un transformador de aislamiento a la salida del sistema."
+     },
+     {
+      "t": "p",
+      "x": "Normalmente para estas capacidades, las clavijas ya no son utilizadas y tanto la alimentación al UPS y la distribución de la potencia se realizan mediante TABLEROS CON INTERRUPTORES TERMOMAGNÉTICOS."
+     },
+     {
+      "t": "h3",
+      "x": "Alimentación de salida del UPS bifásico (Salida del equipo)"
+     },
+     {
+      "t": "p",
+      "x": "En todos los equipos bifásicos y superiores, es decir prácticamente equipos de 5 Kvas o superiores (incluyendo trifásicos), la distribución se realiza mediante la conexión del equipo hacia un tablero de distribución con el número de circuitos requeridos y acorde a la capacidad del equipo."
+     }
+    ]
+   },
+   {
+    "h": "Los equipos trifásicos",
+    "body": [
+     {
+      "t": "h3",
+      "x": "Alimentación del UPS trifásico (Entrada del equipo)"
+     },
+     {
+      "t": "p",
+      "x": "Los equipos trifásicos, se refieren a aquellos que funcionan con las tres fases A, B y C, donde el voltaje puede variar según el país en el que nos encontramos. Siendo en nuestro país común encontrar 220 Volts, y en algunos casos 480 Volts."
+     },
+     {
+      "t": "p",
+      "x": "En este tipo de UPS trifásicos se vuelve todo más interesante, ya que podemos encontrar una gran variedad de configuraciones diferentes."
+     },
+     {
+      "t": "p",
+      "x": "En TODOS LOS CASOS, tanto la entrada como la salida serán conexiones que en todos los casos irán hacia:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Un tablero de entrada o alimentación (para la entrada)",
+       "Un tablero de salida o distribución (llamada regulada)"
+      ]
+     }
+    ]
+   },
+   {
+    "h": "Equipos standalone",
+    "body": [
+     {
+      "t": "p",
+      "x": "Son aquellos equipos que cuentan con una capacidad DEFINIDA y que no puede ser modificada por ninguna situación. Son equipos fabricados y diseñados para cumplir con la capacidad para la que fueron fabricados."
+     },
+     {
+      "t": "p",
+      "x": "Implicaciones:"
+     },
+     {
+      "t": "p",
+      "x": "Nota: los siguientes puntos abajo descritos, no hacen mejor o peor al tipo de equipo señalado, son simplemente características inherentes al equipo."
+     },
+     {
+      "t": "ul",
+      "items": [
+       "No son escalables",
+       "La instalación debe realizarse para la potencia máxima del equipo"
+      ]
+     }
+    ]
+   },
+   {
+    "h": "Equipos escalables",
+    "body": [
+     {
+      "t": "p",
+      "x": "La mayor parte de las empresas han migrado a este tipo de configuraciones lo cual permite una gran flexibilidad para las empresas que tienen planeado un crecimiento futuro. Una ventaja de este tipo de sistemas es que permite de una manera sencilla obtener redundancia."
+     },
+     {
+      "t": "p",
+      "x": "La forma de lograr esta redundancia se consigue solo al aumentar módulos de potencia, en lugar de forzosamente adquirir otro equipo completo."
+     },
+     {
+      "t": "p",
+      "x": "Implicaciones:"
+     },
+     {
+      "t": "p",
+      "x": "Nota: los siguientes puntos abajo descritos, no hacen mejor o peor al tipo de equipo señalado, son simplemente características inherentes al equipo."
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Permiten aumentar la capacidad de la carga, o contar con redundancia.",
+       "La instalación puede realizarse para la potencia máxima del equipo (sugerido), aún cuando se comience con una carga menor."
+      ]
+     },
+     {
+      "t": "p",
+      "x": "*La implicación de hacer esto resulta por supuesto en un costo mayor por dejar preparada la instalación eléctrica de la carga futura y no al tamaño de la carga inicial. Con esto me refiero a cableados, canalizaciones, tamaño de tableros y protecciones."
+     }
+    ]
+   },
+   {
+    "h": "Equipos en configuraciones redundantes",
+    "body": [
+     {
+      "t": "h3",
+      "x": "Redundancia en equipos standalone"
+     },
+     {
+      "t": "p",
+      "x": "La redundancia para equipos standalone incluye por fuerza un gabinete de emparalelamiento el cual estará encargado de unir las salidas de los equipos funcionando en paralelo."
+     },
+     {
+      "t": "p",
+      "x": "Es importante recordar que cada UPS es una fuente independiente de potencia, y cada uno produce su propia señal senoidal. Menciono esto, porque vale la pena recordar que en caso de conectar a un mismo bus dos fuentes que estén desfasadas causaríamos un corto circuito franco, de aquí que los UPS conectados en paralelo deben tener cierta comunicación entre ellos y utilizar como referencia la señal del bypass para comportarse como si fueran una única unidad de potencia."
+     },
+     {
+      "t": "p",
+      "x": "En el caso de varios UPS conectados en paralelo, aún cuando existan múltiples formas de conectarse debido a que algunos serán de una sola entrada, y otros de dos entradas, la conclusión es cada equipo contará con su propio alimentador independiente."
+     },
+     {
+      "t": "p",
+      "x": "El gabinete de emparalelamiento típicamente contará con una serie de interruptores para controlar a cada uno de los UPS y un solo bus de salida para alimentar el tablero de distribución regulado."
+     },
+     {
+      "t": "h3",
+      "x": "Redundancia para equipos modulares"
+     },
+     {
+      "t": "p",
+      "x": "En este caso, la redundancia no se genera por contar con múltiples equipos UPS sincronizados entre ellos, sino por contar con múltiples unidades de potencia que utilizan el mismo sistema. En este caso la instalación se reduce a tratar este sistema como un único UPS (porque es lo que tenemos), que cuente con alimentadores de acuerdo con la capacidad máxima de carga establecida."
+     },
+     {
+      "t": "p",
+      "x": "Es importante comprender que en estos equipos podemos contar con unidades de potencia que aumenten la capacidad del equipo."
+     },
+     {
+      "t": "p",
+      "x": "Ejemplo:"
+     },
+     {
+      "t": "p",
+      "x": "O podemos contar con unidades de potencia que sirvan para proteger la carga, distribuyéndola entre el número de módulos existentes dentro del equipo."
+     },
+     {
+      "t": "p",
+      "x": "Ejemplo:"
+     }
+    ]
+   }
+  ],
+  "correcciones": [
+   "Ligaduras fi/fl/ff perdidas en la extracción del PDF restauradas (p. ej. «de nición» → «definición», «con guración» → «configuración»)",
+   "«deznición/signizca/rezeren/conzguración/modizcada/{exibilidad» (glifos de ligadura mal mapeados) → «definición/significa/refieren/configuración/modificada/flexibilidad»",
+   "Espacios antes de «,» y «:» eliminados (p. ej. «SUFICIENTE ,sin embargo» → «SUFICIENTE, sin embargo»)",
+   "Encabezados en MAYÚSCULAS («ALIMENTACIÓN DEL UPS MONOFÁSICO…», «CONFIGURACIÓN DELTA-DELTA», «EQUIPOS STANDALONE»…) pasados a mayúscula inicial",
+   "Omitido: portada y cabeceras/pies repetidos «COMO INSTALAR UN UPS (MONOFÁSICO)»",
+   "Los dos «Ejemplo:» del final introducen imágenes que no tienen texto"
+  ]
+ },
+ "/blog/cuando-reemplazar-baterias-de-un-ups/": {
+  "fuente": "designrr",
+  "original": "https://designrr.page?id=50990&token=2572727964&h=3230",
+  "sections": [
+   {
+    "h": "",
+    "body": [
+     {
+      "t": "p",
+      "x": "Ing. Javier Galindo García"
+     },
+     {
+      "t": "p",
+      "x": "¿Qué cuidados requieren las baterías para mis cargas críticas o UPS?"
+     },
+     {
+      "t": "p",
+      "x": "Una guía ligera para el cuidado de tus baterías"
+     }
+    ]
+   },
+   {
+    "h": "¿Qué es una batería o un banco de baterías?",
+    "body": [
+     {
+      "t": "p",
+      "x": "Recordemos que una batería es un acumulador de potencial. El cual mediante un proceso químico nos entrega una diferencia de potencial (voltaje) constante y una demanda de corriente variable (amperes). También es importante mencionar que la corriente entregada por una batería es DIRECTA, la cual NO puede ofrecer corriente alterna, razón por la cual los UPS requieren de un elemento electrónico adicional: el inversor, el cual cumple precisamente con la función de convertir la corriente directa en alterna, adicionalmente a todas las ventajas que ofrezca este elemento en directa proporción con la calidad de sus componentes e ingeniería de diseño."
+     }
+    ]
+   },
+   {
+    "h": "¿Para qué sirven las baterías en el caso de las cargas críticas?",
+    "body": [
+     {
+      "t": "p",
+      "x": "Recordemos que las baterías forman el bus de corriente directa, el cual será la fuente de energía para nuestra carga crítica al momento de una interrupción del suministro de alimentación normal, razón por la que muchas personas le llamen a las baterías: el CORAZÓN del UPS (Unidad de potencia ininterrumpida)."
+     }
+    ]
+   },
+   {
+    "h": "¿Cómo se conectan las baterías de un UPS?",
+    "body": [
+     {
+      "t": "p",
+      "x": "Los bancos de baterías normalmente vienen incluidos dentro del gabinete del UPS, sin embargo, existen múltiples ocasiones donde el tiempo de respaldo mayor es necesario, y entonces se adicionan bancos adicionales, los cuales vienen en gabinetes adicionales o en el caso de equipos grandes (mayores a 100 Kvas), pueden estar integrados en racks dentro de cuartos para baterías."
+     },
+     {
+      "t": "p",
+      "x": "En todos los casos, las baterías de cada banco están conectadas en serie, siendo el voltaje del banco, la suma de los voltajes de todas las baterías. Todos los bancos adicionales que existan dentro del sistema están conectados en paralelo al UPS y su limitante estará establecido por la unión de las características del cargador de baterías del equipo y las baterías de los diferentes fabricantes."
+     }
+    ]
+   },
+   {
+    "h": "Fallas de baterías",
+    "body": [
+     {
+      "t": "p",
+      "x": "Las baterías a grandes rasgos pueden presentar dos tipos de fallas de manera interna:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Puede abrirse la batería, lo que quiere decir que abre el circuito, y esta batería puede ser la causa de incluso la pérdida de la carga en caso de estar operando en ese momento el sistema en modo de respaldo. Una batería en este estado debe ser reemplazada de inmediato, y preferiblemente el banco completo. (Es muy posible que una batería en este estado seguramente tuvo síntomas previos, los cuales pudieron ser evitados con un correcto mantenimiento).",
+       "La otra falla de la batería puede presentar a la batería en corto circuito, lo que implica simplemente que deja de funcionar como una batería y se comporta simplemente como un conductor. El efecto que esto causa es que la corriente requerida por la carga se distribuya entre el resto de las baterías que forman parte del circuito. Las pérdidas de impedancia de los elementos del circuito provocan diferentes caídas de potencial dentro de los diferentes puntos del sistema, lo cual lo desgasta de forma desigual. De aquí la razón por la que se recomienda cambiar los bancos de baterías completos."
+      ]
+     }
+    ]
+   },
+   {
+    "h": "Criterios para la sustitución de baterías",
+    "body": [
+     {
+      "t": "ul",
+      "items": [
+       "1. El primero será por supuesto tomar el tiempo promedio de vida útil de las baterías, el cual normalmente para equipos UPS’ será de aproximadamente 3.5 – 4 años. Es importante recordar que cualquier batería legal debe de contar con su fecha de fabricación señalada visiblemente.",
+       "2. Una causa evidente puede ser la aparición de una alarma o indicador en el panel o mímico de los equipos, los cuales pueden ser alarmas o focos rojos en los indicadores del bus de corriente directa.",
+       "3. En un peor caso podemos darnos cuenta del problema demasiado tarde, con problemas de encendido del equipo (arranque). O con alarmas de falla donde podría detectarse un problema en el fusible de las baterías, o así percibirlo el equipo cuando una batería está abierta. (Lo que quiere decir que ya no exista ninguna diferencia de voltaje entre sus bornes), con lo que se ocasiona la apertura del sistema completo.",
+       "4. Otra falla que puede ser evidente es observar que la batería se vea físicamente dilatada (inflada), lo que es consecuencia del sobrecalentamiento de ésta, indicándonos que el banco de baterías debe ser revisado a la brevedad, y seguramente reemplazado.",
+       "5. Es importante recordar que el bus de DC es un sistema completo de elementos con una integración que debe ser lo más homogénea posible, por lo que no se recomienda usar diferentes marcas al mismo tiempo por tener posiblemente diferentes resistencias internas, así como tampoco cambiar solo algunas y no el banco completo o instalarlas sin considerar el torque adecuado. Cualquiera de estas malas prácticas puede generar diferencias de voltajes en las conexiones causando puntos calientes en el sistema o degradación desigual en el resto de las baterías causando con esto el fin prematuro de la vida de las baterías así como la pérdida de garantía inmediata por parte de los fabricantes."
+      ]
+     }
+    ]
+   },
+   {
+    "h": "Consideraciones para la adquisición de baterías nuevas",
+    "body": [
+     {
+      "t": "ul",
+      "items": [
+       "1.- Proveedores confiables: A pesar de lo desilusionante que pueda parecer, es una realidad que existen muchos casos de proveedores que defraudan a sus clientes al ofrecerles baterías usadas, de doble uso o que estuvieron almacenadas durante mucho tiempo fuera de operación.",
+       "2.- Una batería nueva debe recibirse únicamente si está dentro de un período no mayor a 6 meses después de fabricada, ya que después de este tiempo, la batería debería recargarse de nuevo para considerarse funcional, y en la mayor parte de los casos no tenemos la certidumbre del proceso ni de los resultados.",
+       "3.- Es preferible utilizar marcas reconocidas en el mercado. Puede ser que existan muchas otras marcas que no necesariamente sean malas baterías, las que enunciamos aquí son simplemente aquellas con las que hemos trabajado con buenos o excelentes resultados (en el caso de México)."
+      ]
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Dinasty",
+       "Génesis",
+       "CSB",
+       "Osonix",
+       "Power Sonic"
+      ]
+     }
+    ]
+   },
+   {
+    "h": "¿Puedo cambiar solo algunas baterías?",
+    "body": [
+     {
+      "t": "p",
+      "x": "No es recomendable hacer esto, pues las baterías gastadas le robarán energía a las nuevas. Y en un corto plazo tendrán un mayor desgaste y deberán ser sustituir nuevamente. Además de que ello acarreará problemas en la provisión de energía pues esta puede tener variaciones al tener que hacer compensación entre las baterías."
+     },
+     {
+      "t": "p",
+      "x": "Para que un UPS funcione correctamente, todas las baterías deben tener la misma resistencia (Ohms). Por tanto, la indicación es:"
+     },
+     {
+      "t": "p",
+      "x": "Cuando se haga un reemplazo de baterías en el UPS, se le reemplacen todas."
+     },
+     {
+      "t": "h3",
+      "x": "Voltajes más comunes de baterías para UPS en el mercado:"
+     },
+     {
+      "t": "p",
+      "x": "12 volts 5 amperes, 12 Volts 7 amperes y de la misma manera: 12-9, 12-12 y 12-18, 12-24 y 12-33 y 12-38"
+     }
+    ]
+   },
+   {
+    "h": "¿Puedo utilizar una batería de mayor voltaje o amperaje?",
+    "body": [
+     {
+      "t": "p",
+      "x": "Los equipos como consecuencia física de su funcionamiento en cuestión de voltajes y amperes, tendrán diferentes geometrías y pesos."
+     },
+     {
+      "t": "p",
+      "x": "Me gustaría hacer una analogía en el caso de una batería con un sistema hidráulico el cual nos resulta bastante familiar en el día a día."
+     },
+     {
+      "t": "p",
+      "x": "Imaginemos por un momento que la batería es un garrafón de agua y consideremos que tiene 3 diferentes medidas importantes para su configuración."
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Altura (Diferencia de presiones, o en este caso de voltajes)",
+       "Diámetro (amperes máximos de la batería)",
+       "Tamaño del orificio (flujo de agua / flujo de corriente)"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Dicho esto, consideremos que los equipos serán sensibles al voltaje:"
+     },
+     {
+      "t": "p",
+      "x": "Con esto quiero decir que un equipo que opera con un voltaje de 12 Volts requiere forzosamente trabajar a 12Volts, por supuesto más o menos lo admisible por la sensibilidad establecida por el fabricante. (En este ejemplo los 12 volts, son NOMINALES)."
+     },
+     {
+      "t": "p",
+      "x": "La corriente, requerida por el sistema, será el flujo que puede requerir como máximo la carga, lo cual estará determinado por el tamaño del orificio, en nuestro ejemplo gráfico de un garrafón. Si la batería no cuenta con la corriente demandada por la carga, no podrá satisfacer los requerimientos del sistema. (No saldrá suficiente agua para satisfacer al sistema)."
+     },
+     {
+      "t": "p",
+      "x": "Y por último, la idea de usar una analogía con un garrafón de agua es muy clara con respecto al último punto, que es el diámetro, no del orificio, sino el diámetro del garrafón."
+     },
+     {
+      "t": "p",
+      "x": "La razón, es que, si tenemos dos baterías, donde ambas cuentan con el mismo voltaje (altura), y las dos cuentan con el mínimo amperaje requerido (flujo de salida en la llave), lo que resultará es que la de mayor amperaje (diámetro) nos podrá brindar el flujo constante POR MAYOR TIEMPO. (Respaldo)"
+     },
+     {
+      "t": "p",
+      "x": "Conclusiones: Podemos sustituir nuestras baterías por otra del mismo voltaje y de al menos la corriente mínima requerida por el sistema. En caso de querer tomar este camino será importante considerar:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Las dimensiones de la batería",
+       "Que los conectores sean los adecuados"
+      ]
+     }
+    ]
+   },
+   {
+    "h": "¿Cómo se mide el voltaje de una batería?",
+    "body": [
+     {
+      "t": "p",
+      "x": "Al menos existen dos formas para medir los valores de una batería:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1. El primero de ellos, el más usado y común, es con el simple uso de un multímetro, con el cual podremos medir la diferencia de potencial, para esto se recomienda hacerlo directamente de los bornes y no directamente de los conectores, los cuales pueden no estar debidamente conectados, obteniendo con esto una medida con poca precisión.",
+       "2. El segundo, es un procedimiento que requiere de un equipo más sofisticado llamado “cell-corders”, y lo que hacen éstos son generar un consumo de corriente conocido y preestablecido, utilizar el valor del voltaje conocido de la batería y entonces poder medir el valor real de la resistencia interna de la batería conociendo con antelación el resultado esperado. Con este método podemos conocer de manera más detallada el estatus integral de la batería a nivel más profundo."
+      ]
+     },
+     {
+      "t": "p",
+      "x": "*Este segundo procedimiento se podría utilizar, cuando luego de la primera medición con multímetro, detectamos alguna medición fuera de rango."
+     }
+    ]
+   },
+   {
+    "h": "Instalación adecuada de una batería",
+    "body": [
+     {
+      "t": "p",
+      "x": "La instalación correcta de una batería requerirá por supuesto de tomar en cuenta algunos sencillos pero importantes puntos, tales como:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Utilizar el torque adecuado para una correcta conexión (excesivo puede dañar la batería, mientras que no suficiente puede generar puntos de calor, pérdidas de energía y conexión deficiente).",
+       "Polaridades correctas",
+       "Conectores adecuados / revisar que se encuentren libres de sulfatos (considerar reemplazo en caso de ser necesario).",
+       "Configuración en el software de los equipos para indicar que se cuenta con un banco nuevo de baterías"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Nosotros recomendamos SIEMPRE hacer un mantenimiento al equipo al momento de reemplazar las baterías para dar una mayor vida útil a sus equipos."
+     }
+    ]
+   },
+   {
+    "h": "¿Cómo conservar la vida de una batería mayor tiempo?",
+    "body": [
+     {
+      "t": "p",
+      "x": "La vida de las baterías varía en general por cuatro factores importantes que deben controlarse lo más posible en medida de lo posible:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1. La calidad del fabricante de la batería",
+       "2. La temperatura del ambiente de las baterías (las cuales deseablemente deberían rondar los 20°C), y en realidad forma parte de las características requeridas por el proveedor para hacer válida la garantía.",
+       "3. El número de descargas (frecuencia del uso de las baterías) y especialmente el número de descargas profundas (se refiere a cuando la batería llega al 0% de uso).",
+       "4. El control del polvo en el sitio"
+      ]
+     }
+    ]
+   },
+   {
+    "h": "¿Cuánto tiempo requiero de respaldo?",
+    "body": [
+     {
+      "t": "p",
+      "x": "Este es una pregunta que ha pasado por la mente de todos los usuarios alguna vez, y que incluso puede ser un tormento al momento de ser la persona sobre quien cae la responsabilidad de tomar dicha decisión. Es importante considerar que mayor tiempo de respaldo, implica más baterías, lo que implica un gasto mayor, mayor espacio para almacenarlas, mayor mantenimiento y también mayores puntos de falla. Por lo que esta decisión debe ser una buena combinación entre cubrir los requerimientos y ser eficientes con las decisiones que tomemos."
+     },
+     {
+      "t": "p",
+      "x": "Es importante recalcar por supuesto que diferentes cargas, pueden ser más críticas que otras. Razón por la cual temas como REDUNDANCIA podrían tomar parte de la conversación."
+     },
+     {
+      "t": "p",
+      "x": "Sin embargo, un factor muy importante es recalcar que EL MODO CORRECTO DE PENSAR EN CUESTIÓN DE RESPALDO DE BATERÍAS debería estar basado en: que el banco debería cubrir CON SEGURIDAD SUFICIENTE hasta el momento en el que la PLANTA DE EMERGENCIA / PLANTA DE LUZ / PLANTA ELÉCTRICA, cubra nuevamente el suministro eléctrico principal."
+     }
+    ]
+   },
+   {
+    "h": "¿Qué requerimos los distribuidores para seleccionar las baterías de sus equipos?",
+    "body": [
+     {
+      "t": "p",
+      "x": "Lo que a nosotros nos sirve para poder cotizar la instalación de sus baterías es:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Contar con el modelo de sus equipos, y cantidad de equipos",
+       "El modelo de batería (si cuentan con él)",
+       "Una fotografía (para poder reconocer el modelo y verificar el número de gabinetes con los que cuentan con baterías)",
+       "La fotografía también nos sirve para determinar el tipo de conector (en caso de que se vea la batería).",
+       "Si es necesario, realizar una visita para corroborar el tipo de batería"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Agradezco a mi amigo el ingeniero Agustín Falcón León por su ayuda técnica y aportaciones para la elaboración del presente documento."
+     }
+    ]
+   }
+  ],
+  "correcciones": [
+   "Ligaduras fi/fl/ff perdidas en la extracción del PDF restauradas (p. ej. «de nición» → «definición», «con guración» → «configuración»)",
+   "«No es recondable» → «No es recomendable»",
+   "«focos rojos en los indicares» → «indicadores»",
+   "«físicamentedilatada» → «físicamente dilatada»",
+   "«la perdida de garantía» → «la pérdida de garantía»",
+   "«12-12 y 1218» → «12-12 y 12-18»",
+   "«el bus de DC.es» → «el bus de DC es»",
+   "Espacios antes de «,», «:» y «.» eliminados",
+   "La lista de marcas (Dinasty, Génesis, CSB, Osonix, Power Sonic) estaba como recuadro lateral de la página 8; se colocó tras el punto 3 («las que enunciamos aquí…»), al que se refiere",
+   "Omitido: portada, cabecera/pie «El cuidado de tus baterías / Page N», rótulos de imagen («12 Volts / 9 amperes», «12 Volts / 38 amperes»), bloque «¿Cómo contactarnos?» y lema «Mantenimientos - Suministro de baterías - Instalaciones - UPS's Plantas de emergencia»",
+   "Sin corregir (gramática, no ortografía): «deberán ser sustituir nuevamente», «Este es una pregunta»"
+  ]
+ },
+ "/blog/debo-cambiar-todo-el-banco-de-baterias/": {
+  "fuente": "pdf",
+  "original": "https://drive.google.com/file/d/1l81fWIdDk6CdY52GPk9ApdN2fCKwAiCX/view",
+  "sections": [
+   {
+    "h": "",
+    "body": [
+     {
+      "t": "p",
+      "x": "Por: Javier Galindo G."
+     },
+     {
+      "t": "p",
+      "x": "Cuando se trata de sistemas de baterías, especialmente en aplicaciones críticas como en centrales eléctricas, instalaciones de energía renovable o equipos de respaldo, se recomienda cambiar el banco de baterías completo en lugar de solo reemplazar las baterías dañadas por varias razones:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Compatibilidad y Rendimiento Uniforme: Las baterías nuevas y viejas pueden tener características eléctricas ligeramente diferentes, incluso si son del mismo modelo. Al cambiar solo las baterías dañadas, se pueden introducir disparidades en el rendimiento, lo que puede afectar la eficiencia y confiabilidad del sistema.",
+       "Vida Útil y Ciclos de Recarga: Las baterías tienen una vida útil limitada y un número finito de ciclos de recarga. Si solo se reemplazan las baterías dañadas, las nuevas pueden experimentar un mayor estrés al interactuar con las antiguas, lo que podría acortar la vida útil de las baterías nuevas.",
+       "Simplicidad en la Gestión y Mantenimiento: Cambiar el banco completo simplifica la gestión y el mantenimiento. La uniformidad en la edad y el rendimiento facilita el monitoreo y la implementación de estrategias de mantenimiento preventivo.",
+       "Mejoras Tecnológicas: En el tiempo entre la instalación original y el reemplazo, puede haber mejoras tecnológicas en las baterías. Al cambiar el banco completo, se aprovechan estas mejoras para garantizar un rendimiento óptimo.",
+       "Evitar Problemas de Garantía: Al cambiar solo las baterías dañadas, podría surgir un problema si las nuevas baterías no se instalan de acuerdo con las recomendaciones del fabricante. Esto podría afectar la validez de las garantías.",
+       "Seguridad: La mezcla de baterías nuevas y antiguas podría aumentar el riesgo de problemas de seguridad, como sobrecarga o sobrecalentamiento, ya que las características de carga y descarga pueden variar entre las baterías."
+      ]
+     }
+    ]
+   }
+  ],
+  "correcciones": [
+   "Ligaduras fi/fl/ff perdidas en la extracción del PDF restauradas (p. ej. «de nición» → «definición», «con guración» → «configuración»)",
+   "Omitido: portada (título + subtítulo «Conoce todos los aspectos de cambiar o no, tode el banco de baterías de tu sistema e respaldo de energía.» que trae dos erratas: «tode»→«todo», «e respaldo»→«de respaldo», por si se usa como entradilla) y pie «cbps.com.mx Todo sobre protección y continuidad de cargas críticas / Page N»"
+  ]
+ },
+ "/blog/como-hacer-la-instalacion-de-un-ups/": {
+  "fuente": "pdf",
+  "original": "https://drive.google.com/file/d/17nWpkYfbVuX1D5BPMg21VycODrC4mxI8/view",
+  "sections": [
+   {
+    "h": "Instalación de equipos monofásicos online: 1 a 3 KVA 120 Volts (L, N y G)",
+    "body": [
+     {
+      "t": "p",
+      "x": "Inst 1-1h+N+G"
+     },
+     {
+      "t": "h3",
+      "x": "Interruptor termomagnético"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1KVA ~ 1x 15 Amp.",
+       "2 KVA ~ 1x 20 Amp.",
+       "3 KVA ~ 1 x 30 Amp."
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Cableados"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1KVA ~ 12:14AWG",
+       "2 KVA ~ 12:14AWG",
+       "3 KVA ~ 10AWG"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Clavija"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1KVA ~ Nema 5-15P",
+       "2 KVA ~ Nema L5-20P",
+       "3 KVA ~ Nema L5-30P"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "El número de salidas será dependiendo el modelo y marca."
+     },
+     {
+      "t": "p",
+      "x": "*En el caso de algunas marcas los equipos de 3 KVA cuentan con toma de salida para sacar toda la potencia a un centro de carga."
+     },
+     {
+      "t": "p",
+      "x": "Es una representación simbólica de la instalación y puede variar dependiendo el equipo"
+     }
+    ]
+   },
+   {
+    "h": "Instalación de equipos bifásicos online 220V: 5 a 20 KVA (sin referencia de neutro)",
+    "body": [
+     {
+      "t": "p",
+      "x": "Inst 1-2h+G"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Entrada: 208 / 220 Volts ~ (L1, L2, y G)",
+       "Salida: 208 / 220 Volts ~ (L1, L2, y G)"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Interruptor termomagnético (entrada)"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "3KVA ~ 2 X 30 Amp. 10AWG",
+       "5 KVA ~ 2 X 50 Amp. 8AWG",
+       "6 KVA ~ 2 X 50 Amp. 8AWG",
+       "8 KVA ~ 2 X 60 Amp. 6AWG",
+       "10 KVA ~ 2 X 70 Amp. 6AWG"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "*Los valores de los breakers pueden variar de acuerdo a la recomendación de cada fabricante. En este caso basados en equipos Vertiv."
+     }
+    ]
+   },
+   {
+    "h": "Instalación de equipos bifásicos online con transformador de aislamiento y voltaje dividido a la salida: 5 a 20 KVA",
+    "body": [
+     {
+      "t": "p",
+      "x": "Inst 1-2h+G/2h+N+G"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Entrada (sin neutro): 208 / 220 V (L1, L2, y G)",
+       "Salida: (con neutro) 220 / 127 V ~ 208 / 120 V (L1, L2, N y G)"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Cableados"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "5 KVA ~ 8 AWG",
+       "6 KVA ~ 6 AWG",
+       "8 KVA ~ 6 AWG",
+       "10 KVA ~ 6 AWG",
+       "15 KVA ~ 1 AWG",
+       "20KVA ~ 1/0 AWG"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Interruptor termomagnético"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "5 KVA ~ 2 X 40A",
+       "6 KVA ~ 2 X 60A",
+       "8 KVA ~ 2 X 60A",
+       "10 KVA ~ 2 X 60 AWG",
+       "15 KVA ~ 2x 125 AWG",
+       "20KVA ~ 2x 125 AWG"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "*Los valores de los breakers pueden variar de acuerdo a la recomendación de cada fabricante."
+     }
+    ]
+   },
+   {
+    "h": "Instalación de equipos bifásicos online, neutro entrada y salida: 5 a 20 KVA",
+    "body": [
+     {
+      "t": "p",
+      "x": "Inst 1-2h+N+G"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Entrada: 208/110V, 220/127 V ~ (L1, L2, N y G)",
+       "Salida: 208/110V, 220/127 V ~ (L1, L2, N y G)"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Cableados"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "5 KVA ~ 8 AWG",
+       "6 KVA ~ 6 AWG",
+       "8 KVA ~ 6 AWG",
+       "10 KVA ~ 6 AWG",
+       "15 KVA ~ 1 AWG",
+       "20KVA ~ 1/0 AWG"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Interruptor termomagnético"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "5 KVA ~ 2 X 40A",
+       "6 KVA ~ 2 X 60A",
+       "8 KVA ~ 2 X 60A",
+       "10 KVA ~ 2 X 60 AWG",
+       "15 KVA ~ 2x 125 AWG",
+       "20KVA ~ 2x 125 AWG"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "*Los valores de los breakers pueden variar de acuerdo a la recomendación de cada fabricante. Estos valores son referenciados de equipos Vertiv"
+     }
+    ]
+   },
+   {
+    "h": "Instalación de equipos trifásicos online, neutro entrada y salida: 10 a 250 KVA’s",
+    "body": [
+     {
+      "t": "p",
+      "x": "Inst 3-3h+N+G"
+     },
+     {
+      "t": "p",
+      "x": "Entrada: 220 y 480 Volts"
+     },
+     {
+      "t": "p",
+      "x": "220V"
+     },
+     {
+      "t": "table",
+      "rows": [
+       [
+        "Capacidad",
+        "OPD",
+        "Cableado"
+       ],
+       [
+        "10",
+        "3X50",
+        "6AWG"
+       ],
+       [
+        "20",
+        "3X90",
+        "(1) #2"
+       ],
+       [
+        "40",
+        "3X175",
+        "(1) 4/0"
+       ],
+       [
+        "60",
+        "3X300",
+        "(2) 3/0"
+       ],
+       [
+        "80",
+        "3X350",
+        "(2) 4/0"
+       ],
+       [
+        "100",
+        "3X450",
+        "(2) 350"
+       ],
+       [
+        "120",
+        "3X600",
+        "(2) 500"
+       ],
+       [
+        "140",
+        "3X600",
+        "(2) 500"
+       ],
+       [
+        "160",
+        "3X700",
+        "(3) 350"
+       ],
+       [
+        "180",
+        "3X800",
+        "(3) 500"
+       ],
+       [
+        "200",
+        "3X1000",
+        "(4) 350"
+       ]
+      ]
+     },
+     {
+      "t": "p",
+      "x": "480V"
+     },
+     {
+      "t": "table",
+      "rows": [
+       [
+        "Capacidad",
+        "OPD",
+        "Cableado"
+       ],
+       [
+        "50",
+        "3X90",
+        "(1) #3"
+       ],
+       [
+        "100",
+        "3X175",
+        "(1) 2/0"
+       ],
+       [
+        "150",
+        "3X300",
+        "(2) 1/0"
+       ],
+       [
+        "200",
+        "3X350",
+        "(2) 2/0"
+       ],
+       [
+        "250",
+        "3X450",
+        "(2) 4/0"
+       ]
+      ]
+     },
+     {
+      "t": "p",
+      "x": "*Los valores de los breakers pueden variar de acuerdo a la recomendación de cada fabricante."
+     }
+    ]
+   }
+  ],
+  "correcciones": [
+   "«representación sibólica de la intalación» → «representación simbólica de la instalación»",
+   "Espacios dentro de paréntesis y antes de coma eliminados («( L1, L2, y G)» → «(L1, L2, y G)»; «-208/110V ,» → «208/110V,»)",
+   "Fuente: 5 infografías (diagramas con texto). El 1.er PDF (17nWpk…) ya trae las 5 páginas; los otros 4 PDF (1j-ZS1…, 1J70QQ…, 1pBXUQ…, 1r9OCH…) son copias idénticas de las páginas 2-5, así que no se repiten",
+   "Los títulos de sección se arman con el título + subtítulo de cada infografía; los códigos «Inst 1-1h+N+G»… van como párrafo",
+   "Se conserva tal cual «2 X 60 AWG» / «2x 125 AWG» en el interruptor (probable «A», no se toca)",
+   "Omitido: rótulos del dibujo («Centro de carga», «UPS», «Clavija», «Conexiones hacia la carga/alimentación») y pie «¡Conócenos! cbps.com.mx»"
+  ]
+ },
+ "/blog/por-que-fallan-los-ups/": {
+  "fuente": "pdf",
+  "original": "https://drive.google.com/file/d/1ImP4Dmg1XA488Y3cAsGS8zeth-2E8ou9/view",
+  "sections": [
+   {
+    "h": "",
+    "body": [
+     {
+      "t": "p",
+      "x": "Descubra lo que daña sus equipos y aprenda a prevenir desastres."
+     },
+     {
+      "t": "p",
+      "x": "Ing. Javier Galindo"
+     }
+    ]
+   },
+   {
+    "h": "Causas y recomendaciones",
+    "body": [
+     {
+      "t": "p",
+      "x": "Es importante recordar que los UPS son equipos electrónicos delicados los cuales requieren de ciertas condiciones con el fin de alargar su vida útil y mantenerlos funcionando en condiciones favorables."
+     },
+     {
+      "t": "p",
+      "x": "Considero que existen 3 diferentes causas que deberíamos analizar:"
+     }
+    ]
+   },
+   {
+    "h": "I.- Problemas eléctricos ajenos a nuestras instalaciones",
+    "body": [
+     {
+      "t": "p",
+      "x": "Como muchas situaciones generales que se nos presentan en múltiples áreas de la vida si no es que, en todas, el tema de los equipos eléctricos no son una excepción desde el punto de vista de que no todo lo que sucede está ni puede estar bajo nuestro control."
+     },
+     {
+      "t": "p",
+      "x": "De ahí que la comprensión de cómo funciona todo un sistema tiene un papel fundamental para la protección integral de las cargas críticas con el fin de minimizar los riesgos."
+     },
+     {
+      "t": "p",
+      "x": "Ejemplos de estas situaciones serían:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Los errores humanos fuera de nuestras instalaciones, pero que nos repercuten; por ejemplo: un camión que tira un poste de luz",
+       "La calidad de energía que nos entrega la compañía de Luz",
+       "Problemas de tipo naturales, como rayos, temblores, inundaciones"
+      ]
+     }
+    ]
+   },
+   {
+    "h": "II.- Problemas en nuestras instalaciones",
+    "body": [
+     {
+      "t": "p",
+      "x": "Errores humanos que se pueden deber a causas como:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1.- Intervenciones por personal no calificado",
+       "2.- Falta de buenas prácticas de seguridad al maniobrar los equipos o sistemas eléctricos",
+       "3.- Instalaciones electrónicas deficientes",
+       "4.- Falta de programas de mantenimientos",
+       "5.- Zonas sucias",
+       "6.- Ambientes con temperaturas no adecuadas"
+      ]
+     }
+    ]
+   },
+   {
+    "h": "III.- Problemas inherentes a los equipos",
+    "body": [
+     {
+      "t": "p",
+      "x": "Todos los equipos electrónicos son susceptibles a fallas por razones tales como:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1. Desgaste y envejecimiento: Con el tiempo, los componentes eléctricos y electrónicos pueden experimentar desgaste debido al uso continuo, lo que puede provocar fallas en su funcionamiento. Este desgaste puede manifestarse como debilitamiento de conexiones eléctricas, fatiga de materiales o degradación de componentes internos.",
+       "2. Sobrecalentamiento: Es una causa común de fallas en los componentes electrónicos. Cuando los dispositivos operan a temperaturas elevadas durante períodos prolongados, los materiales pueden degradarse, los circuitos pueden volverse inestables y los componentes pueden quemarse, lo que resulta en un mal funcionamiento o una falla completa.",
+       "3. Sobrecargas y picos de voltaje: Las sobrecargas eléctricas y los picos de voltaje pueden dañar los componentes eléctricos y electrónicos al exceder sus límites de diseño. Estos eventos pueden causar daños en los circuitos, quemar componentes sensibles, fundir fusibles o provocar cortocircuitos, lo que resulta en una falla del dispositivo.",
+       "4. Contaminación y corrosión: La contaminación ambiental, como el polvo, la humedad o los productos químicos corrosivos, puede afectar negativamente a los componentes electrónicos al causar cortocircuitos, corrosión de conexiones o deterioro de materiales. Esto puede provocar un mal funcionamiento o una falla completa del dispositivo.",
+       "5. Impactos físicos y vibraciones: Los impactos físicos y las vibraciones pueden dañar los componentes electrónicos al causar desconexiones, fracturas de soldaduras, daños en circuitos impresos o desalineación de componentes. Esto puede resultar en fallas intermitentes o permanentes del dispositivo.",
+       "6.- Errores de diseño o fabricación: Los errores de diseño o fabricación pueden hacer que los componentes electrónicos sean susceptibles a fallas prematuras. Esto puede incluir defectos de diseño que resultan en puntos calientes, debilidades estructurales o vulnerabilidades a condiciones ambientales adversas"
+      ]
+     }
+    ]
+   },
+   {
+    "h": "¿Cómo podemos prevenir fallos en nuestro UPS?",
+    "body": [
+     {
+      "t": "p",
+      "x": "Una de las cosas importantes de entender es que, no existe manera de saber cuándo un componente electrónico pueda fallar. Por lo que, es un criterio sano pensar que pueda suceder en cualquier momento. Y estar preparado para rescatar la continuidad de nuestras cargas críticas a través de soluciones tales como:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "la redundancia a nivel de UPS",
+       "Baipás externo de mantenimiento",
+       "Redundancia a nivel de planta de emergencia"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Nota: En la mayoría de las marcas los equipos inferiores a 10 Kvas son considerados desechables. Ya que en su mayoría cuentan prácticamente con una sola tarjeta que puede llegar a costar hasta un 80% del valor del UPS. Sin tomar en cuenta la mano de obra y otros indirectos para la reparación de los equipos, por lo que, lo habitual al presentarse un daño es pensar en la sustitución del equipo. Lo más sano para su conservación, es considerar lo que podemos controlar como lo es:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Contar con una buena instalación eléctrica",
+       "Espacios limpios",
+       "Acondicionamiento adecuado de temperatura y humedad",
+       "Mantenimientos anuales (3) idealmente con revisiones de baterías",
+       "Un plan de sustitución de baterías de buena calidad que podría ocurrir entre los dos y cinco años."
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Un criterio que yo recomendaría tener en cuenta es la consideración de los tiempos de garantía de los equipos ofrecidos por el fabricante, así como los tiempos de garantía de las partes que le dan vida a esos equipos. Es decir, para el caso de los UPS, el tiempo de garantía habitual es de uno o dos años dependiendo de su capacidad y la garantía de las baterías es de 1 año en su mayoría, aunque tienen una expectativa de vida 3 a 5 años."
+     },
+     {
+      "t": "p",
+      "x": "En cuanto a la consideración de sustitución tecnológica, los tiempos se han venido acortando con el paso de los últimos años, siendo deseable la sustitución de los equipos en un promedio de 5 a 10 años desde la fecha de fabricación."
+     }
+    ]
+   },
+   {
+    "h": "Conclusiones",
+    "body": [
+     {
+      "t": "p",
+      "x": "Aun cuando NO podemos pronosticar cuándo tendremos el siguiente problema eléctrico, sí podemos prevenir la mayoría de ellos y evitar desgracias al tomar en consideración la siguiente tabla."
+     }
+    ]
+   },
+   {
+    "h": "En CBPS lo primero es la protección de tu negocio",
+    "body": [
+     {
+      "t": "p",
+      "x": "Todos los negocios tienen puntos vulnerables que ponen en riesgo la continuidad de su operación. Nosotros los conocemos, tenemos la experiencia y somos su mejor socio para proteger sus cargas eléctricas."
+     },
+     {
+      "t": "p",
+      "x": "Como por ejemplo: sites de cómputo, centros de datos, consolas de grabación y múltiples aplicaciones más o proceso de maquinaria que no pueden estar operando a la suerte de terceros."
+     }
+    ]
+   }
+  ],
+  "correcciones": [
+   "Ligaduras fi/fl/ff perdidas en la extracción del PDF restauradas (p. ej. «de nición» → «definición», «con guración» → «configuración»)",
+   "«nuestras caras críticas» → «nuestras cargas críticas»",
+   "«si podemos prevenir» → «sí podemos prevenir»",
+   "Espacios faltantes en la numeración («1.-Intervenciones» → «1.- Intervenciones»)",
+   "Encabezados en MAYÚSCULAS pasados a mayúscula inicial",
+   "Omitido: portada, cabecera repetida «¿Por qué fallan los UPS?», pie «cbps.com.mx» y línea de contacto «Ing. Javier Galindo 55-29-47-80-25 / www.cbps.com.mx»",
+   "La «siguiente tabla» de Conclusiones (pág. 14) es solo imagen: no se extrajo"
+  ]
+ },
+ "/blog/cuidado-de-plantas-electricas/": {
+  "fuente": "pdf",
+  "original": "https://drive.google.com/file/d/1zn44lM0upGVC1CqgWBqUfI4uPfOqfXw4/view",
+  "sections": [
+   {
+    "h": "",
+    "body": [
+     {
+      "t": "p",
+      "x": "Ing. Javier Galindo"
+     },
+     {
+      "t": "p",
+      "x": "Una guía ligera para el cuidado y conocimiento de las plantas de emergencia."
+     }
+    ]
+   },
+   {
+    "h": "¿Qué es una Planta de Emergencia, también llamadas Plantas de luz o Generadores Eléctricos?",
+    "body": [
+     {
+      "t": "p",
+      "x": "Recordemos que una Planta de Luz, o planta eléctrica, es un sistema. Es un ensamble de componentes que cubren una función, la cual es garantizar la continuidad del servicio eléctrico."
+     },
+     {
+      "t": "p",
+      "x": "La planta de emergencia es el resultado de un principio eléctrico fundamental el cual es fascinante, ya que se basa en la transformación de energías. El principio de un motor es generar potencia. En este caso nos referiremos a que el motor (combustión interna) genera la potencia a través de un movimiento ROTACIONAL."
+     },
+     {
+      "t": "p",
+      "x": "Por otro lado, el generador es un elemento que a través de un movimiento rotacional mecánico genera energía eléctrica."
+     },
+     {
+      "t": "p",
+      "x": "De manera que la secuencia: motor – generador, resulta en alimentar un motor de combustión interna (con Diesel), el cual está acoplado a un generador, y como resultado final obtendremos como salida del sistema: ELECTRICIDAD."
+     }
+    ]
+   },
+   {
+    "h": "¿Cuáles son sus componentes principales?",
+    "body": [
+     {
+      "t": "h3",
+      "x": "1.- Motor"
+     },
+     {
+      "t": "p",
+      "x": "El tipo de motor de las plantas de emergencia en la que nos enfocaremos en este documento será uno de combustión interna, alimentado por Diesel. Sus capacidades son dimensionadas en Kilowatts. (Watts)"
+     },
+     {
+      "t": "p",
+      "x": "Resistencia eléctrica de precalentamiento: Los equipos vienen normalmente desde las fábricas con resistencias eléctricas, las cuales tienen el objetivo de mantener la temperatura ideal para operar. Mantiene el anticongelante caliente y al circular a través del bloque del motor, asegura que siempre esté a una temperatura controlada y listo para arrancar en cualquier momento."
+     },
+     {
+      "t": "ul",
+      "items": [
+       "La puesta en marcha es más fácil, rápida y confiable",
+       "Mantiene la batería en buenas condiciones, ya que las bajas temperaturas reducen su vida útil."
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Batería: De la misma forma que en el motor de un automóvil, la planta de emergencia cuenta con una batería, la cual ayudará para vencer la inercia inicial del motor. Es la batería quien asistirá al arranque de la marcha para comenzar el primer movimiento que acelere al motor hasta su velocidad esperada."
+     },
+     {
+      "t": "p",
+      "x": "Sistema de Arranque auxiliar: Es un relevador, que aunado al motor de arranque (marcha) hace la función para poner en operación al motor principal ya sea en ralentí o en operación máxima de 1,800 RPM."
+     },
+     {
+      "t": "p",
+      "x": "Ralentí: Número de revoluciones por minuto que debe tener el motor de un automóvil u otro vehículo cuando no está acelerado."
+     },
+     {
+      "t": "p",
+      "x": "Escape: El escape será el conducto por el cual desecharemos las emisiones del motor."
+     },
+     {
+      "t": "p",
+      "x": "Radiador: Es el intercambiador de calor, el cual ayudará a mantener la planta en temperaturas adecuadas para su funcionamiento. Es importante considerar la orientación de este para su instalación ya que éste debe estar orientado hacia un lugar con ventilación, y en caso de estar la planta en un sitio confinado es importante considerar la adecuación de luvers para mantenerlo en contacto con un espacio de menor temperatura y donde el aire circule."
+     },
+     {
+      "t": "h3",
+      "x": "2.- Generador"
+     },
+     {
+      "t": "p",
+      "x": "El generador, como mencionamos, es el elemento que transformará la energía mecánica en energía eléctrica. Será éste, el que debe ser seleccionado adecuadamente desde el principio de acuerdo con el voltaje que pretendamos utilizar en nuestras instalaciones."
+     },
+     {
+      "t": "h3",
+      "x": "3.- Gobernador electrónico"
+     },
+     {
+      "t": "p",
+      "x": "Recordemos que nuestro sistema de motor-generador estará en la mayoría de los casos conectado a un RED eléctrica, y en pocas ocasiones de manera autónoma, como sería en el caso de: ferias, construcciones, etc.…"
+     },
+     {
+      "t": "p",
+      "x": "El gobernador electrónico, se vuelve un elemento de vital importancia, ya que será quien garantice la aceleración o desaceleración del motor para mantener el No. De RPM y por consiguiente variar la frecuencia de salida de la planta. Esto con el fin, tanto de poder SINCRONIZARSE con la fuente de normal y generar la retransferencia, así como de ofrecer una buena calidad de energía a la carga cuando está trabajando de manera autónoma."
+     },
+     {
+      "t": "p",
+      "x": "¿Cómo funciona? Está acoplado a la bomba de transmisión del motor mediante un pickup electrónico que sensa y con esto puede modular las RPM."
+     },
+     {
+      "t": "h3",
+      "x": "4.- Transferencia"
+     },
+     {
+      "t": "p",
+      "x": "Podría llegar a ser el elemento más débil de la cadena. Debido a que aún cuando tengamos un motor-generador, eficiente, y de gran calidad, la transferencia será la responsable de realizar las conmutaciones de las fuentes normal a emergencia y viceversa (en la sección eléctrica), de aquí que mi recomendación es utilizar una transferencia de máxima confiabilidad que no dependa de elementos que han sido creados con diferentes fines (como es el caso de interruptores termomagnéticos). Por lo que nuestra recomendación será una transferencia con una tecnología como la utilizada por las transferencias ASCO: activadas eléctricamente por una bobina, y sostenidas mecánicamente."
+     },
+     {
+      "t": "h3",
+      "x": "5.- Módulo de Control"
+     },
+     {
+      "t": "p",
+      "x": "Es el elemento electrónico que fungirá como la interfase entre el usuario y la máquina."
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Según el modelo, podremos obtener una serie de datos, que nos revelarán el funcionamiento adecuado de la planta, o de igual forma en su defecto, problemas o alarmas que nos alerten de puntos a revisar.",
+       "Será quien reciba la información de sensores y tome las decisiones (en el caso de plantas automáticas) para cuando poder generar transferencias y retransferencias.",
+       "También puede recordarnos cuando realizar mantenimientos",
+       "Puede programarse para efectuar arranques programados para ejercitar la planta, en condiciones de vacío."
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Monitoreo: Gracias al control, podremos obtener datos del sistema tales como: voltajes, % de carga utilizado, estatus de la operación de la planta, ya sea en normal o en emergencia, corriente, etc.… Gracias a protocolos de comunicación, podremos enviar estos datos a una red o dispositivo para un monitoreo remoto en tiempo real a través de diferentes protocolos de comunicación tales como SNMP, MODBUS O BACNET."
+     },
+     {
+      "t": "h3",
+      "x": "6.- Accesorio de almacenamiento de combustible"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Base: Actualmente las plantas hasta ciertas capacidades pueden contener el combustible, en la base del motor-generador lo cual lo hace muy cómodo y funcional ya que evita instalaciones adicionales.",
+       "Tanque de día: En múltiples ocasiones, la criticidad de la operación puede requerir de un respaldo de combustible para asegurar la continuidad de la carga, por lo que dichos tanques pueden ser muy funcionales para el continuo abastecimiento del combustible."
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "7.- Caseta acústica"
+     },
+     {
+      "t": "p",
+      "x": "La caseta acústica es un contenedor para la planta de emergencia, el cual cuenta con las paredes forradas de material que absorben la mayor parte del ruido generado por la planta, evitando con esto las molestias que exponen estos Db (decibeles) para la protección del oído humano y del ambiente."
+     },
+     {
+      "t": "h3",
+      "x": "8.- Sistemas antivibración"
+     },
+     {
+      "t": "p",
+      "x": "Por supuesto, la planta vibra y para eso es necesario que cuente con sistemas anti vibratorios, los cuales para equipos pequeños inferiores a 800 KWatts, normalmente utilizan tacones de neopreno, y el uso de resortes puede ser considerado. Mientras que, en equipos más grandes el uso de resortes es NECESARIO para amortiguar las vibraciones."
+     }
+    ]
+   },
+   {
+    "h": "Criterios internos que debemos analizar para nuestro proyecto eléctrico según el uso requerido",
+    "body": [
+     {
+      "t": "p",
+      "x": "1.- Revisar el tipo de carga o aplicación para la cual requerimos el servicio. La naturaleza de las cargas (inductivas o resistivas), son importantes al momento de dimensionar el tamaño del generador."
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Éste podría incrementarse hasta un 50% cuando existen cargas de tipo lineal como motores, para mantener a la operación continua aún en caso necesario de arranques."
+      ]
+     },
+     {
+      "t": "p",
+      "x": "2.- Determinar cuáles de nuestras cargas son esenciales / no esenciales / críticas"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Cuando el punto principal del negocio sea la INFORMACIÓN, como es en el caso de telecomunicaciones, bancos, o servicios financieros, será importante considerar como una opción: una planta independiente o incluso la alternativa de redundancia.",
+       "Para casos donde el centro del negocio no es la información, pero la falta de suministro eléctrico puede afectar a la operación, normalmente se pueden compartir cargas críticas con otras no esenciales. *1",
+       "Para casos industriales, es vital conocer qué cargas deben permanecer activas con el fin de darle continuidad al negocio, y entender la naturaleza eléctrica de dichas cargas."
+      ]
+     },
+     {
+      "t": "p",
+      "x": "*1 El hecho de que diferentes cargas puedan compartir el suministro eléctrico, no implica de ninguna manera que la distribución de potencia eléctrica se maneje de manera homologada. Las cargas críticas, SIEMPRE recibirán un tratamiento diferente a las cargas no esenciales."
+     }
+    ]
+   },
+   {
+    "h": "Preguntas frecuentes para la selección de una planta eléctrica",
+    "body": [
+     {
+      "t": "h3",
+      "x": "1.- ¿Cuál es el dimensionamiento de una planta eléctrica?"
+     },
+     {
+      "t": "p",
+      "x": "Acerca de la Capacidad (tamaño del motor): Este parece ser un tema controversial que se discute normalmente entre los usuarios y los inversionistas, ya que unos (usuarios) temen no tener suficiente capacidad para abastecer los requerimientos, y por el otro lado (los inversionistas) tampoco quieren estar demasiado sobrados y adquirir un elefante blanco."
+     },
+     {
+      "t": "p",
+      "x": "De aquí que la recomendación de mi parte será tomar en cuenta las CARGAS REALES O INSTALADAS en caso de ser posible, y en caso de un proyecto nuevo, considerar entonces las CARGAS TEÓRICAS, pero tomando en consideración:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "a. Factores de uso",
+       "b. Tomar en cuenta que no todas las cargas se usarán al mismo tiempo",
+       "c. Considerar un crecimiento futuro REAL"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "2.- ¿Cuáles son las consecuencias de adquirir una planta de mayor capacidad a la necesaria?"
+     },
+     {
+      "t": "p",
+      "x": "Una de las principales preocupaciones de las personas que van a adquirir una planta, se basa en el hecho de adquirir una planta de emergencia que resulte ser mayor de lo que podrían necesitar y entonces gastar más de lo necesario, tanto en la adquisición como en la operación y los mantenimientos."
+     },
+     {
+      "t": "p",
+      "x": "Y es por supuesto una excelente pregunta, que yo diría tiene dos respuestas:"
+     },
+     {
+      "t": "p",
+      "x": "A) En lo personal lo vería como una situación efectivamente desfavorable cuando la carga es mucho más pequeña que la requerida. Y con esto me refiero a un ejemplo como el siguiente: Supongamos que tenemos una carga de 12 Kwatts, y una planta de 65 Kwatts"
+     },
+     {
+      "t": "p",
+      "x": "La razón por la que lo considero desfavorable es debido a que nuestra carga es alrededor del 20% del suministro que la planta puede proporcionar, y aunque la planta no estará trabajando al 100% (es decir que no estará consumiendo el combustible al 100% de su capacidad) en el momento del arranque, si tendrá que vencer la inercia del motor, y estos arranques pueden generar un consumo mayor al realmente requerido hasta el momento en que la planta se regularice a la capacidad real."
+     },
+     {
+      "t": "p",
+      "x": "B) Por otro lado, si la carga está entre un 50 a 70% del tamaño de la capacidad actual de la planta, yo no le vería UN PROBLEMA debido a que el consumo de combustible va directamente proporcional a la demanda, lo que quiere decir, que, a mayor consumo, mayor combustible y viceversa!"
+     }
+    ]
+   },
+   {
+    "h": "Diferencia entre plantas manuales, semiautomáticas y automáticas",
+    "body": [
+     {
+      "t": "h3",
+      "x": "Plantas manuales:"
+     },
+     {
+      "t": "p",
+      "x": "No cuenta con una transferencia, simplemente se acciona cuando es necesario. No cuentan tampoco con un control, y las únicas protecciones con las que cuenta son para el motor:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "baja presión de aceite",
+       "baja temperatura"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Aplicación típica: Ferias, construcción"
+     },
+     {
+      "t": "h3",
+      "x": "Planta semiautomática:"
+     },
+     {
+      "t": "p",
+      "x": "Esta configuración cuenta con una transferencia y un controlador manual. Esto implica que, para activarla, hay que hacerlo de manera manual. No cuenta con sensores, y es relativamente sencilla porque no sincroniza las fuentes. Cuenta con cargador para proteger y dar vida a la batería."
+     },
+     {
+      "t": "p",
+      "x": "Aplicación típica: Uso de cárcamos (uso de aguas residuales para bombeo)"
+     },
+     {
+      "t": "h3",
+      "x": "Planta automática:"
+     },
+     {
+      "t": "p",
+      "x": "Cuenta con un controlador más sofisticado, cuenta con sensores, y la característica más obvia e importante es que genera transferencias y contratransferencias, sin necesidad de la intervención de personas."
+     }
+    ]
+   },
+   {
+    "h": "Recomendaciones para la compra de una planta de emergencia",
+    "body": [
+     {
+      "t": "p",
+      "x": "1.- Proveedores con MARCAS confiables: Desde mi opinión la mayoría de los fabricantes conocidos en el mercado (ver más abajo) son en realidad confiables. Puede ser que algunos cuenten con una u otra característica ligeramente superior, sin embargo, en general las marcas posicionadas en el mercado cumplen bien con sus funciones. Será luego de la adquisición mayor responsabilidad del mantenimiento la correcta operación de la máquina para la continuidad en el tiempo."
+     },
+     {
+      "t": "p",
+      "x": "2.- La calidad del Servicio de la empresa que efectúe los mantenimientos en cuestión de:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Fácil comunicación",
+       "Responsabilidad",
+       "Experiencia",
+       "Y costo-beneficio."
+      ]
+     },
+     {
+      "t": "p",
+      "x": "3.- Definición cuidadosa de las características que se necesitarán:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Voltajes requeridos (220 / 440 / 480 / 600 Volts)",
+       "Dimensionamiento (capacidad) de la planta eléctrica (20 Kwatts – 30 Kwatts, etc…)",
+       "Tipo de transferencia (elementos de conmutación)",
+       "Requerimientos de monitoreo (Modbus, Bacnet, SNMP, etc…)",
+       "Altura del sitio donde trabajará el equipo",
+       "Manual / semiautomática / automática",
+       "Niveles de ruido requeridos en el área (considerar una caseta acústica en caso de ubicar al equipo cerca de personas)."
+      ]
+     },
+     {
+      "t": "p",
+      "x": "4.- Es preferible utilizar marcas reconocidas en el mercado. Puede ser que existan muchas otras marcas que no necesariamente sean de baja calidad, las que enunciamos aquí son simplemente aquellas con las que hemos trabajado con buenos o excelentes resultados (en el caso de México)."
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Igsa",
+       "Selmec",
+       "GP",
+       "Ottomotores",
+       "Generac",
+       "Alesso",
+       "Cummins Power",
+       "Planelec",
+       "Siemens",
+       "Caterpillar"
+      ]
+     },
+     {
+      "t": "p",
+      "x": "Las marcas de los motores más comunes en el mercado serán:"
+     },
+     {
+      "t": "p",
+      "x": "Caterpillar, John Deere, GNC, Cummins, FG Wilson, Perkins, Yanmar, Kubota, Volvo"
+     },
+     {
+      "t": "p",
+      "x": "Mientras que las marcas de los generadores serán:"
+     },
+     {
+      "t": "p",
+      "x": "Stamford, Marathon, General Electric"
+     },
+     {
+      "t": "h3",
+      "x": "Capacidades más comunes de encontrar en el mercado:"
+     },
+     {
+      "t": "p",
+      "x": "Entre las líneas menores a 30 Kwatts, existen plantas monofásicas o bifásicas. Arriba de estas capacidades, solo encontraremos plantas trifásicas."
+     }
+    ]
+   },
+   {
+    "h": "¿Dónde ubicar la planta de emergencia?",
+    "body": [
+     {
+      "t": "p",
+      "x": "Una planta puede estar ubicada en cualquier lugar prácticamente considerando:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "El espacio que ocupará, así como el peso",
+       "Que habrá un suministro de combustible y pueden existir derrames",
+       "El ruido que genera",
+       "No es un equipo diseñado para intemperies (considerar una caseta en caso de requerirlo)",
+       "Que la transferencia es una acometida eléctrica (cuidar a las personas)"
+      ]
+     }
+    ]
+   },
+   {
+    "h": "En qué consisten los mantenimientos de una planta de Emergencia",
+    "body": [
+     {
+      "t": "h3",
+      "x": "I Predictivo o preventivo:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "1. Revisión física, visual de niveles de combustibles, aceite, fugas",
+       "2. Arranques manuales / automática con el controlador existente",
+       "3. Limpieza de generador, limpieza de transferencia con soplete y reapriete de conexiones y toma de lecturas y parámetros, revisión de alarmas",
+       "4. Limpieza del cuarto de máquinas (pisos libres de aceites, etc…)"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "II Mantenimiento preventivo Mayor:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "TODOS LOS PREVENTIVOS",
+       "Cambio de filtros de aceite, anticongelante y baterías"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "III Mantenimiento Correctivo:"
+     },
+     {
+      "t": "p",
+      "x": "Todos los puntos ajenos como daños mecánicos, eléctricos o electrónicos que salen de un presupuesto de los mantenimientos anteriores. Cualquier elemento externo es cotizado por aparte."
+     }
+    ]
+   },
+   {
+    "h": "Fallas comunes de planta de emergencia",
+    "body": [
+     {
+      "t": "p",
+      "x": "Dentro de las principales fallas que pueden presentar las plantas de emergencia, se encuentran:"
+     },
+     {
+      "t": "p",
+      "x": "Falta de mantenimiento: servicios al motor, descarga de batería, programa de arranques programados de prueba, cambios de filtros"
+     },
+     {
+      "t": "h3",
+      "x": "Mi planta tiene batería, niveles sin fugas, pero no hay arranque:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Posible problema en el controlador de señal de arranque",
+       "Problema en el relevador auxiliar de arranque",
+       "Posible falla en el motor auxiliar de arranque (marcha)",
+       "Posible problema de un voltaje flotante en baterías (aún cuando nos da un falso flotante)",
+       "Posible problema de mi cargador de baterías dañado"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Mi planta arranca, pero no se estabiliza (RPM) ni toma carga"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Posible problema en su sistema de suministro de Diesel",
+       "Posible problema en la bomba de transmisión o inyección",
+       "Posible problema en sistema de inyectores",
+       "Posible problema en actuador electrónico",
+       "Posible paso de agua o contaminación de combustible (o combustible contaminado)"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Mi máquina arranca, estabiliza, pero no toma carga:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Posible falla en señal de transferencia",
+       "Posible falla en el tiempo transitorio de generación",
+       "Posible falla en las bobinas si la transferencia es de contactores, motor-mando-motor, o interruptor Master Pack (bobinas)"
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Mi máquina arranca, conmuta, toma carga, pero a unos minutos se apaga tirando la carga:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Posible falla en los transitorios de carga súbita al generador “Rebasar carga de Generador”",
+       "Posible problema de falla por señal de baja presión de aceite o alta temperatura",
+       "Posible problema en ventanas de apertura en transitorios por estar abajo del rango en los picos electrónicos de carga. (Corto circuito en cargas)."
+      ]
+     },
+     {
+      "t": "h3",
+      "x": "Ya regresó la fuente de normal, pero la planta no hace la re-transferencia."
+     },
+     {
+      "t": "ul",
+      "items": [
+       "No se cumplió el tiempo requerido aún para la re-transferencia",
+       "No se puede sincronizar con la fuente principal",
+       "Secuencia de fases modificada externamente por CFE",
+       "Variaciones de voltaje de CFE (Mala calidad de energía)"
+      ]
+     }
+    ]
+   },
+   {
+    "h": "CBPS a tu servicio",
+    "body": [
+     {
+      "t": "p",
+      "x": "Luego de 25 años de experiencia y después de haber conocido decenas de Instalaciones con Plantas, nos especializamos en el Suministro, Instalación, Mantenimiento y Reparación de Plantas de Luz con el fin de:"
+     },
+     {
+      "t": "ul",
+      "items": [
+       "Evitar pérdida del negocio por caídas del suministro eléctrico",
+       "Evitar la pérdida de información para su negocio",
+       "Proteger los equipos electrónicos de alto costo"
+      ]
+     }
+    ]
+   }
+  ],
+  "correcciones": [
+   "Ligaduras fi/fl/ff perdidas en la extracción del PDF restauradas (p. ej. «de nición» → «definición», «con guración» → «configuración»)",
+   "«¿Cuáles son las consecuencia de adquirir» → «consecuencias»",
+   "«3- De nición» → «3.- Definición»",
+   "Marcas: «Siemen» → «Siemens», «John Deer» → «John Deere», «Standford» → «Stamford» (fabricante de generadores)",
+   "Espacios antes de «,» eliminados (p. ej. «Caterpillar , John Deer» → «Caterpillar, John Deere»)",
+   "«fungirá / Como la interfase» (salto de línea con mayúscula) → «fungirá como la interfase»",
+   "Encabezados en MAYÚSCULAS pasados a mayúscula inicial",
+   "Omitido: portada, cabecera «Cuidado de plantas de eléctricas» y pie «plantasdeemergencia-cbps.com»",
+   "Sin corregir (gramática): «un RED eléctrica», «si tendrá que vencer» (probable «sí»)"
+  ]
+ }
+}

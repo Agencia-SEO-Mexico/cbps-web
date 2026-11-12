@@ -1,6 +1,7 @@
 import fuenteRescatada from '../data/fuente.json';
 import { corregirFuente, ajustesFinales } from '../data/correcciones.js';
 import { ESCRITAS } from '../data/escritas.js';
+import BLOG_TEXTO from '../data/blog-texto.json';
 import { ARBOL } from './nav.js';
 
 // contenido rescatado + correcciones de la revisión del 12-nov (src/data/correcciones.js)
@@ -58,6 +59,18 @@ if (PAGINAS['/contacto/']) {
     { h: 'Qué puedes esperar', body: [ { t: 'h3', x: 'Soluciones personalizadas' }, { t: 'p', x: 'Ofrecemos soluciones adaptadas a las necesidades específicas de tu industria.' }, { t: 'h3', x: 'Soporte técnico' }, { t: 'p', x: 'Contamos con un equipo de expertos para brindarte soporte técnico.' } ] },
     { h: 'Preguntas frecuentes sobre CBPS', body: c.faqs },
   ];
+}
+// Blog (fase 2, 12-nov): 8 artículos que eran solo un iframe (Drive o designrr) pasan a HTML real con el texto
+// del documento de CBPS (extraído tal cual; solo ortografía obvia). El iframe sale y queda un enlace al original,
+// que conserva los diagramas e imágenes. Los artículos cuyo contenido es una imagen siguen con su iframe.
+for (const [ruta, doc] of Object.entries(BLOG_TEXTO)) {
+  const p = PAGINAS[ruta]; if (!p) continue;
+  const propias = (p.sections || []).map((s) => ({ ...s, body: s.body.filter((b) => b.t !== 'embed' && !/^Te invitamos a que revises el siguiente art/i.test(b.x || '')) })).filter((s) => s.body.length);
+  if (/^Te invitamos a que revises el siguiente art/i.test(p.lead || '')) p.lead = '';
+  const delDoc = doc.sections.map((s) => ({ h: s.h, body: s.body.map((b) => b.t === 'table' ? { ...b, head: true } : b) }));
+  const enlace = { h: '', body: [{ t: 'enlace', href: doc.original, x: doc.fuente === 'designrr' ? 'Ver el documento original con sus imágenes' : 'Ver el documento original (PDF) con sus diagramas e imágenes' }] };
+  p.sections = [...propias, ...delDoc, enlace];
+  p.words = doc.sections.flatMap((s) => s.body).reduce((n, b) => n + [b.x || '', ...(b.items || []), ...(b.rows || []).flat()].join(' ').split(/\s+/).filter(Boolean).length, 0);
 }
 // nombre corto para menús y migas
 for (const r of Object.keys(PAGINAS)) if (!ARBOL[r] && !r.startsWith('/blog/')) ARBOL[r] = { nombre: PAGINAS[r].h1, padre: '/' };

@@ -242,7 +242,7 @@ details[open]::details-content { block-size: auto; }
 .tbl { overflow-x: auto; margin: 22px 0; border: 1px solid var(--line); border-radius: var(--r-m); background: #fff; -webkit-overflow-scrolling: touch; }
 .tbl table { border-collapse: collapse; width: 100%; font-size: 0.95rem; min-width: 480px; }
 .tbl th, .tbl td { padding: 11px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
-.tbl tr:first-child td, .tbl th { background: var(--night); color: #fff; font-weight: 600; }
+.tbl tbody:first-child tr:first-child td, .tbl th { background: var(--night); color: #fff; font-weight: 600; }
 .tbl tr:nth-child(even) td { background: #f6f9fb; }
 .tbl tr:last-child td { border-bottom: 0; }
 
