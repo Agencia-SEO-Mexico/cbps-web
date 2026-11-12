@@ -22,15 +22,18 @@ Mientras `PREVIEW` no sea `false` (por defecto es vista previa):
    ```
    Con eso desaparece el `noindex`, `robots.txt` pasa a `Allow: /` con el sitemap y el
    `canonical` apunta a la URL nueva de cada página.
-2. Con `PREVIEW=false` las páginas puente ya no se generan; las URLs viejas pasan a 301 de servidor: copiar
-   `lanzamiento/_redirects` a `public/_redirects` (Netlify y Cloudflare Pages lo leen tal cual).
+2. Con `PREVIEW=false` las páginas puente ya no se generan y el build copia solo `lanzamiento/_redirects`
+   a `dist/_redirects` (Netlify y Cloudflare Pages lo leen tal cual). Si el hosting es Apache o Nginx, usar
+   `lanzamiento/.htaccess` o `lanzamiento/nginx-redirecciones.conf`, que se regeneran con
+   `node lanzamiento/generar-servidor.mjs` cada vez que cambie `_redirects`.
    El detalle URL por URL está en `lanzamiento/redirecciones-301-cbps.csv`.
 3. Conectar el formulario al servicio del hosting (Netlify Forms u otro) con un buzón por división
    (matriz pendiente de CBPS). Hoy el formulario valida en la página y abre un modal propio con
    envío por WhatsApp o por correo; no usa ningún servidor.
 4. Instalar el contenedor de Google Tag Manager `GTM-TDQRDQCG` en `src/layouts/Base.astro` y
    quitar Site Kit y el gtag manual del WordPress actual. Los clics ya empujan eventos a
-   `dataLayer`: `contacto_whatsapp`, `contacto_telefono`, `contacto_formulario`, `form_listo`.
+   `dataLayer`: `contacto_whatsapp`, `contacto_telefono`, `form_listo` (solo con el formulario válido) y,
+   en el modal, `contacto_form_whatsapp` y `contacto_form_correo` (el envío real; marcar esos como evento clave).
 5. Volver a pasar la revisión (enlaces, consola, móvil) sobre el dominio final.
 
 ## Estructura
@@ -38,6 +41,7 @@ Mientras `PREVIEW` no sea `false` (por defecto es vista previa):
 | Carpeta | Qué hay |
 |---|---|
 | `src/data/fuente.json` | Contenido rescatado de cada página actual de cbps.com.mx (generado) |
+| `src/data/correcciones.js` | Correcciones sobre lo rescatado: erratas, bloques fuera, H1/title/desc (revisión 12-nov) |
 | `src/data/escritas.js` | Páginas nuevas de la arquitectura SEO (servicios, tableros de transferencia) |
 | `src/lib/nav.js` | Árbol del sitio: menú, migas, hubs y relacionados |
 | `src/lib/site.js` | Datos de contacto, WhatsApp, modo vista previa |
