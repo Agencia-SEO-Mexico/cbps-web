@@ -67,7 +67,7 @@ export const BLOQUES_FUERA = [
   /^Your content goes here/i,
   /^Más de 15 años en soluciones de energía/i, // 15 / 10 / 17 años: la home actual no da cifra → pendiente de CBPS
   /^\.$/,
-  /^Ver plantas disponibles/i, // botón de la promo caducada
+  /^(Solicitar asesoría para mi planta\s*)?Ver plantas disponibles/i, // etiquetas de botones sueltas de la promo caducada
 ];
 
 // 3) Por página: secciones o bloques fuera, y H1/title/desc completos (keyword del pen de Diego, sección 3).
