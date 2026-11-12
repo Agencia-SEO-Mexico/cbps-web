@@ -174,6 +174,8 @@ export const POR_PAGINA = {
 for (const [re, to] of [...REEMPLAZOS]) {
   if (!re.source.includes('\\') && !re.source.includes('(') && re.source !== re.source.toUpperCase()) REEMPLAZOS.push([new RegExp(re.source.toUpperCase(), re.flags), to.toUpperCase()]);
 }
+// fase 2: signos de admiración de la garantía de Invermexa (van al final: antes se corrige «ELECCIELECCIÓN Ý»)
+REEMPLAZOS.push([/y ¡? ?un año (de )?garantía !/gi, (m) => (m === m.toUpperCase() ? 'Y ¡UN AÑO DE GARANTÍA!' : 'y ¡un año de garantía!')]);
 
 // ---- aplicación ----
 const textoDe = (b) => b.x || b.q || '';
