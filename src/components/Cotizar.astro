@@ -3,9 +3,28 @@
 // (WhatsApp o correo). Al lanzar se conecta al servicio de formularios del hosting.
 import { NEGOCIO, waCotizar } from '../lib/site.js';
 import Icono from './Icono.astro';
-const { tema = '', titulo = 'Cuéntanos qué necesitas proteger', texto = 'La consulta es gratuita; ignorar una falla puede salir mucho más caro. Un ingeniero de CBPS revisa tu caso y te responde con una propuesta técnica, no con un catálogo.' } = Astro.props;
+const { tema = '', ruta = '', titulo = 'Cuéntanos qué necesitas proteger', texto = 'La consulta es gratuita; ignorar una falla puede salir mucho más caro. Un ingeniero de CBPS revisa tu caso y te responde con una propuesta técnica, no con un catálogo.' } = Astro.props;
 const divisiones = ['Plantas de emergencia', 'Sistemas UPS', 'Mantenimiento de UPS', 'Baterías industriales', 'Aire acondicionado de precisión', 'Reguladores de voltaje', 'Supresores de picos', 'Convertidores de frecuencia', 'Renta de equipos', 'Otro / no estoy seguro'];
-const pre = divisiones.find((d) => tema && d.toLowerCase().includes(tema.toLowerCase())) || '';
+// división preseleccionada según la página (la ruta manda; sin coincidencia clara, el visitante elige)
+const DIVISION_POR_RUTA = [
+  ['/servicios/renta-de-plantas-de-emergencia/', 'Renta de equipos'],
+  ['/servicios/renta-y-financiamiento-de-ups-trifasico/', 'Renta de equipos'],
+  ['/promociones/', 'Renta de equipos'],
+  ['/servicios/mantenimiento/plantas-de-emergencia/', 'Plantas de emergencia'],
+  ['/servicios/mantenimiento/ups/', 'Mantenimiento de UPS'],
+  ['/servicios/plantas-de-emergencia/', 'Plantas de emergencia'],
+  ['/servicios/instalacion-y-dimensionamiento/', 'Plantas de emergencia'],
+  ['/servicios/reparacion-y-modernizacion/', 'Sistemas UPS'],
+  ['/servicios/sustitucion-de-bancos-de-baterias/', 'Baterías industriales'],
+  ['/productos/tableros-de-transferencia/', 'Plantas de emergencia'],
+  ['/productos/ups/', 'Sistemas UPS'],
+  ['/productos/baterias-industriales/', 'Baterías industriales'],
+  ['/productos/aire-de-precision/', 'Aire acondicionado de precisión'],
+  ['/productos/reguladores-de-voltaje/', 'Reguladores de voltaje'],
+  ['/productos/supresores-de-picos/', 'Supresores de picos'],
+  ['/productos/convertidores-de-frecuencia/', 'Convertidores de frecuencia'],
+];
+const pre = DIVISION_POR_RUTA.find(([r]) => ruta.startsWith(r))?.[1] || '';
 ---
 <section class="band band--night" id="cotizar" aria-labelledby="cot-t">
   <div class="wrap cot">
@@ -33,12 +52,12 @@ const pre = divisiones.find((d) => tema && d.toLowerCase().includes(tema.toLower
           <option value="">Elige una línea</option>
           {divisiones.map((d) => <option selected={d === pre}>{d}</option>)}
         </select>
-        <span class="hint">Así tu solicitud llega directo al área que la atiende.</span>
+        <span class="hint">Así sabemos qué especialista debe atenderte.</span>
         <span class="err">elige una opción.</span>
       </div>
       <div class="fld"><label for="f-msg">Equipo, capacidad o falla</label><textarea id="f-msg" name="mensaje" required placeholder="Ej.: UPS trifásico de 30 kVA sin respaldo; necesitamos cambiar el banco de baterías."></textarea><span class="err">cuéntanos brevemente qué necesitas.</span></div>
       <p class="legal">Al enviar aceptas la <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/politica-privacidad/`}>política de privacidad</a>.</p>
-      <button class="btn" type="submit" data-ev="formulario">Preparar solicitud</button>
+      <button class="btn" type="submit">Preparar solicitud</button>
     </form>
   </div>
 </section>

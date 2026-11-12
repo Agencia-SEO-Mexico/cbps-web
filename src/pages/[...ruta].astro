@@ -26,7 +26,7 @@ const tema = linea?.corto || (ruta.includes('bateria') ? 'Baterías' : '');
 const nombreCorto = ARBOL[ruta]?.nombre || p?.h1;
 const kids = puente || esBlog ? [] : hijos(ruta).map((k) => ({ ...k, resumen: PAGINAS[k.ruta]?.desc || k.resumen }));
 const bros = puente || esPost || (ARBOL[ruta]?.padre || '/') === '/' ? [] : hermanos(ruta).filter((b) => !b.ruta.startsWith('/blog/')).slice(0, 12);
-const relacionados = (p?.related || []).map((r) => ({ ruta: r, nombre: ARBOL[r]?.nombre || PAGINAS[r]?.h1 || r }));
+const relacionados = (p?.related || []).filter((r) => !PAGINAS[r]?.noindex).map((r) => ({ ruta: r, nombre: ARBOL[r]?.nombre || PAGINAS[r]?.h1 || r }));
 const toc = (p?.sections || []).filter((s) => s.h).map((s) => ({ id: slug(s.h), h: tc(s.h) }));
 const esProducto = ruta.startsWith('/productos/');
 const esServicio = ruta.startsWith('/servicios/');
@@ -37,7 +37,7 @@ const cruces = esProducto
     : ruta.includes('bateria') ? ['/servicios/sustitucion-de-bancos-de-baterias/', '/servicios/mantenimiento/ups/'] : ['/servicios/', '/servicios/instalacion-y-dimensionamiento/'])
   : esServicio ? (ruta.includes('plantas') ? ['/servicios/plantas-de-emergencia/', '/servicios/mantenimiento/plantas-de-emergencia/', '/servicios/instalacion-y-dimensionamiento/plantas-de-emergencia/', '/servicios/renta-de-plantas-de-emergencia/', '/productos/tableros-de-transferencia/'] : ruta.includes('ups') ? ['/productos/ups/', '/productos/baterias-industriales/baterias-para-ups/'] : ruta.includes('bateria') ? ['/productos/baterias-industriales/baterias-para-ups/', '/productos/baterias-industriales/'] : ['/servicios/plantas-de-emergencia/', '/productos/ups/', '/productos/baterias-industriales/'])
   : [];
-const crucesL = cruces.filter((r) => r !== ruta).map((r) => ({ ruta: r, nombre: ARBOL[r]?.nombre || PAGINAS[r]?.h1 }));
+const crucesL = cruces.filter((r) => r !== ruta && !PAGINAS[r]?.noindex).map((r) => ({ ruta: r, nombre: ARBOL[r]?.nombre || PAGINAS[r]?.h1 }));
 
 const faqs = (p?.faqs || []).filter((f) => f.a?.length);
 const schema = [];
@@ -144,6 +144,6 @@ const etiqueta = esPost ? 'Blog Electric Leaders' : esProducto ? (linea && linea
       </aside>
     </div>
   )}
-  <Cotizar tema={tema} />
+  <Cotizar tema={tema} ruta={ruta} />
 </Base>
 )}
