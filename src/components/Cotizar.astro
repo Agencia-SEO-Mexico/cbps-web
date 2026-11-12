@@ -43,7 +43,7 @@ const pre = DIVISION_POR_RUTA.find(([r]) => ruta.startsWith(r))?.[1] || '';
         <div class="fld"><label for="f-empresa">Empresa</label><input id="f-empresa" name="empresa" autocomplete="organization" required /><span class="err">escribe el nombre de tu empresa.</span></div>
       </div>
       <div class="two">
-        <div class="fld"><label for="f-tel">Teléfono o WhatsApp</label><input id="f-tel" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required pattern="[0-9 +()-]{8,}" /><span class="err">usa al menos 8 dígitos.</span></div>
+        <div class="fld"><label for="f-tel">Teléfono o WhatsApp</label><input id="f-tel" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required pattern="[0-9 +\(\)\-]{8,}" /><span class="err">usa al menos 8 dígitos.</span></div>
         <div class="fld"><label for="f-correo">Correo</label><input id="f-correo" name="correo" type="email" autocomplete="email" required /><span class="err">el correo debe tener el formato nombre@empresa.com.</span></div>
       </div>
       <div class="fld">
