@@ -185,7 +185,7 @@ const GTM = 'GTM-TDQRDQCG';
         $('[data-sum]', modal).textContent = txt;
         $('[data-send-wa]', modal).href = `https://wa.me/${f.dataset.wa}?text=${encodeURIComponent(txt)}`;
         $('[data-send-mail]', modal).href = `mailto:${f.dataset.correo}?subject=${encodeURIComponent('Solicitud de cotización: ' + d.division)}&body=${encodeURIComponent(txt)}`;
-        window.dataLayer?.push({ event: 'form_listo', division: d.division });
+        (window.dataLayer = window.dataLayer || []).push({ event: 'form_listo', division: d.division });
         const btn = $('button[type=submit]', f); const etiqueta = btn.textContent;
         btn.disabled = true; btn.textContent = 'Enviando…';
         const muestra = (ok) => {
