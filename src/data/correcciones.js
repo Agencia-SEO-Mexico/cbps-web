@@ -163,6 +163,8 @@ export const POR_PAGINA = {
       [/respaldar tu hogar/g, 'respaldar tu instalación'], [/^!MÁS QUE UN EQUIPO/g, '¡MÁS QUE UN EQUIPO'], [/TU HOGAR/g, 'TU INSTALACIÓN'], [/tu hogar o instalación/g, 'tu instalación'], [/tu hogar/g, 'tu instalación'], [/toda mi casa/g, 'toda mi instalación']],
   },
   '/productos/baterias-industriales/america/': { h1: 'Baterías América: venta y asesoría especializada' },
+  '/blog/': { h1: 'Blog de plantas de emergencia, UPS y baterías industriales' },
+  '/promociones/': { h1: 'Promociones en plantas de emergencia, UPS y baterías' },
   '/productos/ups/cyberpower/': { h1: 'UPS CyberPower: sistemas de respaldo y protección' },
   '/blog/como-hacer-la-instalacion-de-un-ups/': {
     h1: 'Cómo hacer la instalación de un UPS según sus características', title: 'Cómo hacer la instalación de un UPS según sus características',
