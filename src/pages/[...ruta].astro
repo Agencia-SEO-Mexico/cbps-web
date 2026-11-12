@@ -41,13 +41,20 @@ const cruces = esProducto
   : [];
 const crucesL = cruces.filter((r) => r !== ruta && !PAGINAS[r]?.noindex).map((r) => ({ ruta: r, nombre: ARBOL[r]?.nombre || PAGINAS[r]?.h1 }));
 
+// Service.name = nombre corto (title sin « | …»); si coincide con el H1, el nombre del menú
+const tCorto = (p?.title || '').split(' | ')[0].trim();
+const nombreServicio = tCorto && tc(tCorto) !== tc(p?.h1 || '') ? tCorto : (nombreCorto && tc(nombreCorto) !== tc(p?.h1 || '') ? nombreCorto : tCorto);
+// og:image propia: la del héroe (producto o línea) o la primera imagen grande del contenido; si no hay, la general
+const primeraImg = p ? (p.sections || []).flatMap((s) => s.body || []).flatMap((b) => b.t === 'img' ? [b] : b.t === 'imgs' ? b.items : []).find((im) => (im.w || 0) >= 400) : null;
+const imgPropia = p?.media?.src || primeraImg?.src;
+const ogImage = imgPropia ? `/img/${imgPropia}` : undefined;
 const faqs = (p?.faqs || []).filter((f) => f.a?.length);
 const schema = [];
 if (!puente) {
   schema.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.nombre, item: `${PROD}${c.ruta}` })) });
   if (faqs.length) schema.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a.map((a) => a.x || (a.items || []).join('; ')).join(' ') } })) });
-  if (esProducto || esServicio) schema.push({ '@context': 'https://schema.org', '@type': 'Service', name: p.h1, description: p.desc, serviceType: nombreCorto, provider: { '@id': `${PROD}/#negocio` }, areaServed: { '@type': 'Country', name: 'México' }, url: `${PROD}${ruta}` });
-  if (esPost) schema.push({ '@context': 'https://schema.org', '@type': 'BlogPosting', headline: p.h1, description: p.desc, datePublished: p.published || undefined, dateModified: p.modified || p.published || undefined, author: { '@type': 'Organization', name: 'CBPS' }, publisher: { '@id': `${PROD}/#negocio` }, mainEntityOfPage: `${PROD}${ruta}` });
+  if (esProducto || esServicio) schema.push({ '@context': 'https://schema.org', '@type': 'Service', name: nombreServicio, description: p.desc, serviceType: nombreCorto, provider: { '@id': `${PROD}/#negocio` }, areaServed: { '@type': 'Country', name: 'México' }, url: `${PROD}${ruta}` });
+  if (esPost) schema.push({ '@context': 'https://schema.org', '@type': 'BlogPosting', headline: p.h1, description: p.desc, datePublished: p.published || undefined, dateModified: p.modified || p.published || undefined, author: { '@type': 'Organization', name: 'CBPS' }, image: `${PROD}${ogImage || '/og-cbps.jpg'}`, publisher: { '@id': `${PROD}/#negocio` }, mainEntityOfPage: `${PROD}${ruta}` });
 }
 // imagen del héroe (LCP en móvil): precarga de su AVIF responsive si existe
 const lcpBase = p?.media?.src?.replace(/\.webp$/, '');
@@ -69,7 +76,7 @@ const etiqueta = esPost ? 'Blog Electric Leaders' : esProducto ? (linea && linea
     <body><p>Esta página ahora está en <a href={u(puente)}>{`${PROD}${puente}`}</a>.</p></body>
   </html>
 ) : (
-<Base title={p.title} desc={p.desc} ruta={ruta} canon={p.canon} schema={schema} tipo={esPost ? 'article' : 'website'} noindex={!!p.noindex} lcp={lcp}>
+<Base title={p.title} desc={p.desc} ruta={ruta} canon={p.canon} schema={schema} tipo={esPost ? 'article' : 'website'} noindex={!!p.noindex} lcp={lcp} ogImage={ogImage}>
   <div class="phero">
     <div class="wrap">
       <nav class="crumbs" aria-label="Migas de pan"><ol>{crumbs.map((c, i) => <li>{i < crumbs.length - 1 ? <a href={u(c.ruta)}>{c.nombre}</a> : <span aria-current="page">{c.nombre}</span>}</li>)}</ol></nav>

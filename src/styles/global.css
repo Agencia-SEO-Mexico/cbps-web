@@ -173,7 +173,7 @@ details[open]::details-content { block-size: auto; }
 .crumbs ol { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 0; padding: 0; margin: 0; }
 .crumbs li { display: inline-flex; align-items: center; }
 .crumbs li + li::before { content: '/'; margin: 0 8px; color: var(--wire); }
-.crumbs a { color: var(--on-night-2); }
+.crumbs a { color: var(--on-night-2); display: inline-flex; align-items: center; min-height: 24px; } /* zona de toque WCAG 2.5.8 */
 .crumbs a:hover { color: #fff; }
 .crumbs [aria-current] { color: #fff; font-weight: 500; }
 
@@ -343,6 +343,8 @@ details[open]::details-content { block-size: auto; }
 .ftr__logo { width: 150px; margin-bottom: 16px; }
 .ftr__base { margin-top: 56px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.14); display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; font-size: 0.88rem; }
 .ftr address { font-style: normal; line-height: 1.7; }
+/* zonas de toque de al menos 24 px (WCAG 2.5.8) en teléfono, WhatsApp y enlaces legales */
+.ftr address a, .ftr__base a { display: inline-flex; align-items: center; min-height: 28px; }
 
 /* barra de acción móvil */
 .mbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 38; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,0.95); border-top: 1px solid var(--line); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transform: translateY(110%); transition: transform 360ms var(--ease-out); }

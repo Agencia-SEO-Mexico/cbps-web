@@ -220,9 +220,42 @@ export function corregirFuente(fuenteOriginal) {
   return fuente;
 }
 
+// 4) Fase 2 (12-nov tarde): titles a 25-65 caracteres con « | CBPS», metas de 165 o más recortadas y H1 sin
+// mayúsculas sostenidas. Mismas palabras clave que ya tenía cada página; nada de datos nuevos.
+export const FASE2 = {
+  '/blog/': { title: 'Blog: plantas de emergencia, UPS y baterías' },
+  '/blog/como-hacer-la-instalacion-de-un-ups/': { title: 'Cómo instalar un UPS según sus características' },
+  '/blog/iec-60320-iec320/': { title: 'Norma IEC 60320 (IEC320)' },
+  '/blog/tabla-de-la-nema/': { title: 'Tabla de la NEMA: conectores y receptáculos' },
+  '/blog/tierras-fisicas/': { title: 'Tierras físicas en instalaciones eléctricas' },
+  '/blog/norma-oficial-mexicana-nom-001-sede-2012-instalaciones-electricas-utilizacion/': { h1: 'Norma Oficial Mexicana NOM-001-SEDE-2012, instalaciones eléctricas (utilización)' },
+  '/contacto/': { title: 'Contacto: habla con un ingeniero de cargas críticas' },
+  '/libro-gratis/': { title: 'Libro gratis: protección de cargas críticas eléctricas' },
+  '/nosotros/': { h1: 'Protección de cargas críticas sensibles' },
+  '/promociones/': { title: 'Promociones en protección de cargas críticas' },
+  '/productos/baterias-industriales/america/': { title: 'Baterías América: venta y asesoría' },
+  '/productos/baterias-industriales/baterias-de-arranque/': { h1: 'Baterías de arranque: características, funcionamiento y aplicaciones' },
+  '/productos/baterias-industriales/baterias-de-ciclo-profundo/': { title: 'Baterías de ciclo profundo: qué son y cómo funcionan' },
+  '/productos/baterias-industriales/c-and-d/': { title: 'Baterías C&D para UPS y respaldo industrial' },
+  '/productos/baterias-industriales/eaton/': { title: 'Baterías Eaton para UPS' },
+  '/productos/baterias-industriales/kaise/': { title: 'Baterías Kaise para UPS y sistemas de respaldo' },
+  '/productos/baterias-industriales/powest/': { title: 'Baterías Powest para UPS y energía solar' },
+  '/productos/aire-de-precision/': { desc: 'Aires acondicionados de precisión para data centers, telecomunicaciones e infraestructura crítica: control de temperatura y humedad.' },
+  '/productos/convertidores-de-frecuencia/': { desc: 'Convertidores de frecuencia para controlar motores, optimizar procesos y adaptar la velocidad a cada aplicación. Asesoría de CBPS.' },
+  '/productos/ups/': { title: 'UPS industrial: respaldo y protección de energía', desc: 'UPS industrial (no break industrial) para proteger cargas críticas. Asesoría técnica y marcas como Eaton, Vertiv y ABB para elegir la solución adecuada.' },
+  '/servicios/': { title: 'Servicios: mantenimiento, reparación e instalación' },
+  '/servicios/instalacion-y-dimensionamiento/': { title: 'Dimensionamiento e instalación de respaldo eléctrico' },
+  '/servicios/instalacion-y-dimensionamiento/plantas-de-emergencia/': { desc: 'Cómo se dimensiona una planta de emergencia: cargas, arranque de motores, autonomía y transferencia. Instalación y puesta en marcha con CBPS.' },
+  '/servicios/mantenimiento/': { title: 'Mantenimiento de plantas de emergencia y UPS' },
+  '/servicios/mantenimiento/plantas-de-emergencia/': { title: 'Mantenimiento de plantas de emergencia' },
+  '/servicios/reparacion-y-modernizacion/': { title: 'Reparación y modernización de equipos de respaldo' },
+  '/servicios/plantas-de-emergencia/igsa/': { title: 'Plantas de emergencia IGSA' },
+  '/servicios/plantas-de-emergencia/planelec/': { h1: 'Plantas de emergencia PLANELEC para empresas e industria' },
+};
+
 // H1, title y desc finales (después de normalizar el H1 rescatado)
 export function ajustesFinales(paginas) {
-  for (const [ruta, c] of Object.entries(POR_PAGINA)) {
+  for (const [ruta, c] of [...Object.entries(POR_PAGINA), ...Object.entries(FASE2)]) {
     const p = paginas[ruta]; if (!p) continue;
     if (c.h1) p.h1 = c.h1;
     if (c.title) p.title = c.title;
