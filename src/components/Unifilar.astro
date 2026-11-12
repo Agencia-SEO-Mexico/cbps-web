@@ -27,10 +27,7 @@ const L = [
     <div><span>Corte en la carga</span><b class="ok">0 ms</b></div>
   </div>
   <svg viewBox="0 0 600 400" role="group" aria-label="Diagrama del sistema de respaldo de CBPS">
-    <defs>
-      <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
-    </defs>
-    {L.map((l) => (<g class={`ln ${l.id}`}><path class="ln__base" d={l.d} /><path class="ln__flow" d={l.d} filter="url(#glow)" /></g>))}
+    {L.map((l) => (<g class={`ln ${l.id}`}><path class="ln__base" d={l.d} /><path class="ln__glow" d={l.d} /><path class="ln__flow" d={l.d} /></g>))}
     {N.map((n) => (
       <a href={u(n.href)} class={`nd nd--${n.id}`} aria-label={`${n.t1} ${n.t2}`}>
         <rect x={n.x} y={n.y} width="172" height="60" rx="8" />
@@ -59,7 +56,13 @@ const L = [
   .ln__base { fill: none; stroke: var(--wire); stroke-width: 3; stroke-dasharray: 2 8; stroke-linecap: round; transition: stroke 400ms ease; }
   .ln__flow { fill: none; stroke: var(--amber); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 10 14; opacity: 0; transition: opacity 400ms ease; }
   .ln.on .ln__base { stroke: #3d8fbf; stroke-dasharray: none; }
+  /* halo fijo bajo la corriente (antes un filtro de desenfoque que se repintaba en cada cuadro) */
+  .ln__glow { fill: none; stroke: var(--amber); stroke-width: 10; stroke-linecap: round; opacity: 0; transition: opacity 400ms ease; }
+  .ln.on .ln__glow { opacity: 0.16; }
+  .ln.slow .ln__glow { opacity: 0.09; }
   .ln.on .ln__flow { opacity: 1; animation: flow 900ms linear infinite; }
+  /* la corriente se mueve solo con el diagrama en pantalla y con la página ya cargada */
+  .uni:not(.is-live) .ln__flow, .uni:not(.is-live) .nd__halo { animation-play-state: paused; }
   .ln.rev .ln__flow { animation-direction: reverse; }
   .ln.slow .ln__flow { animation-duration: 2.4s; stroke-dasharray: 4 20; opacity: 0.75; }
   @keyframes flow { to { stroke-dashoffset: -24; } }
@@ -105,11 +108,15 @@ const L = [
       fig.querySelector('[data-st]').textContent = e.txt; fig.querySelector('[data-sim]').textContent = e.btn;
     };
     const sig = () => orden[(orden.indexOf(fig.dataset.state) + 1) % 3];
-    const auto = () => { clearTimeout(timer); if (manual || !visible || document.hidden) return; timer = setTimeout(() => { pinta(sig()); auto(); }, ESTADOS[fig.dataset.state].ms); };
+    const auto = () => { clearTimeout(timer); if (manual || !visible || !libre || document.hidden) return; timer = setTimeout(() => { pinta(sig()); auto(); }, ESTADOS[fig.dataset.state].ms); };
     pinta('normal');
     // el ciclo automático no se anuncia al lector de pantalla; solo los cambios que pide la persona
     fig.querySelector('[data-sim]').addEventListener('click', () => { manual = true; clearTimeout(timer); fig.querySelector('[data-st]').setAttribute('aria-live', 'polite'); pinta(sig()); });
-    new IntersectionObserver(([en]) => { visible = en.isIntersecting; auto(); }, { threshold: 0.35 }).observe(fig);
+    let libre = false;
+    const vivo = () => fig.classList.toggle('is-live', libre && visible);
+    const ocioso = window.requestIdleCallback || ((fn) => setTimeout(fn, 1200));
+    addEventListener('load', () => ocioso(() => { libre = true; vivo(); auto(); }, { timeout: 2500 }), { once: true });
+    new IntersectionObserver(([en]) => { visible = en.isIntersecting; vivo(); auto(); }, { threshold: 0.1 }).observe(fig);
     document.addEventListener('visibilitychange', auto);
   });
 </script>

@@ -36,7 +36,7 @@ const marcas = [
   ['CSB', '/productos/baterias-industriales/csb/'], ['C&D', '/productos/baterias-industriales/c-and-d/'], ['EnerSys', '/productos/baterias-industriales/enersys/'], ['Kaise', '/productos/baterias-industriales/kaise/'], ['Invermexa', '/productos/baterias-industriales/invermexa/'], ['LTH', '/productos/baterias-industriales/lth/'], ['América', '/productos/baterias-industriales/america/'], ['Trojan', '/productos/baterias-industriales/trojan/'], ['Crown', '/productos/baterias-industriales/crown/'],
   ['STULZ', '/productos/aire-de-precision/stulz/'], ['HiRef', '/productos/aire-de-precision/hiref/'], ['VOGAR', '/productos/reguladores-de-voltaje/vogar/'], ['Power All', '/productos/reguladores-de-voltaje/power-all/'], ['RPSM', '/productos/reguladores-de-voltaje/rpsm/'],
 ];
-// logos recortados en /marcas/ (alto 96 px), uno por marca
+// logos recortados en /marcas/ (alto 96 px); la home usa /marcas/x2/ (76 px = 2× de los 38 px que se muestran)
 const LOGOS = { 'Generac': ['generac', 431], 'PLANELEC': ['planelec', 617], 'Eaton': ['eaton', 343], 'Vertiv': ['vertiv', 388], 'CyberPower': ['cyberpower', 515], 'ABB': ['abb', 250], 'Industronic': ['industronic', 392], 'Powest': ['powest', 386], 'CSB': ['csb', 180], 'C&D': ['c-and-d', 205], 'EnerSys': ['enersys', 186], 'Kaise': ['kaise', 197], 'Crown': ['crown', 126], 'STULZ': ['stulz', 205], 'HiRef': ['hiref', 461], 'VOGAR': ['vogar', 331], 'Power All': ['power-all', 269], 'RPSM': ['rpsm', 98], 'IGSA': ['igsa', 95], 'LTH': ['lth', 237], 'América': ['america', 418], 'Trojan': ['trojan', 279], 'Invermexa': ['invermexa', 621] };
 const filaA = marcas.slice(0, 12), filaB = marcas.slice(12);
 const problema = 'Hay operaciones donde un microcorte representa minutos de pérdida. En otras significa detener producción, comprometer información o poner en riesgo la continuidad. La diferencia entre una solución que parcha y un sistema que protege está en diseñarlo completo. Eso es lo que hacemos en CBPS.';
@@ -70,12 +70,12 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: 'C
       <p>Existen decenas de marcas para cada segmento. En CBPS solo trabajamos con las que consideramos comprometidas con los clientes y que vale la pena recomendar por experiencia, calidad y servicio.</p>
     </div>
     <div class="marq" style="--dur:46s">
-      <ul class="marq__track">{filaA.map(([n, r]) => <li><a href={u(r)} class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/${LOGOS[n][0]}.webp`)} alt={n} width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</a></li>)}</ul>
-      <ul class="marq__track" aria-hidden="true">{filaA.map(([n]) => <li><span class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/${LOGOS[n][0]}.webp`)} alt="" width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</span></li>)}</ul>
+      <ul class="marq__track">{filaA.map(([n, r]) => <li><a href={u(r)} class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/x2/${LOGOS[n][0]}.webp`)} loading="lazy" alt={n} width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</a></li>)}</ul>
+      <ul class="marq__track" aria-hidden="true">{filaA.map(([n]) => <li><span class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/x2/${LOGOS[n][0]}.webp`)} loading="lazy" alt="" width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</span></li>)}</ul>
     </div>
     <div class="marq marq--rev" style="--dur:40s">
-      <ul class="marq__track">{filaB.map(([n, r]) => <li><a href={u(r)} class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/${LOGOS[n][0]}.webp`)} alt={n} width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</a></li>)}</ul>
-      <ul class="marq__track" aria-hidden="true">{filaB.map(([n]) => <li><span class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/${LOGOS[n][0]}.webp`)} alt="" width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</span></li>)}</ul>
+      <ul class="marq__track">{filaB.map(([n, r]) => <li><a href={u(r)} class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/x2/${LOGOS[n][0]}.webp`)} loading="lazy" alt={n} width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</a></li>)}</ul>
+      <ul class="marq__track" aria-hidden="true">{filaB.map(([n]) => <li><span class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/x2/${LOGOS[n][0]}.webp`)} loading="lazy" alt="" width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</span></li>)}</ul>
     </div>
   </section>
 
@@ -208,13 +208,15 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: 'C
   .hero__fig::before { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(150deg, rgba(143, 208, 240, 0.85), transparent 35%, transparent 70%, rgba(95, 209, 127, 0.5)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
   /* entrada única y orquestada del héroe: el titular se «expande» como una barra que se energiza */
   @media (prefers-reduced-motion: no-preference) {
-    .hero__txt > * { animation: up 760ms var(--ease-out) both; }
-    .hero h1 { animation: stretch 1300ms 80ms var(--ease-out) both; }
+    .hero__txt > :not(h1) { animation: up 760ms var(--ease-out) both; }
     .hero__txt > *:nth-child(3) { animation-delay: 200ms; } .hero__txt > *:nth-child(4) { animation-delay: 280ms; } .hero__txt > *:nth-child(5) { animation-delay: 360ms; }
     .hero__fig { animation: figIn 1000ms 220ms var(--ease-out) both; }
     .hero::after { animation: wire 1600ms 300ms var(--ease-io) both; }
   }
   @keyframes figIn { from { opacity: 0; transform: translateY(26px) scale(0.97); } }
+
+  /* bandas bajo el pliegue: el navegador no las calcula ni pinta hasta que se acercan a la pantalla */
+  .band { content-visibility: auto; contain-intrinsic-size: auto 820px; }
 
   /* ---------- marcas en marquesina (pausa al pasar o enfocar) ---------- */
   .brandband { background: var(--surface); padding-block: clamp(48px, 6vw, 72px); border-bottom: 1px solid var(--line); overflow: hidden; }
@@ -225,7 +227,7 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: 'C
   .marq { --gap: 12px; display: flex; gap: var(--gap); width: 100%; padding-block: 6px; -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
   .marq__track { flex: none; display: flex; gap: var(--gap); list-style: none; margin: 0; padding: 0; min-width: 100%; justify-content: space-around; animation: marq var(--dur) linear infinite; }
   .marq--rev .marq__track { animation-direction: reverse; }
-  .marq:hover .marq__track, .marq:focus-within .marq__track { animation-play-state: paused; }
+  .marq:hover .marq__track, .marq:focus-within .marq__track, .marq:not(.is-live) .marq__track { animation-play-state: paused; }
   @keyframes marq { to { transform: translateX(calc(-100% - var(--gap))); } }
   .marq a, .marq span { display: inline-flex; align-items: center; min-height: 72px; padding: 10px 22px; border: 1px solid var(--line); border-radius: var(--r-s); background: #fff; color: var(--ink); text-decoration: none; white-space: nowrap; font: 700 1.08rem var(--f-display); font-stretch: 116%; letter-spacing: 0.01em; transition: border-color 200ms ease, color 200ms ease, background-color 200ms ease, transform 260ms var(--ease-out); }
   .marq a:hover, .marq a:focus-visible { border-color: var(--blue); color: var(--blue-deep); background: #fff; transform: translateY(-2px); }

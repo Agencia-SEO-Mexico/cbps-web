@@ -1,0 +1,19 @@
+---
+// Imagen de /img con AVIF/WebP responsive cuando existen las variantes de lanzamiento/generar-imagenes.mjs
+// (imágenes de más de 560 px). Si no hay variantes, un <img> normal.
+import { existsSync } from 'node:fs';
+import { u } from '../lib/site.js';
+const { src, alt = '', w, h, prioridad = false, sizes = '(min-width: 900px) 560px, 100vw' } = Astro.props;
+const base = src.replace(/\.webp$/, '');
+const hay = existsSync(`public/img/r/${base}.avif`);
+const r = (x) => u(`/img/r/${x}`);
+const attrs = prioridad ? { fetchpriority: 'high', decoding: 'async' } : { loading: 'lazy', decoding: 'async' };
+---
+{hay ? (
+  <picture>
+    <source type="image/avif" srcset={`${r(base + '-560.avif')} 560w, ${r(base + '.avif')} ${w}w`} sizes={sizes} />
+    <img src={u('/img/' + src)} srcset={`${r(base + '-560.webp')} 560w, ${u('/img/' + src)} ${w}w`} sizes={sizes} alt={alt} width={w} height={h} {...attrs} />
+  </picture>
+) : (
+  <img src={u('/img/' + src)} alt={alt} width={w} height={h} {...attrs} />
+)}

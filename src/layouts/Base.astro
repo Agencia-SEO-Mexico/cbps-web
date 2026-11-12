@@ -7,7 +7,7 @@ import Icono from '../components/Icono.astro';
 import fontA from '../assets/fonts/archivo-wdth.woff2?url';
 import fontB from '../assets/fonts/plex-400.woff2?url';
 
-const { title, desc = '', ruta = '/', canon = null, schema = [], ogImage = '/og-cbps.jpg', tipo = 'website', noindex = false } = Astro.props;
+const { title, desc = '', ruta = '/', canon = null, schema = [], ogImage = '/og-cbps.jpg', tipo = 'website', noindex = false, lcp = null } = Astro.props;
 // la marca solo una vez: si el título ya dice CBPS no se repite
 const fullTitle = ruta === '/' || /\bCBPS\b/.test(title) ? title : `${title} | CBPS`;
 // Vista previa: canonical a la URL equivalente que existe HOY en cbps.com.mx.
@@ -48,6 +48,7 @@ const GTM = 'GTM-TDQRDQCG';
   <meta name="theme-color" content="#0c1b26" />
   <link rel="icon" href={u('/favicon.png')} type="image/png" />
   <link rel="apple-touch-icon" href={u('/apple-touch-icon.png')} />
+  {lcp && <link rel="preload" as="image" type="image/avif" imagesrcset={lcp.srcset} imagesizes={lcp.sizes} fetchpriority="high" />}
   <link rel="preload" href={fontA} as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={fontB} as="font" type="font/woff2" crossorigin />
   <script is:inline>document.documentElement.classList.add('js');</script>
@@ -129,7 +130,7 @@ const GTM = 'GTM-TDQRDQCG';
 
     // ----- foco de luz que sigue al cursor en las tarjetas -----
     if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      $$('[data-spot]').forEach((el) => el.addEventListener('pointermove', (e) => { const r = el.getBoundingClientRect(); el.style.setProperty('--mx', `${e.clientX - r.left}px`); el.style.setProperty('--my', `${e.clientY - r.top}px`); }));
+      $$('[data-spot]').forEach((el) => { let raf = 0, ev; el.addEventListener('pointermove', (e) => { ev = e; if (raf) return; raf = requestAnimationFrame(() => { raf = 0; const r = el.getBoundingClientRect(); el.style.setProperty('--mx', `${ev.clientX - r.left}px`); el.style.setProperty('--my', `${ev.clientY - r.top}px`); }); }); });
     }
 
     // ----- escalonado automático de grupos -----
@@ -147,6 +148,16 @@ const GTM = 'GTM-TDQRDQCG';
         map.forEach((_, id) => { const s = document.getElementById(id); if (s) io2.observe(s); });
       }
     } else { $$('.rv, .rv-clip').forEach((el) => el.classList.add('is-in')); }
+
+    // ----- marquesina de marcas: solo se mueve en pantalla y con la página ya cargada -----
+    const marqs = $$('.marq');
+    if (marqs.length && 'IntersectionObserver' in window) {
+      const ocioso = window.requestIdleCallback || ((fn) => setTimeout(fn, 1200));
+      addEventListener('load', () => ocioso(() => {
+        const io3 = new IntersectionObserver((ents) => ents.forEach((en) => en.target.classList.toggle('is-live', en.isIntersecting)));
+        marqs.forEach((m) => io3.observe(m));
+      }, { timeout: 2500 }), { once: true });
+    } else marqs.forEach((m) => m.classList.add('is-live'));
 
     // ----- barra de contacto móvil: aparece tras el primer pantallazo -----
     const mbar = $('#mbar');

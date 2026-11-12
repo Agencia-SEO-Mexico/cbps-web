@@ -3,6 +3,8 @@ import Base from '../layouts/Base.astro';
 import Secciones from '../components/Secciones.astro';
 import Cotizar from '../components/Cotizar.astro';
 import Icono from '../components/Icono.astro';
+import Foto from '../components/Foto.astro';
+import { existsSync } from 'node:fs';
 import { PAGINAS, POSTS, VIEJAS } from '../lib/paginas.js';
 import { ARBOL, migas, hermanos, hijos, LINEAS, SERVICIOS } from '../lib/nav.js';
 import { u, PROD, PREVIEW, waCotizar, waOrientacion } from '../lib/site.js';
@@ -47,6 +49,9 @@ if (!puente) {
   if (esProducto || esServicio) schema.push({ '@context': 'https://schema.org', '@type': 'Service', name: p.h1, description: p.desc, serviceType: nombreCorto, provider: { '@id': `${PROD}/#negocio` }, areaServed: { '@type': 'Country', name: 'México' }, url: `${PROD}${ruta}` });
   if (esPost) schema.push({ '@context': 'https://schema.org', '@type': 'BlogPosting', headline: p.h1, description: p.desc, datePublished: p.published || undefined, dateModified: p.modified || p.published || undefined, author: { '@type': 'Organization', name: 'CBPS' }, publisher: { '@id': `${PROD}/#negocio` }, mainEntityOfPage: `${PROD}${ruta}` });
 }
+// imagen del héroe (LCP en móvil): precarga de su AVIF responsive si existe
+const lcpBase = p?.media?.src?.replace(/\.webp$/, '');
+const lcp = lcpBase && existsSync(`public/img/r/${lcpBase}.avif`) ? { srcset: `${u('/img/r/' + lcpBase + '-560.avif')} 560w, ${u('/img/r/' + lcpBase + '.avif')} ${p.media.w}w`, sizes: '(min-width: 900px) 40vw, 92vw' } : null;
 const fecha = (iso) => iso ? new Date(iso).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Mexico_City' }) : '';
 const etiqueta = esPost ? 'Blog Electric Leaders' : esProducto ? (linea && linea.ruta !== ruta ? linea.nombre : 'Productos') : esServicio ? 'Servicios' : 'CBPS';
 ---
@@ -64,7 +69,7 @@ const etiqueta = esPost ? 'Blog Electric Leaders' : esProducto ? (linea && linea
     <body><p>Esta página ahora está en <a href={u(puente)}>{`${PROD}${puente}`}</a>.</p></body>
   </html>
 ) : (
-<Base title={p.title} desc={p.desc} ruta={ruta} canon={p.canon} schema={schema} tipo={esPost ? 'article' : 'website'} noindex={!!p.noindex}>
+<Base title={p.title} desc={p.desc} ruta={ruta} canon={p.canon} schema={schema} tipo={esPost ? 'article' : 'website'} noindex={!!p.noindex} lcp={lcp}>
   <div class="phero">
     <div class="wrap">
       <nav class="crumbs" aria-label="Migas de pan"><ol>{crumbs.map((c, i) => <li>{i < crumbs.length - 1 ? <a href={u(c.ruta)}>{c.nombre}</a> : <span aria-current="page">{c.nombre}</span>}</li>)}</ol></nav>
@@ -80,7 +85,7 @@ const etiqueta = esPost ? 'Blog Electric Leaders' : esProducto ? (linea && linea
             </div>
           )}
         </div>
-        {p.media && <div class="phero__media"><img src={u('/img/' + p.media.src)} alt={p.media.alt || p.h1} width={p.media.w} height={p.media.h} fetchpriority="high" decoding="async" /></div>}
+        {p.media && <div class="phero__media"><Foto src={p.media.src} alt={p.media.alt || p.h1} w={p.media.w} h={p.media.h} prioridad sizes="(min-width: 900px) 40vw, 92vw" /></div>}
       </div>
     </div>
   </div>
