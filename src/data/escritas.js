@@ -9,7 +9,7 @@ export const ESCRITAS = {
   '/servicios/': {
     canon: '/servicios-electricos-para-cargas-criticas-cbps/',
     title: 'Servicios para cargas críticas: mantenimiento, reparación e instalación',
-    desc: 'Servicios de CBPS para plantas de emergencia, UPS y baterías: mantenimiento, reparación y modernización, dimensionamiento e instalación, sustitución de bancos y renta.',
+    desc: 'Servicios de CBPS para plantas de emergencia, UPS y baterías: mantenimiento, reparación, dimensionamiento, instalación, sustitución de bancos y renta.',
     h1: 'Servicios para que tu respaldo eléctrico funcione cuando lo necesitas',
     lead: 'En CBPS no solo te ayudamos a elegir tus equipos. También contamos con servicios técnicos para mantener tus sistemas de respaldo, protección y continuidad eléctrica en condiciones adecuadas de operación.',
     sections: [
@@ -31,7 +31,7 @@ export const ESCRITAS = {
   '/servicios/mantenimiento/': {
     canon: '/servicios-electricos-para-cargas-criticas-cbps/',
     title: 'Mantenimiento preventivo y correctivo de plantas de emergencia y UPS',
-    desc: 'Mantenimiento preventivo y correctivo de plantas de emergencia y sistemas UPS en sitio, pruebas de funcionamiento, atención de emergencias y pólizas de mantenimiento.',
+    desc: 'Mantenimiento preventivo y correctivo de plantas de emergencia y UPS en sitio: pruebas de funcionamiento, atención de emergencias y pólizas.',
     h1: 'Mantenimiento de plantas de emergencia y UPS',
     lead: 'Un equipo de respaldo sin mantenimiento puede fallar justo el día que la red se cae. El mantenimiento preventivo permite revisar componentes, detectar condiciones anormales y mantener el equipo preparado para cuando realmente sea necesario.',
     sections: [
@@ -56,7 +56,7 @@ export const ESCRITAS = {
   '/servicios/mantenimiento/plantas-de-emergencia/': {
     canon: '/home/electricas/plantas-de-emergencia/',
     title: 'Mantenimiento de plantas de emergencia preventivo y correctivo',
-    desc: 'Mantenimiento preventivo y correctivo de plantas de emergencia: revisión de componentes, pruebas de funcionamiento, transferencia y pólizas de mantenimiento con CBPS.',
+    desc: 'Mantenimiento preventivo y correctivo de plantas de emergencia: revisión de componentes, pruebas de funcionamiento, transferencia y pólizas.',
     h1: 'Mantenimiento de plantas de emergencia',
     lead: 'Una planta de emergencia debe recibir mantenimiento al menos una vez al año; en operación crítica o uso frecuente, cada seis meses o según sus horas de trabajo. CBPS lo realiza en sitio, con pruebas de funcionamiento y revisión del sistema de transferencia.',
     sections: [

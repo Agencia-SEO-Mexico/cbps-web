@@ -38,7 +38,7 @@ export const LINEAS = [
   { ruta: `${P}/convertidores-de-frecuencia/`, nombre: 'Convertidores de frecuencia', corto: 'Convertidores',
     resumen: 'Control de velocidad de motores para bombeo, HVAC y procesos industriales.',
     hijos: [ { ruta: `${P}/convertidores-de-frecuencia/abb/`, nombre: 'ABB' }, { ruta: `${P}/convertidores-de-frecuencia/industronic/`, nombre: 'Industronic' } ] },
-  { ruta: `${P}/magic-battery/`, nombre: 'Magic Battery', corto: 'Magic Battery', resumen: 'Respaldo de energía para el hogar y pequeños negocios.', hijos: [] },
+  { ruta: `${P}/magic-battery/`, nombre: 'Magic Battery', corto: 'Magic Battery', resumen: 'Respaldo de energía sin combustible para cargas esenciales de pequeñas instalaciones.', hijos: [] },
 ];
 export const SERVICIOS = [
   { ruta: `${S}/plantas-de-emergencia/`, nombre: 'Plantas de emergencia', corto: 'Plantas',
