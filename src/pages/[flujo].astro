@@ -1,0 +1,207 @@
+---
+// Flujo de trabajo del sitio nuevo para la revisión de CBPS (pedido tras la llamada del 19-nov):
+// quién hace qué, de la búsqueda en Google a la propuesta. Solo existe en la vista previa.
+import Base from '../layouts/Base.astro';
+import Cotizar from '../components/Cotizar.astro';
+import { u, PREVIEW } from '../lib/site.js';
+import { LINEAS, SERVICIOS } from '../lib/nav.js';
+import { PAGINAS, POSTS } from '../lib/paginas.js';
+
+export function getStaticPaths() {
+  return PREVIEW ? [{ params: { flujo: 'flujo' } }] : [];
+}
+
+const marcas = new Set(LINEAS.flatMap((l) => l.hijos.flatMap((h) => (h.hijos ? h.hijos : [h])).map((m) => m.nombre))).size;
+
+const CARRILES = [
+  { id: 'cli', nombre: 'Cliente' },
+  { id: 'web', nombre: 'Sitio web' },
+  { id: 'cbps', nombre: 'Equipo CBPS' },
+  { id: 'asm', nombre: 'Agencia SEO México' },
+];
+// col = columna del diagrama (0-6); búsquedas y volúmenes: Semrush MX del plan SEO (nov-2026)
+const PASOS = [
+  { id: 1, c: 'cli', col: 0, t: 'Busca en Google', s: ['plantas de emergencia,', 'banco de baterías,', 'mantenimiento de UPS…'], m: 'Por ejemplo «plantas de emergencia» (2,900 búsquedas al mes en México), «banco de baterías» (720) o «mantenimiento de UPS» (560).' },
+  { id: 2, c: 'web', col: 1, t: 'Llega a la página', s: [`${SERVICIOS.length} servicios, ${LINEAS.length} líneas`, `y ${marcas} marcas, cada una`, 'con su propia página'], m: `La que responde su búsqueda: ${SERVICIOS.length} servicios, ${LINEAS.length} líneas y ${marcas} marcas, cada una con su propia página.`, ruta: '/servicios/plantas-de-emergencia/' },
+  { id: 3, c: 'cli', col: 2, t: '¿Sabe qué necesita?', s: [], rombo: true },
+  { id: 4, c: 'web', col: 2, t: 'Lo orienta', s: [`${POSTS.length} guías técnicas y el`, 'botón «Hablar con', 'un ingeniero»'], m: `${POSTS.length} guías técnicas y el botón «Hablar con un ingeniero».`, ruta: '/blog/' },
+  { id: 5, c: 'cli', col: 3, t: 'Pide cotización', s: ['formulario, WhatsApp', 'o teléfono'], m: 'Por formulario, WhatsApp o teléfono.', ruta: '/contacto/' },
+  { id: 6, c: 'web', col: 4, t: 'Registra la solicitud', s: ['y la marca con su área', '(9 áreas y «Otro»)'], m: 'Y la marca con su área: hay 9 y la opción «Otro».' },
+  { id: 7, c: 'cbps', col: 5, t: 'Le llega al área', s: ['aviso al correo o CRM', 'de esa área'], m: 'Aviso al correo o CRM de esa área.' },
+  { id: 8, c: 'cbps', col: 6, t: 'Un ingeniero responde', s: ['con propuesta técnica,', 'no con un catálogo'], m: 'Con una propuesta técnica, no con un catálogo.' },
+  { id: 9, c: 'cli', col: 6, t: 'Recibe su propuesta', s: [], fin: true },
+  { id: 10, c: 'asm', col: 4, t: 'Mide cada solicitud', s: ['de qué página y qué', 'búsqueda vino', '(Google Analytics)'], m: 'De qué página y de qué búsqueda vino, en Google Analytics.' },
+  { id: 11, c: 'asm', col: 2, t: 'Mejora lo que vende', s: ['refuerza las páginas', 'que traen clientes'], m: 'Cada mes refuerza las páginas que traen clientes.' },
+];
+for (const p of PASOS) if (p.ruta && !PAGINAS[p.ruta]) throw new Error(`flujo: no existe ${p.ruta}`);
+
+// geometría del diagrama (escritorio)
+const W = 1430, LANE = 176, TOP = 0, LBL = 180, PITCH = 176, BW = 156, BH = 112;
+const fila = Object.fromEntries(CARRILES.map((c, i) => [c.id, i]));
+const cx = (col) => LBL + 12 + PITCH / 2 + col * PITCH;
+const cy = (c) => TOP + LANE / 2 + fila[c] * LANE;
+const H = TOP + LANE * CARRILES.length;
+const N = Object.fromEntries(PASOS.map((p) => [p.id, { ...p, x: cx(p.col), y: cy(p.c) }]));
+const L = (id) => N[id].x - BW / 2, R = (id) => N[id].x + BW / 2, T = (id) => N[id].y - BH / 2, B = (id) => N[id].y + BH / 2;
+const RD = 50; // medio alto del rombo
+// flechas ortogonales; t = etiqueta, tx/ty = dónde va
+const FLECHAS = [
+  { d: `M${N[1].x},${B(1)} V${N[2].y} H${L(2)}` },
+  { d: `M${N[2].x},${T(2)} V${N[3].y} H${N[3].x - 62}` },
+  { d: `M${N[3].x + 62},${N[3].y} H${L(5)}`, t: 'Sí', tx: N[3].x + 76, ty: N[3].y - 10 },
+  { d: `M${N[3].x},${N[3].y + RD} V${T(4)}`, t: 'No', tx: N[3].x + 10, ty: N[3].y + RD + 30 },
+  { d: `M${R(4)},${N[4].y} H${N[5].x} V${B(5)}`, t: 'ya decidió', tx: R(4) + 12, ty: N[4].y - 10 },
+  { d: `M${R(5)},${N[5].y} H${N[6].x} V${T(6)}` },
+  { d: `M${R(6)},${N[6].y} H${N[7].x} V${T(7)}` },
+  { d: `M${R(7)},${N[7].y} H${L(8)}` },
+  { d: `M${N[8].x},${T(8)} V${B(9)}` },
+  { d: `M${N[6].x},${B(6)} V${T(10)}`, t: 'cada solicitud', tx: N[6].x - 10, ty: cy('cbps') + 4, fin: true },
+  { d: `M${L(10)},${N[10].y} H${R(11)}`, t: 'cada mes', tx: R(11) + 14, ty: N[10].y - 10, ciclo: true },
+  { d: `M${L(11)},${N[11].y} H${N[2].x} V${B(2)}`, t: 'más clientes', tx: N[2].x + 10, ty: cy('cbps') + 4, ciclo: true },
+];
+const titulo = (p) => (p.t.length > 15 && !p.rombo ? p.t.replace(/^(\S+ \S+) /, '$1\n').split('\n') : [p.t]);
+---
+<Base title="Flujo de trabajo del sitio nuevo" desc="Quién hace qué en el sitio nuevo de CBPS, desde la búsqueda en Google hasta la propuesta técnica." ruta="/flujo/" noindex>
+  <div class="phero">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Migas de pan"><ol><li><a href={u('/')}>Inicio</a></li><li><span aria-current="page">Flujo de trabajo</span></li></ol></nav>
+      <div class="phero__grid solo">
+        <div>
+          <h1>Flujo de trabajo del sitio nuevo</h1>
+          <p class="lead">Quién hace qué desde que alguien busca en Google hasta que recibe la propuesta de CBPS. Los recuadros con enlace abren la página real.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="fl" aria-labelledby="fl-t">
+    <div class="wrap">
+      <h2 id="fl-t" class="sr">Diagrama del flujo</h2>
+
+      <figure class="fl__svg">
+        <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="fl-desc">
+          <desc id="fl-desc">El cliente busca en Google, llega a la página que responde su búsqueda; si no sabe qué necesita, el sitio lo orienta. Pide cotización, el sitio registra la solicitud con su área, el área de CBPS recibe el aviso y un ingeniero responde con una propuesta. Agencia SEO México mide cada solicitud y cada mes refuerza las páginas que traen clientes.</desc>
+          <defs>
+            <marker id="pf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="pf" /></marker>
+            <marker id="pc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="pc" /></marker>
+          </defs>
+          {CARRILES.map((c, i) => (
+            <g class={`carril carril--${c.id}`}>
+              <rect x="0" y={TOP + i * LANE} width={W} height={LANE} />
+              <text x="20" y={TOP + i * LANE + LANE / 2 + 6} class="carril__n">{c.nombre}</text>
+            </g>
+          ))}
+          {FLECHAS.map((f) => (
+            <g class={f.ciclo ? 'fx fx--ciclo' : 'fx'}>
+              <path d={f.d} marker-end={f.ciclo ? 'url(#pc)' : 'url(#pf)'} />
+              {f.t && <text x={f.tx} y={f.ty} text-anchor={f.fin ? 'end' : 'start'}>{f.t}</text>}
+            </g>
+          ))}
+          {PASOS.map((p) => {
+            const n = N[p.id];
+            const lineas = titulo(p);
+            const alto = lineas.length * 21 + p.s.length * 17 + (p.s.length ? 6 : 0);
+            let y = n.y - alto / 2 + 15;
+            const cuerpo = (
+              <g class={`nodo nodo--${p.c}${p.fin ? ' nodo--fin' : ''}${p.rombo ? ' nodo--rombo' : ''}`}>
+                {p.rombo
+                  ? <polygon points={`${n.x},${n.y - RD} ${n.x + 62},${n.y} ${n.x},${n.y + RD} ${n.x - 62},${n.y}`} />
+                  : <rect x={n.x - BW / 2} y={n.y - BH / 2} width={BW} height={BH} rx="10" />}
+                {p.rombo
+                  ? <text x={n.x} y={n.y - 3} class="nodo__t nodo__t--r"><tspan x={n.x} dy="0">¿Sabe qué</tspan><tspan x={n.x} dy="17">necesita?</tspan></text>
+                  : <text x={n.x} class="nodo__t">{lineas.map((l, i) => <tspan x={n.x} y={y + i * 21}>{l}</tspan>)}</text>}
+                {!p.rombo && p.s.length > 0 && <text x={n.x} class="nodo__s">{p.s.map((l, i) => <tspan x={n.x} y={y + lineas.length * 21 + 5 + i * 17}>{l}</tspan>)}</text>}
+              </g>
+            );
+            return p.ruta ? <a href={u(p.ruta)} class="nodo__a">{cuerpo}</a> : cuerpo;
+          })}
+        </svg>
+        <figcaption>Búsquedas al mes en México (Semrush): «plantas de emergencia» 2,900 · «banco de baterías» 720 · «mantenimiento de UPS» 560.</figcaption>
+      </figure>
+
+      <ol class="fl__mov" aria-label="Flujo paso a paso">
+        {PASOS.map((p) => (
+          <li class={`mv mv--${p.c}${p.fin ? ' mv--fin' : ''}`}>
+            <span class="mv__c">{CARRILES.find((c) => c.id === p.c).nombre}</span>
+            {p.ruta ? <a class="mv__t" href={u(p.ruta)}>{p.t}</a> : <strong class="mv__t">{p.t}</strong>}
+            {(p.m || p.s.length > 0) && <span class="mv__s">{p.m || p.s.join(' ')}</span>}
+            {p.rombo && <span class="mv__s">Sí: pide cotización. No: el sitio lo orienta primero.</span>}
+            {p.id === 11 && <span class="mv__s">Y el ciclo vuelve a «Llega a la página».</span>}
+          </li>
+        ))}
+      </ol>
+
+      <div class="fl__notas">
+        <p>Si el formulario falla, el cliente sigue por WhatsApp o correo: no se pierde ninguna solicitud. Antes del lanzamiento definimos con ustedes a qué correo o CRM llega cada área.</p>
+        <h2>Para revisar</h2>
+        <ul>
+          <li>¿El flujo se parece a cómo atienden hoy una solicitud?</li>
+          <li>¿Falta alguna línea, marca o servicio?</li>
+          <li>¿A qué correo o persona debe llegar cada área?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <Cotizar ruta="/flujo/" />
+</Base>
+
+<style>
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .fl { padding-block: clamp(40px, 6vw, 72px) clamp(56px, 8vw, 96px); }
+
+  /* diagrama (escritorio) */
+  .fl__svg { display: none; position: relative; left: 50%; transform: translateX(-50%); width: min(1430px, calc(100vw - 40px)); margin: 0; border-radius: var(--r-l); overflow: hidden; box-shadow: var(--shadow); background: var(--surface); }
+  .fl__svg svg { display: block; width: 100%; height: auto; font-family: var(--f-body); }
+  .carril rect { stroke: #fff; stroke-width: 3; }
+  .carril--cli rect { fill: #e1eef6; }
+  .carril--web rect { fill: #eef3f6; }
+  .carril--cbps rect { fill: #e3f1e6; }
+  .carril--asm rect { fill: #fbf0d9; }
+  .carril__n { font: 600 16px var(--f-display); fill: var(--ink); }
+  .fl__svg figcaption { padding: 12px 20px 14px; font-size: var(--step--1); color: var(--steel); border-top: 1px solid var(--line); }
+  .fx path { fill: none; stroke: var(--steel); stroke-width: 2; }
+  .fx text { font-size: 14px; font-weight: 600; fill: var(--steel); }
+  .fx--ciclo path { stroke: #9a6512; stroke-dasharray: 7 5; }
+  .fx--ciclo text { fill: #8a5a10; }
+  .pf { fill: var(--steel); }
+  .pc { fill: #9a6512; }
+  .nodo rect, .nodo polygon { fill: #fff; stroke: var(--blue); stroke-width: 2; }
+  .nodo--web rect { fill: var(--night); stroke: var(--night); }
+  .nodo--cbps rect { stroke: var(--green); }
+  .nodo--asm rect { stroke: #c98a1c; }
+  .nodo--fin rect { fill: var(--green-deep); stroke: var(--green-deep); }
+  .nodo--rombo polygon { fill: #fff; stroke: var(--blue); }
+  .nodo__t { font: 600 17px var(--f-display); fill: var(--ink); text-anchor: middle; }
+  .nodo__s { font-size: 13px; fill: var(--steel); text-anchor: middle; }
+  .nodo--web .nodo__t, .nodo--fin .nodo__t { fill: #fff; }
+  .nodo--web .nodo__s { fill: var(--on-night-2); }
+  .nodo__a .nodo rect { transition: stroke 160ms ease, transform 160ms var(--ease-out); }
+  .nodo__a:hover .nodo__t { text-decoration: underline; }
+  .nodo__a:focus-visible { outline: 3px solid var(--blue); }
+
+  /* móvil: el mismo flujo en vertical */
+  .fl__mov { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; }
+  .mv { position: relative; display: grid; gap: 3px; padding: 14px 16px 14px 18px; margin-left: 14px; border-left: 3px solid var(--blue); background: var(--surface); }
+  .mv + .mv { margin-top: 22px; }
+  .mv + .mv::before { content: ''; position: absolute; left: 20px; top: -22px; height: 22px; width: 2px; background: var(--steel); }
+  .mv--web { border-left-color: var(--night); background: var(--night); color: var(--on-night); }
+  .mv--cbps { border-left-color: var(--green); }
+  .mv--asm { border-left-color: #c98a1c; background: #fbf0d9; }
+  .mv--fin { border-left-color: var(--green-deep); background: var(--green-deep); color: #fff; }
+  .mv__c { font-size: var(--step--1); color: var(--steel); }
+  .mv--web .mv__c, .mv--fin .mv__c { color: var(--on-night-2); }
+  .mv__t { font: 600 var(--step-1)/1.25 var(--f-display); color: inherit; }
+  a.mv__t { color: var(--blue-deep); }
+  .mv--web a.mv__t { color: var(--sky); }
+  .mv__s { font-size: var(--step--1); line-height: 1.45; }
+
+  .fl__notas { margin-top: 32px; max-width: 70ch; }
+  .fl__notas p { color: var(--steel); line-height: 1.55; }
+  .fl__notas h2 { font-size: var(--step-2); margin-top: 28px; }
+  .fl__notas ul { margin-top: 12px; padding-left: 1.2em; display: grid; gap: 8px; }
+
+  @media (min-width: 900px) {
+    .fl__svg { display: block; }
+    .fl__mov { display: none; }
+  }
+</style>
