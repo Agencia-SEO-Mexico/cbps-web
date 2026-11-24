@@ -30,7 +30,7 @@ Mientras `PREVIEW` no sea `false` (por defecto es vista previa):
 3. Conectar el formulario al servicio del hosting (Netlify Forms u otro) con un buzón por división
    (matriz pendiente de CBPS). Hoy el formulario valida en la página y abre un modal propio con
    envío por WhatsApp o por correo; no usa ningún servidor.
-4. Instalar el contenedor de Google Tag Manager `GTM-TDQRDQCG` en `src/layouts/Base.astro` y
+4. Instalar el contenedor de Google Tag Manager `GTM-MJQ86GP6` (cuenta propia «CBPS») en `src/layouts/Base.astro` y
    quitar Site Kit y el gtag manual del WordPress actual. Los clics ya empujan eventos a
    `dataLayer`: `contacto_whatsapp`, `contacto_telefono`, `form_listo` (solo con el formulario válido) y,
    en el modal, `contacto_form_whatsapp` y `contacto_form_correo` (el envío real; marcar esos como evento clave).
