@@ -60,7 +60,8 @@ export const REEMPLAZOS = [
   [/^La configuración de cuchilla\. Las normas NEMA/g, 'Configuración de clavija de vuelta: las normas NEMA'],
   [/^¿Baterías es mejor en serie o paralelo\?$/g, '¿Baterías en serie o en paralelo?'],
   [/(\d)años/g, '$1 años'],
-  [/(?<![\w.@/-])cbps(?![\w.@-])/g, 'CBPS'], // la marca en minúscula (fuera de correos y dominios)
+  [/(?<![\w.@/-])cbps(?![\w.@-])/g, 'CBPS'],
+  [/(\d) ?%/g, '$1\u00a0%'], // auditoría CBPS (reporte 05): «99 %» // la marca en minúscula (fuera de correos y dominios)
 ];
 
 // 2) Bloques que se quitan en todo el sitio (texto de plantilla Divi, cifras de experiencia que se contradicen, restos sueltos).
@@ -76,12 +77,14 @@ const tituloSeccion = (re) => (s) => re.test(s.h || '');
 const bloque = (re) => (b) => re.test(b.x || b.q || '');
 
 export const POR_PAGINA = {
-  '/servicios/plantas-de-emergencia/': {
+  '/productos/plantas-de-emergencia/': {
     // promo «últimas 3 plantas premium» (landing del 28-jul-2026, existencias, bonos y vino sin confirmar para noviembre)
     seccionesFuera: [/^Nos quedan pocas Unidades/i, /^TODAS LAS CONFIGURACIONES/i, /^DISPONIBLE EN TRES CAPACIDADES/i, /^Venta de planta de \d+ kW/i,
       /^Conoce el precio especial de lanzamiento/i, /^Inventario limitado/i, /^ASEGURA LA CONTINUIDAD DE TU OPERACIÓN$/, /^¡SEGURO TE CONVIENE/i,
       /^¿TODAVÍA TE QUEDAN DUDAS/i, /^¡NO HAY MÁS PRETEXTOS/i, /^¡QUIERO COMPRAR/i],
     desc: 'Plantas de emergencia y plantas eléctricas diésel para empresas e industria. Te ayudamos a elegir la capacidad correcta ante cortes de energía.',
+
+    reemplazos: [[/^Controles DeepSea$/, 'Accesorios: controladores DeepSea']], // reporte de observaciones 2: DeepSea como accesorio de plantas
   },
   '/politica-privacidad/': {
     // texto por defecto de WordPress (comentarios, Gravatar, cuentas, spam): en un sitio estático no aplica
@@ -112,6 +115,8 @@ export const POR_PAGINA = {
     bloquesFuera: [/^“Gracias a CBPS, hemos podido mantener/, /^“La renta de UPS con CBPS ha sido/, /^Monitoreo Continuo$/, /^Con tecnología de monitoreo en tiempo real/],
     seccionHAnula: [/^Testimonios de Clientes$/],
     desc: 'Renta y financiamiento de sistemas UPS, pólizas anuales de mantenimiento y consultoría para proteger las cargas eléctricas críticas de tu empresa.',
+
+    h1: 'Promociones: renta y financiamiento de UPS y pólizas de mantenimiento', // la página solo trae esas ofertas (revisión editorial 25-nov)
   },
   '/libro-gratis/': {
     reemplazos: [[/Con más de diez años de experiencia, he podido lograra? dejar/g, 'A lo largo de mi experiencia he podido dejar'], [/^Con 49 años de edad y más de 17 años de experiencia en el sector, Javier/g, 'Javier']],
@@ -164,12 +169,45 @@ export const POR_PAGINA = {
   },
   '/productos/baterias-industriales/america/': { h1: 'Baterías América: venta y asesoría especializada' },
   '/blog/': { h1: 'Blog de plantas de emergencia, UPS y baterías industriales' },
-  '/promociones/': { h1: 'Promociones en plantas de emergencia, UPS y baterías' },
   '/productos/ups/cyberpower/': { h1: 'UPS CyberPower: sistemas de respaldo y protección' },
   '/blog/como-hacer-la-instalacion-de-un-ups/': {
     h1: 'Cómo hacer la instalación de un UPS según sus características', title: 'Cómo hacer la instalación de un UPS según sus características',
   },
   '/blog/configuracion-de-clavija-de-vuelta/': {},
+  // ---- auditoría de CBPS (reportes del 21 y 24-nov), aplicada el 25-nov ----
+  '/productos/ups/': {
+    reemplazos: [
+      [/^La tecnologías como doble conversión, proporciona una alimentación controlada y estable\.$/, 'La tecnología de doble conversión proporciona una alimentación controlada y estable.'],
+      [/ Los mejores ups\.$/, ' Soluciones UPS para aplicaciones profesionales.'],
+      [/^Diseñadas para asegurar la continuidad de tus operaciones críticas\. Amplio rango de voltaje de entrada$/, 'Diseñadas para asegurar la continuidad de tus operaciones críticas, con un amplio rango de voltaje de entrada.'],
+    ],
+    // reporte 01, observación 02: «UPS Online» y «UPS Online de doble conversión» eran la misma tecnología con dos nombres
+    fn: (p) => {
+      const qp = p.sections.find((s) => /^¿Qué protege realmente un sistema UPS\?$/.test(s.h || ''));
+      if (qp) { let prev = null; for (const b of qp.body) { if (b.t === 'h3' && prev?.t === 'h3') b.t = 'p'; prev = b; } }
+      const tec = p.sections.find((s) => /^Conoce las principales tecnologías UPS$/.test(s.h || ''));
+      if (!tec) return;
+      const body = [];
+      for (let i = 0; i < tec.body.length; i++) {
+        const b = tec.body[i];
+        if (b.t === 'h3' && b.x === '¿No sabes cuál necesitas?') continue;
+        if (b.t === 'h3' && b.x === 'UPS' && tec.body[i + 1]?.x === 'Online') { i++; body.push({ t: 'h3', x: 'UPS online de doble conversión para aplicaciones profesionales' }); continue; }
+        if (b.t === 'h3' && b.x === 'UPS Interactivo') { body.push({ t: 'h3', x: 'UPS interactivo' }); continue; }
+        if (b.t === 'h3' && b.x === 'UPS Online de doble conversión') { body.push({ t: 'h3', x: 'UPS online de doble conversión para cargas críticas de mayor capacidad' }); continue; }
+        if (b.t === 'p' && /^Para aplicaciones donde se requiere respaldo y regulación/.test(b.x)) { body.push({ t: 'p', x: b.x + ' Ante un corte, transfiere la carga a baterías en unos milisegundos.' }); continue; }
+        if (b.t === 'p' && /^Para cargas críticas que requieren un nivel superior/.test(b.x)) { body.push({ t: 'p', x: 'Para cargas críticas que requieren un nivel superior de protección: equipos de mayor capacidad, con opciones de redundancia y arquitectura modular.' }); continue; }
+        body.push(b);
+      }
+      tec.body = [{ t: 'p', x: 'Hay dos tecnologías principales. En un UPS interactivo la carga se alimenta de la red y el equipo regula el voltaje; si la red falla, transfiere a baterías. En un UPS online de doble conversión la energía pasa siempre por el rectificador y el inversor, así que la carga no percibe el paso a baterías. Dentro de la doble conversión, la diferencia está en la capacidad, la redundancia y el tipo de instalación.' }, ...body];
+    },
+  },
+  '/productos/baterias-industriales/': {
+    reemplazos: [
+      [/^Las baterías son el componente mas critico —y el mas frecuentemente fallido— en cualquier sistema de continuidad eléctrica\. Elegir el tipo correcto no es opcional: determina si su operación sobrevive un corte\.$/, 'Las baterías son el componente más crítico de cualquier sistema de continuidad eléctrica y el que falla con mayor frecuencia. Elegir el tipo correcto determina si tu operación puede continuar durante un corte.'],
+      [/^Estas baterías son las utilizadas en UPS, No break, sistemas de potencia ininterrumpible\.$/, 'Son las baterías que se utilizan en UPS o sistemas de alimentación ininterrumpida (también llamados no break).'],
+      [/^En esta guía aprenderá los tipos de baterías, su funcionamiento y cómo seleccionar la adecuada para su sistema\.?$/, 'En esta guía conocerás los tipos de baterías, cómo funcionan y cómo seleccionar la adecuada para tu sistema.'],
+    ],
+  },
 };
 
 // los títulos rescatados en MAYÚSCULAS pasan a tipo frase después (tc): también se corrigen en mayúsculas
@@ -220,6 +258,7 @@ export function corregirFuente(fuenteOriginal) {
     }
     p.faqs = limpiaBloques(p.faqs || [], fuera);
     p.faqs.forEach((f) => cambiaTexto(f, reglas));
+    if (c.fn) c.fn(p);
   }
   return fuente;
 }
@@ -253,8 +292,8 @@ export const FASE2 = {
   '/servicios/mantenimiento/': { title: 'Mantenimiento de plantas de emergencia y UPS' },
   '/servicios/mantenimiento/plantas-de-emergencia/': { title: 'Mantenimiento de plantas de emergencia' },
   '/servicios/reparacion-y-modernizacion/': { title: 'Reparación y modernización de equipos de respaldo' },
-  '/servicios/plantas-de-emergencia/igsa/': { title: 'Plantas de emergencia IGSA' },
-  '/servicios/plantas-de-emergencia/planelec/': { h1: 'Plantas de emergencia PLANELEC para empresas e industria' },
+  '/productos/plantas-de-emergencia/igsa/': { title: 'Plantas de emergencia IGSA' },
+  '/productos/plantas-de-emergencia/planelec/': { h1: 'Plantas de emergencia PLANELEC para empresas e industria' },
 };
 
 // H1, title y desc finales (después de normalizar el H1 rescatado)
@@ -264,5 +303,30 @@ export function ajustesFinales(paginas) {
     if (c.h1) p.h1 = c.h1;
     if (c.title) p.title = c.title;
     if (c.desc) p.desc = c.desc;
+  }
+}
+
+// 5) Listas que se perdieron al rescatar el contenido (la frase terminaba en «:» y no seguía nada). Se recuperan del
+// sitio actual (cbps.com.mx, 25-nov); si allí tampoco existe la lista, se quita la frase colgada.
+const L = (...x) => ({ t: 'ul', items: x });
+export const LISTAS = {
+  '/productos/aire-de-precision/': [[/enfoque orientado a:$/, L('Temperatura estable: reducir variaciones que puedan afectar a los equipos.', 'Control de humedad: mantener condiciones ambientales adecuadas para la operación.', 'Operación continua: sistemas diseñados para aplicaciones donde la climatización no puede simplemente apagarse.', 'Distribución adecuada del aire: favorecer una correcta circulación del aire alrededor de los equipos.', 'Mayor control ambiental: una solución diseñada alrededor de las necesidades específicas de la instalación.')]],
+  '/productos/plantas-de-emergencia/igsa/': [[/tres grandes categorías:$/, L('Plantas de emergencia a diésel: generación eléctrica para aplicaciones comerciales, industriales y proyectos que requieren respaldo ante interrupciones del suministro.', 'Plantas de emergencia a gas: alternativas que utilizan gas natural, de acuerdo con las características y la configuración del equipo seleccionado.', 'Plantas para aplicaciones industriales: equipos para proyectos que requieren mayores capacidades de generación y respaldo para procesos de mayor demanda.')]],
+  '/productos/reguladores-de-voltaje/': [[/puede ayudar a:$/, L('Estabilizar la alimentación eléctrica, corrigiendo variaciones de tensión antes de que lleguen a los equipos.', 'Proteger equipos sensibles, reduciendo el impacto de condiciones de voltaje inadecuadas.', 'Mejorar la continuidad operativa, manteniendo condiciones eléctricas más adecuadas para la operación.', 'Reducir riesgos asociados a variaciones eléctricas, como parte de un esquema integral de protección.')]],
+  '/productos/ups/eaton/': [[/ayudarte a revisar:$/, L('Capacidad requerida: ¿cuánta carga necesitas respaldar?', 'Tipo de carga: ¿qué equipos estarán conectados al UPS?', 'Autonomía: ¿cuánto tiempo necesitas mantener la operación?', 'Configuración eléctrica: ¿qué características tiene tu instalación?', 'Crecimiento futuro: ¿la carga aumentará con el tiempo?', 'Nivel de criticidad: ¿qué impacto tendría una interrupción de energía?')]],
+  '/productos/ups/vertiv/': [[/ayudarte a evaluar:$/, L('Capacidad de carga: ¿cuántos equipos necesitas proteger y cuál es su demanda eléctrica?', 'Tipo de aplicación: ¿servidores, telecomunicaciones, automatización, industria o infraestructura crítica?', 'Autonomía: ¿cuánto tiempo necesitas mantener operando tus equipos durante una interrupción?', 'Configuración eléctrica: ¿qué tensión, fases y características tiene tu instalación?', 'Redundancia: ¿necesitas una arquitectura N+1 u otro esquema de disponibilidad?', 'Crecimiento: ¿la capacidad de tu infraestructura aumentará en el futuro?')]],
+  '/productos/ups/abb/': [[/^Podemos apoyarte en:$/, null]],
+  '/productos/plantas-de-emergencia/cbps/': [[/Podemos ayudarte a analizar necesidades como:$/, null]],
+  '/productos/supresores-de-picos/industronic/': [[/te orientamos considerando los siguientes aspectos:$/, null]],
+};
+export function completarListas(paginas) {
+  for (const [ruta, reglas] of Object.entries(LISTAS)) {
+    const p = paginas[ruta]; if (!p) continue;
+    for (const [re, lista] of reglas) for (const s of p.sections || []) {
+      const i = (s.body || []).findIndex((b) => typeof b.x === 'string' && re.test(b.x.trim()));
+      if (i < 0) continue;
+      if (lista && s.body[i + 1]?.t !== 'ul') s.body.splice(i + 1, 0, lista);
+      if (!lista) { const x = s.body[i].x.trim(); const sin = x.replace(re, '').trim(); if (sin && !/[.:]$/.test(sin)) s.body[i].x = sin.replace(/[,;]$/, '') + '.'; else if (sin) s.body[i].x = sin; else s.body.splice(i, 1); }
+    }
   }
 }

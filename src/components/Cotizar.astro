@@ -4,27 +4,38 @@
 import { NEGOCIO, waCotizar } from '../lib/site.js';
 import Icono from './Icono.astro';
 const { tema = '', ruta = '', titulo = 'Cuéntanos qué necesitas proteger', texto = 'La consulta es gratuita; ignorar una falla puede salir mucho más caro. Un ingeniero de CBPS revisa tu caso y te responde con una propuesta técnica, no con un catálogo.' } = Astro.props;
-const divisiones = ['Plantas de emergencia', 'Sistemas UPS', 'Mantenimiento de UPS', 'Baterías industriales', 'Aire acondicionado de precisión', 'Reguladores de voltaje', 'Supresores de picos', 'Convertidores de frecuencia', 'Renta de equipos', 'Otro / no estoy seguro'];
-// división preseleccionada según la página (la ruta manda; sin coincidencia clara, el visitante elige)
-const DIVISION_POR_RUTA = [
-  ['/servicios/renta-de-plantas-de-emergencia/', 'Renta de equipos'],
-  ['/servicios/renta-y-financiamiento-de-ups-trifasico/', 'Renta de equipos'],
-  ['/promociones/', 'Renta de equipos'],
-  ['/servicios/mantenimiento/plantas-de-emergencia/', 'Plantas de emergencia'],
-  ['/servicios/mantenimiento/ups/', 'Mantenimiento de UPS'],
-  ['/servicios/plantas-de-emergencia/', 'Plantas de emergencia'],
-  ['/servicios/instalacion-y-dimensionamiento/', 'Plantas de emergencia'],
-  ['/servicios/reparacion-y-modernizacion/', 'Sistemas UPS'],
-  ['/servicios/sustitucion-de-bancos-de-baterias/', 'Baterías industriales'],
-  ['/productos/tableros-de-transferencia/', 'Plantas de emergencia'],
-  ['/productos/ups/', 'Sistemas UPS'],
-  ['/productos/baterias-industriales/', 'Baterías industriales'],
-  ['/productos/aire-de-precision/', 'Aire acondicionado de precisión'],
-  ['/productos/reguladores-de-voltaje/', 'Reguladores de voltaje'],
-  ['/productos/supresores-de-picos/', 'Supresores de picos'],
-  ['/productos/convertidores-de-frecuencia/', 'Convertidores de frecuencia'],
+// productos = matriz de buzones de CBPS (reporte de observaciones 6.6): cada uno tendrá su correo de gerente y de QMP
+const divisiones = ['Plantas de emergencia', 'UPS (sistemas de alimentación ininterrumpida)', 'Baterías para UPS', 'Baterías de ciclo profundo', 'Baterías de arranque', 'Tableros de transferencia', 'Convertidores de frecuencia', 'Reguladores de voltaje', 'Supresores de picos', 'Aires acondicionados de precisión', 'Magic Battery', 'Otro / no estoy seguro'];
+// tipo de solicitud: separa una compra de un mantenimiento del mismo equipo (reporte 03, observación 05)
+const tipos = ['Cotización de equipo', 'Mantenimiento preventivo o correctivo', 'Reparación o diagnóstico', 'Instalación y puesta en marcha', 'Renta', 'Reemplazo de baterías', 'Otro servicio'];
+// producto y tipo preseleccionados según la página (la ruta manda; sin coincidencia clara, el visitante elige)
+const POR_RUTA = [
+  ['/servicios/renta-de-plantas-de-emergencia/', 'Plantas de emergencia', 'Renta'],
+  ['/servicios/renta-y-financiamiento-de-ups-trifasico/', 'UPS (sistemas de alimentación ininterrumpida)', 'Renta'],
+  ['/servicios/mantenimiento/plantas-de-emergencia/', 'Plantas de emergencia', 'Mantenimiento preventivo o correctivo'],
+  ['/servicios/mantenimiento/ups/', 'UPS (sistemas de alimentación ininterrumpida)', 'Mantenimiento preventivo o correctivo'],
+  ['/servicios/mantenimiento/', '', 'Mantenimiento preventivo o correctivo'],
+  ['/servicios/instalacion-y-dimensionamiento/', 'Plantas de emergencia', 'Instalación y puesta en marcha'],
+  ['/servicios/reparacion-y-modernizacion/', 'UPS (sistemas de alimentación ininterrumpida)', 'Reparación o diagnóstico'],
+  ['/servicios/sustitucion-de-bancos-de-baterias/', 'Baterías para UPS', 'Reemplazo de baterías'],
+  ['/productos/plantas-de-emergencia/', 'Plantas de emergencia', ''],
+  ['/productos/tableros-de-transferencia/', 'Tableros de transferencia', ''],
+  ['/productos/ups/', 'UPS (sistemas de alimentación ininterrumpida)', ''],
+  ['/productos/baterias-industriales/baterias-de-ciclo-profundo/', 'Baterías de ciclo profundo', ''],
+  ['/productos/baterias-industriales/trojan/', 'Baterías de ciclo profundo', ''],
+  ['/productos/baterias-industriales/crown/', 'Baterías de ciclo profundo', ''],
+  ['/productos/baterias-industriales/baterias-de-arranque/', 'Baterías de arranque', ''],
+  ['/productos/baterias-industriales/lth/', 'Baterías de arranque', ''],
+  ['/productos/baterias-industriales/america/', 'Baterías de arranque', ''],
+  ['/productos/baterias-industriales/', 'Baterías para UPS', ''],
+  ['/productos/aire-de-precision/', 'Aires acondicionados de precisión', ''],
+  ['/productos/reguladores-de-voltaje/', 'Reguladores de voltaje', ''],
+  ['/productos/supresores-de-picos/', 'Supresores de picos', ''],
+  ['/productos/convertidores-de-frecuencia/', 'Convertidores de frecuencia', ''],
+  ['/productos/magic-battery/', 'Magic Battery', ''],
 ];
-const pre = DIVISION_POR_RUTA.find(([r]) => ruta.startsWith(r))?.[1] || '';
+const fila = POR_RUTA.find(([r]) => ruta.startsWith(r));
+const pre = fila?.[1] || '', preTipo = fila?.[2] || '';
 ---
 <section class="band band--night" id="cotizar" aria-labelledby="cot-t">
   <div class="wrap cot">
@@ -39,23 +50,33 @@ const pre = DIVISION_POR_RUTA.find(([r]) => ruta.startsWith(r))?.[1] || '';
     </div>
     <form class="form rv" novalidate data-form data-api="https://cbps-leads.josegaspard.dev/api/lead" data-correo={NEGOCIO.correo} data-wa={NEGOCIO.whatsapp}>
       <div class="two">
-        <div class="fld"><label for="f-nombre">Nombre</label><input id="f-nombre" name="nombre" autocomplete="name" required /><span class="err">escribe tu nombre.</span></div>
         <div class="fld"><label for="f-empresa">Empresa</label><input id="f-empresa" name="empresa" autocomplete="organization" required /><span class="err">escribe el nombre de tu empresa.</span></div>
+        <div class="fld"><label for="f-nombre">Nombre</label><input id="f-nombre" name="nombre" autocomplete="name" required /><span class="err">escribe tu nombre.</span></div>
       </div>
       <div class="two">
-        <div class="fld"><label for="f-tel">Teléfono o WhatsApp</label><input id="f-tel" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required pattern={String.raw`[0-9 +\(\)\-]{8,}`} /><span class="err">usa al menos 8 dígitos.</span></div>
         <div class="fld"><label for="f-correo">Correo</label><input id="f-correo" name="correo" type="email" autocomplete="email" required /><span class="err">el correo debe tener el formato nombre@empresa.com.</span></div>
+        <div class="fld"><label for="f-tel">Teléfono</label><input id="f-tel" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required pattern={String.raw`[0-9 +\(\)\-]{8,}`} /><span class="err">usa al menos 8 dígitos.</span></div>
       </div>
-      <div class="fld">
-        <label for="f-div">¿Sobre qué es tu consulta?</label>
-        <select id="f-div" name="division" required>
-          <option value="">Elige una línea</option>
-          {divisiones.map((d) => <option selected={d === pre}>{d}</option>)}
-        </select>
-        <span class="hint">Así sabemos qué especialista debe atenderte.</span>
-        <span class="err">elige una opción.</span>
+      <div class="two">
+        <div class="fld">
+          <label for="f-div">Producto</label>
+          <select id="f-div" name="division" required>
+            <option value="">Elige un producto</option>
+            {divisiones.map((d) => <option selected={d === pre}>{d}</option>)}
+          </select>
+          <span class="hint">Así llega al especialista de esa línea.</span>
+          <span class="err">elige un producto.</span>
+        </div>
+        <div class="fld">
+          <label for="f-tipo">Tipo de solicitud</label>
+          <select id="f-tipo" name="tipo" required>
+            <option value="">Elige una opción</option>
+            {tipos.map((d) => <option selected={d === preTipo}>{d}</option>)}
+          </select>
+          <span class="err">elige el tipo de solicitud.</span>
+        </div>
       </div>
-      <div class="fld"><label for="f-msg">Equipo, capacidad o falla</label><textarea id="f-msg" name="mensaje" required placeholder="Ej.: UPS trifásico de 30 kVA sin respaldo; necesitamos cambiar el banco de baterías."></textarea><span class="err">cuéntanos brevemente qué necesitas.</span></div>
+      <div class="fld"><label for="f-msg">Solicitud</label><textarea id="f-msg" name="mensaje" required placeholder="Ej.: UPS trifásico de 30 kVA sin respaldo; necesitamos sustituir el banco de baterías."></textarea><span class="err">describe brevemente lo que necesitas.</span></div>
       <div class="hp" aria-hidden="true"><label for="f-hp">No llenar</label><input id="f-hp" name="hp" tabindex="-1" autocomplete="off" /></div>
       <p class="legal">Al enviar aceptas la <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/politica-privacidad/`}>política de privacidad</a>.</p>
       <button class="btn" type="submit">Enviar solicitud</button>

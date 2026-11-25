@@ -6,7 +6,7 @@
 import { u } from '../lib/site.js';
 const N = [
   { id: 'red', x: 16, y: 26, t1: 'Red eléctrica', t2: 'suministro', href: '/servicios/instalacion-y-dimensionamiento/' },
-  { id: 'planta', x: 16, y: 330, t1: 'Planta de', t2: 'emergencia', href: '/servicios/plantas-de-emergencia/' },
+  { id: 'planta', x: 16, y: 330, t1: 'Planta de', t2: 'emergencia', href: '/productos/plantas-de-emergencia/' },
   { id: 'tab', x: 214, y: 178, t1: 'Tablero de', t2: 'transferencia', href: '/productos/tableros-de-transferencia/' },
   { id: 'ups', x: 412, y: 178, t1: 'UPS', t2: 'en línea', href: '/productos/ups/' },
   { id: 'bat', x: 412, y: 330, t1: 'Banco de', t2: 'baterías', href: '/productos/baterias-industriales/baterias-para-ups/' },
@@ -24,7 +24,7 @@ const L = [
   <div class="uni__bar" aria-hidden="true">
     <div><span>Fuente</span><b data-src>Red eléctrica</b></div>
     <div><span>Carga crítica</span><b class="ok">Alimentada</b></div>
-    <div><span>Corte en la carga</span><b class="ok">0 ms</b></div>
+    <div><span>Corte con UPS online</span><b class="ok">0 ms</b></div>
   </div>
   <svg viewBox="0 0 600 400" role="group" aria-label="Diagrama del sistema de respaldo de CBPS">
     {L.map((l) => (<g class={`ln ${l.id}`}><path class="ln__base" d={l.d} /><path class="ln__glow" d={l.d} /><path class="ln__flow" d={l.d} /></g>))}
@@ -41,6 +41,7 @@ const L = [
   <figcaption id="uni-cap">
     <span class="uni__st" aria-live="off" data-st>Red normal: la carga crítica se alimenta de la red a través del UPS y las baterías se mantienen cargadas.</span>
     <button class="btn btn--ghost-light uni__btn" type="button" data-sim>Simular falla de la red</button>
+    <small class="uni__nota">0 ms aplica a UPS online de doble conversión con baterías en buen estado; un UPS interactivo tarda unos milisegundos en transferir a baterías y la planta necesita unos segundos para arrancar.</small>
   </figcaption>
 </figure>
 
@@ -79,6 +80,7 @@ const L = [
   .nd:focus { outline: none; }
   @keyframes halo { 0% { opacity: 0.55; transform: scale(0.5); } 70%, 100% { opacity: 0; transform: scale(1.6); } }
   .uni figcaption { display: grid; gap: 14px; margin-top: 8px; }
+  .uni__nota { color: var(--on-night-2); font-size: 0.82rem; line-height: 1.45; }
   .uni__st { font-size: 0.95rem; color: var(--on-night-2); min-height: 3.2em; }
   .uni__btn { justify-self: start; min-height: 46px; }
   @media (max-width: 620px) { .nd__t { font-size: 19px; } .nd__led, .nd__halo { display: none; } .uni__bar div { padding: 8px 9px; } .uni__bar b { font-size: 0.86rem; } .uni__bar span { font-size: 0.72rem; } }
@@ -92,7 +94,7 @@ const L = [
     normal: { on: ['l-red', 'l-tab', 'l-carga', 'l-bat'], slow: ['l-bat'], rev: [], nodos: ['red', 'tab', 'ups', 'bat', 'carga'], off: ['planta'], src: 'Red eléctrica',
       txt: 'Red normal: la carga crítica se alimenta de la red a través del UPS y las baterías se mantienen cargadas.', btn: 'Simular falla de la red', ms: 5200 },
     falla: { on: ['l-carga', 'l-bat'], slow: [], rev: ['l-bat'], nodos: ['ups', 'bat', 'carga'], off: ['red', 'tab', 'planta'], src: 'Baterías',
-      txt: 'Falla de la red: el UPS toma la energía de las baterías sin cortar la carga, mientras la planta arranca.', btn: 'Continuar: arranca la planta', ms: 4200 },
+      txt: 'Falla de la red: un UPS online de doble conversión toma la energía de las baterías sin cortar la carga, mientras la planta arranca.', btn: 'Continuar: arranca la planta', ms: 4200 },
     planta: { on: ['l-planta', 'l-tab', 'l-carga', 'l-bat'], slow: ['l-bat'], rev: [], nodos: ['planta', 'tab', 'ups', 'bat', 'carga'], off: ['red'], src: 'Planta',
       txt: 'Planta en operación: el tablero transfirió la carga a la planta y el UPS vuelve a cargar las baterías.', btn: 'Restablecer la red', ms: 5200 },
   };

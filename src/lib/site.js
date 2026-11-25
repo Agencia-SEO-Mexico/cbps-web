@@ -11,12 +11,21 @@ export const NEGOCIO = {
   telVisible: '55 2171 0020',
   tel: '+525521710020',
   correo: 'javier.galindo@cbps.com.mx',
-  calle: 'Churubusco 303, int. 8', // tal cual en cbps.com.mx/contacto (NAP idéntico)
+  calle: 'Av. Churubusco 303, interior 8', // escritura que pidió CBPS (auditoría 21-nov, reportes 05 y 06)
   ciudad: 'Ciudad de México',
   estado: 'CDMX',
   cp: '03340',
   pais: 'MX',
 };
-export const wa = (texto) => `https://wa.me/${NEGOCIO.whatsapp}?text=${encodeURIComponent(texto)}`;
-export const waCotizar = (que) => wa(`Hola, vi su sitio www.cbps.com.mx y quiero solicitar una cotización${que ? ' de ' + que : ''}.\n\nProducto o servicio:\nCantidad:\nEmpresa:\nLocalidad:`);
-export const waOrientacion = (que) => wa(`Hola, vi su sitio www.cbps.com.mx y me gustaría recibir orientación técnica${que ? ' sobre ' + que : ' sobre protección de cargas críticas'}.\n\nEquipo o proyecto:\nConsulta:\nEmpresa:\nLocalidad:`);
+// WhatsApp por área (auditoría de CBPS, 6.2 y 6.4): cuando CBPS defina un número por línea se pone aquí
+// (prefijo de ruta → número con lada 52). Sin número propio, la línea usa el general.
+export const WA_POR_AREA = {
+  // '/productos/plantas-de-emergencia/': '52XXXXXXXXXX',
+  // '/productos/ups/': '52XXXXXXXXXX',
+};
+export const waNumero = (ruta = '') => Object.entries(WA_POR_AREA).find(([r]) => ruta.startsWith(r))?.[1] || NEGOCIO.whatsapp;
+export const wa = (texto, ruta) => `https://wa.me/${waNumero(ruta)}?text=${encodeURIComponent(texto)}`;
+// mensaje precargado con el formato que pidió CBPS (reporte de observaciones, 6.3)
+const CAMPOS = '\nNombre de contacto:\nEmpresa y giro:\nCorreo:\nProducto o servicio y cantidad:\nLocalidad:';
+export const waCotizar = (que, ruta) => wa(`Hola, vi su sitio www.cbps.com.mx y quiero solicitar una cotización${que ? ' de ' + que : ''}.${CAMPOS}`, ruta);
+export const waOrientacion = (que, ruta) => wa(`Hola, vi su sitio www.cbps.com.mx y quiero recibir orientación técnica${que ? ' sobre ' + que : ' sobre protección de cargas críticas'}.${CAMPOS}`, ruta);

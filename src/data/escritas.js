@@ -169,10 +169,10 @@ export const ESCRITAS = {
       ] },
       { h: 'Arquitectura del sistema de respaldo', body: [
         p('Definimos la arquitectura completa del sistema: capacidades, protecciones, integración con UPS y transferencias automáticas. El UPS da respaldo inmediato mientras arranca la planta, siempre que el sistema esté correctamente dimensionado y coordinado.'),
-        p('Trabajamos con controladores DeepSea para automatizar la transferencia de carga y con tableros de transferencia ASCO para pasar de una fuente a otra de forma rápida y confiable.'),
+        p('Trabajamos con tableros de transferencia ASCO y ABB para pasar de una fuente a otra de forma rápida y confiable, y con controladores DeepSea como accesorio de la planta de emergencia.'),
       ] },
     ],
-    related: ['/servicios/plantas-de-emergencia/', '/productos/tableros-de-transferencia/', '/blog/adquirir-una-planta-de-emergencia/'],
+    related: ['/productos/plantas-de-emergencia/', '/productos/tableros-de-transferencia/', '/blog/adquirir-una-planta-de-emergencia/'],
     faqs: [
       faq('¿Una planta de emergencia puede respaldar toda una empresa?', 'Sí, siempre que su capacidad y configuración se hayan dimensionado correctamente para las cargas que se desean mantener operativas.'),
       faq('¿Se puede integrar la planta con un UPS?', 'Sí. La integración entre UPS y planta debe hacerse con ingeniería adecuada, coordinación de protecciones y pruebas controladas, para que la transferencia de carga sea estable.'),
@@ -190,8 +190,8 @@ export const ESCRITAS = {
         ul('El UPS tiene más de 3 años sin reemplazo de baterías', 'La autonomía real ya no corresponde a la esperada', 'El banco está subdimensionado para la carga actual'),
       ] },
       { h: 'Cómo lo hacemos', body: [
-        p('Te ayudamos a identificar el modelo correcto, suministramos baterías originales y compatibles, y coordinamos el reemplazo para no dejar la carga sin protección. Enviamos baterías a toda la República Mexicana.'),
-        p('Trabajamos con CSB, C&D, Eaton, Kaise, Invermexa, EnerSys y Powest, entre otras.'),
+        p('Te ayudamos a identificar el modelo correcto, suministramos baterías originales y compatibles, y coordinamos contigo el reemplazo para reducir al mínimo el tiempo en que la carga queda sin respaldo de baterías. Enviamos baterías a toda la República Mexicana.'),
+        p('Trabajamos con CSB, C&D, Eaton, Kaise, Invermexa, EnerSys, Powest, Power Sonic, Yuasa y baterías CBPS, entre otras.'),
       ] },
     ],
     related: ['/productos/baterias-industriales/baterias-para-ups/', '/blog/debo-cambiar-todo-el-banco-de-baterias/', '/blog/baterias-es-mejor-en-serie-o-paralelo/'],
@@ -203,19 +203,19 @@ export const ESCRITAS = {
   '/productos/tableros-de-transferencia/': {
     canon: '/home/electricas/plantas-de-emergencia/',
     title: 'Tableros de transferencia para plantas de emergencia',
-    desc: 'Tableros de transferencia ASCO y control DeepSea para pasar la carga de la red a la planta de emergencia de forma automática, rápida y confiable.',
+    desc: 'Tableros de transferencia ASCO y ABB para pasar la carga de la red a la planta de emergencia de forma automática, rápida y confiable.',
     h1: 'Tableros de transferencia',
-    lead: 'El tablero de transferencia pasa la carga de la red eléctrica a la planta de emergencia, y de regreso, cuando falla el suministro. CBPS integra tableros ASCO y controladores DeepSea para que esa transferencia sea rápida y confiable.',
+    lead: 'El tablero de transferencia pasa la carga de la red eléctrica a la planta de emergencia, y de regreso, cuando falla el suministro. CBPS integra tableros de transferencia ASCO y ABB para que esa transferencia sea rápida y confiable.',
     sections: [
-      { h: 'Transferencia ASCO y control DeepSea', body: [
-        p('Los tableros ASCO permiten una transferencia rápida y confiable entre fuentes de energía, protegiendo cargas críticas con control avanzado. DeepSea es el cerebro del sistema: sus controladores automatizan la transferencia de carga y permiten configurar el comportamiento exacto que cada instalación crítica requiere.'),
+      { h: 'Tableros de transferencia ASCO y ABB', body: [
+        p('Los tableros ASCO y ABB permiten una transferencia rápida y confiable entre fuentes de energía para proteger cargas críticas. El controlador de la planta de emergencia (por ejemplo, DeepSea) se suministra como accesorio de la planta y se configura junto con el tablero para cada instalación.'),
       ] },
       { h: 'Por qué importa la transferencia', body: [
         p('Las fallas en el control o en la transferencia automática están entre las causas más comunes de que una planta no responda. Si la planta quedó subdimensionada, el momento crítico es justamente la transferencia de carga: ahí aparecen caídas de voltaje o disparos de protección.'),
         p('Por eso la transferencia se dimensiona junto con la planta y, cuando hay UPS, se coordina con él mediante pruebas controladas.'),
       ] },
     ],
-    related: ['/servicios/plantas-de-emergencia/', '/servicios/instalacion-y-dimensionamiento/plantas-de-emergencia/'],
+    related: ['/productos/plantas-de-emergencia/', '/servicios/instalacion-y-dimensionamiento/plantas-de-emergencia/'],
     faqs: [
       faq('¿Las plantas CBPS funcionan automáticamente?', 'Podemos integrar soluciones de operación automática según las características del proyecto y el sistema de transferencia requerido. La configuración se define para cada instalación.'),
     ],

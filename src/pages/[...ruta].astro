@@ -6,7 +6,7 @@ import Icono from '../components/Icono.astro';
 import Foto from '../components/Foto.astro';
 import { existsSync } from 'node:fs';
 import { PAGINAS, POSTS, VIEJAS } from '../lib/paginas.js';
-import { ARBOL, migas, hermanos, hijos, LINEAS, SERVICIOS } from '../lib/nav.js';
+import { ARBOL, migas, hermanos, hijos, LINEAS, SERVICIOS, MATRIZ } from '../lib/nav.js';
 import { u, PROD, PREVIEW, waCotizar, waOrientacion } from '../lib/site.js';
 import { slug, tc } from '../lib/util.js';
 
@@ -32,12 +32,24 @@ const relacionados = (p?.related || []).filter((r) => !PAGINAS[r]?.noindex).map(
 const toc = (p?.sections || []).filter((s) => s.h).map((s) => ({ id: slug(s.h), h: tc(s.h) }));
 const esProducto = ruta.startsWith('/productos/');
 const esServicio = ruta.startsWith('/servicios/');
+// matriz de servicios de CBPS (reporte de observaciones 3.2) en la línea y en las páginas de sus marcas
+const lineaM = esProducto ? LINEAS.find((l) => l.matriz && ruta.startsWith(l.ruta)) : null;
+const PAG_SERV = {
+  plantas: { 'Instalación': '/servicios/instalacion-y-dimensionamiento/plantas-de-emergencia/', 'Mantenimiento preventivo': '/servicios/mantenimiento/plantas-de-emergencia/', 'Mantenimiento correctivo': '/servicios/mantenimiento/plantas-de-emergencia/', 'Renta': '/servicios/renta-de-plantas-de-emergencia/' },
+  ups: { 'Mantenimiento preventivo': '/servicios/mantenimiento/ups/', 'Mantenimiento correctivo': '/servicios/reparacion-y-modernizacion/ups/', 'Actualización de infraestructura': '/servicios/reparacion-y-modernizacion/ups/', 'Renta': '/servicios/renta-y-financiamiento-de-ups-trifasico/', 'Reemplazo de batería': '/servicios/sustitucion-de-bancos-de-baterias/' },
+  baterias: { 'Reemplazo de batería': '/servicios/sustitucion-de-bancos-de-baterias/' },
+};
+const servLinea = lineaM ? MATRIZ[lineaM.matriz].map((s) => ({ s, r: PAG_SERV[lineaM.matriz]?.[s] })) : [];
+// marcas que CBPS pidió agregar y aún no tienen página propia, y accesorios de la línea
+const nodo = (function buscar(lista) { for (const n of lista) { if (n.ruta === ruta) return n; const k = n.hijos && buscar(n.hijos); if (k) return k; } return null; })(LINEAS);
+const marcasSinPagina = nodo?.marcas || [];
+const accesorios = nodo?.accesorios || [];
 // servicios que se cruzan con cada línea de producto (y al revés)
 const cruces = esProducto
   ? (ruta.includes('plantas') || ruta.includes('tableros') ? ['/servicios/mantenimiento/plantas-de-emergencia/', '/servicios/instalacion-y-dimensionamiento/plantas-de-emergencia/', '/servicios/renta-de-plantas-de-emergencia/']
     : ruta.includes('/ups/') ? ['/servicios/mantenimiento/ups/', '/servicios/reparacion-y-modernizacion/ups/', '/servicios/renta-y-financiamiento-de-ups-trifasico/']
     : ruta.includes('bateria') ? ['/servicios/sustitucion-de-bancos-de-baterias/', '/servicios/mantenimiento/ups/'] : ['/servicios/', '/servicios/instalacion-y-dimensionamiento/'])
-  : esServicio ? (ruta.includes('plantas') ? ['/servicios/plantas-de-emergencia/', '/servicios/mantenimiento/plantas-de-emergencia/', '/servicios/instalacion-y-dimensionamiento/plantas-de-emergencia/', '/servicios/renta-de-plantas-de-emergencia/', '/productos/tableros-de-transferencia/'] : ruta.includes('ups') ? ['/productos/ups/', '/productos/baterias-industriales/baterias-para-ups/'] : ruta.includes('bateria') ? ['/productos/baterias-industriales/baterias-para-ups/', '/productos/baterias-industriales/'] : ['/servicios/plantas-de-emergencia/', '/productos/ups/', '/productos/baterias-industriales/'])
+  : esServicio ? (ruta.includes('plantas') ? ['/productos/plantas-de-emergencia/', '/servicios/mantenimiento/plantas-de-emergencia/', '/servicios/instalacion-y-dimensionamiento/plantas-de-emergencia/', '/servicios/renta-de-plantas-de-emergencia/', '/productos/tableros-de-transferencia/'] : ruta.includes('ups') ? ['/productos/ups/', '/productos/baterias-industriales/baterias-para-ups/'] : ruta.includes('bateria') ? ['/productos/baterias-industriales/baterias-para-ups/', '/productos/baterias-industriales/'] : ['/productos/plantas-de-emergencia/', '/productos/ups/', '/productos/baterias-industriales/'])
   : [];
 const crucesL = cruces.filter((r) => r !== ruta && !PAGINAS[r]?.noindex).map((r) => ({ ruta: r, nombre: ARBOL[r]?.nombre || PAGINAS[r]?.h1 }));
 
@@ -87,8 +99,8 @@ const etiqueta = esPost ? 'Blog Electric Leaders' : esProducto ? (linea && linea
           {p.lead && <p class="lead">{p.lead}</p>}
           {!esBlog && (
             <div class="btns" style="margin-top:24px">
-              <a class="btn btn--wa" href={waCotizar(nombreCorto)} target="_blank" rel="noopener" data-ev="whatsapp"><Icono n="wa" />Cotizar por WhatsApp</a>
-              <a class="btn btn--ghost" href={waOrientacion(nombreCorto)} target="_blank" rel="noopener" data-ev="whatsapp-orientacion">Pedir orientación técnica</a>
+              <a class="btn btn--wa" href={waCotizar(nombreCorto, ruta)} target="_blank" rel="noopener" data-ev="whatsapp"><Icono n="wa" />Cotizar por WhatsApp</a>
+              <a class="btn btn--ghost" href={waOrientacion(nombreCorto, ruta)} target="_blank" rel="noopener" data-ev="whatsapp-orientacion">Pedir orientación técnica</a>
             </div>
           )}
         </div>
@@ -122,15 +134,34 @@ const etiqueta = esPost ? 'Blog Electric Leaders' : esProducto ? (linea && linea
     <div class="wrap doc">
       <article>
         <Secciones secciones={p.sections} titulo={p.h1} />
+        {marcasSinPagina.length > 0 && (
+          <section class="sec" aria-labelledby="mar-t">
+            <h2 id="mar-t" style="font-size:var(--step-2)">{nodo?.hijos?.length ? 'Otras marcas que maneja CBPS en esta línea' : 'Marcas que maneja CBPS en esta línea'}</h2>
+            <ul class="lista-cols">{marcasSinPagina.map((m) => <li>{m}</li>)}</ul>
+          </section>
+        )}
+        {accesorios.length > 0 && (
+          <section class="sec" aria-labelledby="acc-t">
+            <h2 id="acc-t" style="font-size:var(--step-2)">Accesorios</h2>
+            <ul>{accesorios.map((a) => <li>{a}</li>)}</ul>
+          </section>
+        )}
+        {servLinea.length > 0 && (
+          <section class="sec" aria-labelledby="mat-t">
+            <h2 id="mat-t" style="font-size:var(--step-2)">Servicios para {lineaM.nombre.charAt(0).toLowerCase() + lineaM.nombre.slice(1)}</h2>
+            <p>Además del suministro del equipo, CBPS ofrece estos servicios para esta línea. Pide el que necesitas en el formulario o por WhatsApp.</p>
+            <ul class="lista-cols">{servLinea.map(({ s, r }) => <li>{r ? <a href={u(r)}>{s}</a> : s}</li>)}</ul>
+          </section>
+        )}
         {esPost && (p.words || 0) < 120 && (
           <aside class="sec" aria-label="Más información">
-            <h2 style="font-size:var(--step-2)">¿Necesitas aplicarlo en tu instalación?</h2>
+            <h2 style="font-size:var(--step-2)">¿Necesitas aplicar esto en tu instalación?</h2>
             <p>Este artículo resume un tema técnico. Si tienes una duda concreta sobre tu equipo o tu instalación, un ingeniero de CBPS te orienta sin costo.</p>
           </aside>
         )}
         {(relacionados.length > 0 || crucesL.length > 0) && (
           <section class="sec" aria-labelledby="rel-t">
-            <h2 id="rel-t" style="font-size:var(--step-2)">{esProducto ? 'Servicios para este equipo' : esServicio ? 'Equipos relacionados' : 'Te puede interesar'}</h2>
+            <h2 id="rel-t" style="font-size:var(--step-2)">{esProducto ? 'Servicios para este equipo' : esServicio ? 'Equipos y servicios relacionados' : 'Te puede interesar'}</h2>
             <ul class="chips">{[...relacionados, ...crucesL].map((r) => <li><a href={u(r.ruta)}>{r.nombre}</a></li>)}</ul>
           </section>
         )}
@@ -143,10 +174,10 @@ const etiqueta = esPost ? 'Blog Electric Leaders' : esProducto ? (linea && linea
       </article>
       <aside class="aside" aria-label="Contacto y contenido">
         <div class="quote">
-          <h2>{esPost ? '¿Tienes una duda técnica?' : `Cotiza ${nombreCorto && nombreCorto.length < 34 ? nombreCorto : 'con CBPS'}`}</h2>
+          <h2>{esPost ? '¿Tienes una duda técnica?' : `Cotiza ${(esProducto || esServicio) && nombreCorto && nombreCorto.length < 34 ? (esServicio ? nombreCorto.charAt(0).toLowerCase() + nombreCorto.slice(1) : nombreCorto) : 'con CBPS'}`}</h2>
           <p>Respuesta de un ingeniero, con propuesta técnica para tu operación.</p>
           <div class="btns">
-            <a class="btn btn--wa" href={waCotizar(nombreCorto)} target="_blank" rel="noopener" data-ev="whatsapp"><Icono n="wa" />WhatsApp</a>
+            <a class="btn btn--wa" href={waCotizar(nombreCorto, ruta)} target="_blank" rel="noopener" data-ev="whatsapp"><Icono n="wa" />WhatsApp</a>
             <a class="btn btn--light" href="#cotizar">Formulario de cotización</a>
           </div>
         </div>

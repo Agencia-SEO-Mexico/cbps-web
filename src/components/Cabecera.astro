@@ -27,17 +27,16 @@ const sec = ruta.startsWith('/productos/') ? 'productos' : ruta.startsWith('/ser
     <div class="mega" id="mega-productos" data-panel="productos">
       <div class="wrap">
         <div class="mega__grid">
-          {LINEAS.slice(0, 3).map((l) => (
+          {LINEAS.filter((l) => l.principal).map((l) => (
             <div>
               <p class="mega__h"><a href={u(l.ruta)}>{l.nombre}</a></p>
-              <p>{l.resumen}</p>
               <ul>{l.hijos.map((h) => (<li><a href={u(h.ruta)}>{h.nombre}</a>{h.hijos && <ul>{h.hijos.map((k) => <li><a href={u(k.ruta)}>{k.nombre}</a></li>)}</ul>}</li>))}</ul>
             </div>
           ))}
           <div>
-            <p class="mega__h"><a href={u('/productos/')}>Otras líneas</a></p>
+            <p class="mega__h"><a href={u('/productos/')}>Otras soluciones</a></p>
             <ul style="display:grid;gap:2px">
-              {LINEAS.slice(3).map((l) => <li><a href={u(l.ruta)}>{l.nombre}</a></li>)}
+              {LINEAS.filter((l) => !l.principal).map((l) => <li><a href={u(l.ruta)}>{l.nombre}</a></li>)}
             </ul>
           </div>
         </div>

@@ -60,7 +60,7 @@ const GTM = 'GTM-MJQ86GP6'; // cuenta propia «CBPS» (24-nov; antes GTM-TDQRDQC
   <div class="prog" aria-hidden="true"></div>
   <Cabecera ruta={ruta} />
   <main id="main"><slot /></main>
-  <Pie />
+  <Pie ruta={ruta} />
 
   <dialog class="modal" id="modal-envio" aria-labelledby="modal-t">
     <div class="modal__in">
@@ -181,11 +181,13 @@ const GTM = 'GTM-MJQ86GP6'; // cuenta propia «CBPS» (24-nov; antes GTM-TDQRDQC
         $$('.fld', f).forEach((fl) => { const i = $('input,select,textarea', fl); const bad = !i.checkValidity() || !i.value.trim(); fl.classList.toggle('is-bad', bad); i.setAttribute('aria-invalid', bad ? 'true' : 'false'); if (bad && ok) { i.focus(); ok = false; } });
         if (!ok) return;
         const d = Object.fromEntries(new FormData(f));
-        const txt = `Hola, vi su sitio www.cbps.com.mx y quiero solicitar una cotización.\n\nNombre: ${d.nombre}\nEmpresa: ${d.empresa}\nTeléfono: ${d.telefono}\nCorreo: ${d.correo}\nLínea: ${d.division}\nNecesidad: ${d.mensaje}`;
+        // formato 1 de CBPS para el CRM (QMP): Empresa, Nombre, Correo, Teléfono, Solicitud; el tipo va al inicio de la solicitud
+        const solicitud = `${d.tipo ? '[' + d.tipo + '] ' : ''}${d.mensaje}`;
+        const txt = `Hola, vi su sitio www.cbps.com.mx y quiero solicitar una cotización.\n\nEmpresa: ${d.empresa}\nNombre: ${d.nombre}\nCorreo: ${d.correo}\nTeléfono: ${d.telefono}\nProducto: ${d.division}\nSolicitud: ${solicitud}`;
         $('[data-sum]', modal).textContent = txt;
         $('[data-send-wa]', modal).href = `https://wa.me/${f.dataset.wa}?text=${encodeURIComponent(txt)}`;
         $('[data-send-mail]', modal).href = `mailto:${f.dataset.correo}?subject=${encodeURIComponent('Solicitud de cotización: ' + d.division)}&body=${encodeURIComponent(txt)}`;
-        (window.dataLayer = window.dataLayer || []).push({ event: 'form_listo', division: d.division });
+        (window.dataLayer = window.dataLayer || []).push({ event: 'form_listo', division: d.division, tipo: d.tipo });
         const btn = $('button[type=submit]', f); const etiqueta = btn.textContent;
         btn.disabled = true; btn.textContent = 'Enviando…';
         const muestra = (ok) => {
@@ -193,13 +195,13 @@ const GTM = 'GTM-MJQ86GP6'; // cuenta propia «CBPS» (24-nov; antes GTM-TDQRDQC
           $('[data-m-t]', modal).textContent = ok ? 'Recibimos tu solicitud' : 'Tu solicitud está lista';
           $('[data-m-p]', modal).textContent = ok ? 'Un ingeniero de CBPS revisará tu caso y te contactará. Si lo prefieres, también puedes escribirnos por WhatsApp.' : 'No pudimos enviarla desde aquí. Elige cómo enviarla para no perderla.';
           $('[data-send-mail]', modal).hidden = ok;
-          if (ok) { (window.dataLayer = window.dataLayer || []).push({ event: 'lead_enviado', division: d.division, pagina: location.pathname }); f.reset(); }
+          if (ok) { (window.dataLayer = window.dataLayer || []).push({ event: 'lead_enviado', division: d.division, tipo: d.tipo, pagina: location.pathname }); f.reset(); }
           modal.showModal();
         };
         const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 12000);
         fetch(f.dataset.api, {
           method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl.signal,
-          body: JSON.stringify({ nombre: d.nombre, empresa: d.empresa, correo: d.correo, telefono: d.telefono, division: d.division, mensaje: d.mensaje,
+          body: JSON.stringify({ nombre: d.nombre, empresa: d.empresa, correo: d.correo, telefono: d.telefono, division: d.division, mensaje: solicitud,
             pagina: location.href, referer: document.referrer, hp: d.hp || '', ...utm() }),
         }).then((r) => r.ok ? r.json() : { ok: false }).then((j) => muestra(j?.ok === true)).catch(() => muestra(false)).finally(() => clearTimeout(t));
       });

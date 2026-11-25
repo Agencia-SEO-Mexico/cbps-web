@@ -116,7 +116,7 @@ ul { padding-left: 1.2em; margin: 0 0 1em; }
 .hdr__cta { display: none; }
 .mega { position: absolute; left: 0; right: 0; top: 100%; background: var(--surface); border-bottom: 1px solid var(--line); box-shadow: 0 30px 50px -30px rgba(14,34,51,0.45); opacity: 0; visibility: hidden; transform: translateY(-8px); clip-path: inset(0 0 100% 0); transition: opacity 200ms var(--ease-out), transform 300ms var(--ease-out), clip-path 380ms var(--ease-out), visibility 0s linear 380ms; }
 .mega.is-open { opacity: 1; visibility: visible; transform: none; clip-path: inset(0 0 -40px 0); transition-delay: 0s; }
-.mega__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 32px; padding-block: 30px 32px; }
+.mega__grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 28px 26px; padding-block: 30px 32px; }
 .mega__grid--serv { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .mega__grid > div { opacity: 0; transform: translateY(8px); transition: opacity 300ms var(--ease-out), transform 400ms var(--ease-out); }
 .mega.is-open .mega__grid > div { opacity: 1; transform: none; }
@@ -373,3 +373,11 @@ details[open]::details-content { block-size: auto; }
   @view-transition { navigation: none; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* burbuja flotante de WhatsApp (auditoría de CBPS, 6.1 #5). En móvil ya está la barra inferior con WhatsApp. */
+.wabub { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: calc(20px + env(safe-area-inset-bottom)); z-index: 39; display: none; align-items: center; gap: 10px; min-height: 56px; padding: 0 20px 0 16px; border-radius: 14px; background: var(--green-deep); color: #fff; text-decoration: none; font: 650 0.98rem var(--f-display); box-shadow: 0 14px 30px -12px rgba(14,34,51,0.55); transition: transform 240ms var(--ease-out), background-color 200ms ease; }
+.wabub svg { width: 26px; height: 26px; }
+.wabub:hover, .wabub:focus-visible { filter: brightness(0.92); transform: translateY(-2px); }
+@media (min-width: 1080px) { .wabub { display: inline-flex; } }
+.lista-cols { columns: 2 14rem; column-gap: 32px; padding-left: 1.1em; }
+.lista-cols li { break-inside: avoid; margin-bottom: 6px; }

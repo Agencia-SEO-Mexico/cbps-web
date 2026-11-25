@@ -10,15 +10,15 @@ import { tc } from '../lib/util.js';
 
 // fotos reales del sitio de CBPS para las tres líneas principales (sus páginas no traen imagen propia)
 const FOTOS = {
-  '/servicios/plantas-de-emergencia/': { src: '2026_07_whatsapp-image-2026-01-15-at-8-26-48-pm-e1790788687806.webp', w: 1028, h: 696, alt: 'Planta de emergencia CBPS en caseta acústica instalada en exterior' },
+  '/productos/plantas-de-emergencia/': { src: '2026_07_whatsapp-image-2026-01-15-at-8-26-48-pm-e1790788687806.webp', w: 1028, h: 696, alt: 'Planta de emergencia CBPS en caseta acústica instalada en exterior' },
   '/productos/ups/': { src: '2024_08_todas-las-bateria-facebook-ad-1.webp', w: 1100, h: 576, alt: 'Gabinetes de sistemas UPS de distintas capacidades' },
   '/productos/baterias-industriales/': { src: '2026_07_cbps-31-jul-2026-12_12_49-p-m.webp', w: 1100, h: 733, alt: 'Batería sellada VRLA para respaldo de UPS' },
 };
-const prio = [SERVICIOS[0], LINEAS[0], LINEAS[1]].map((l) => ({ ...l, media: FOTOS[l.ruta] || PAGINAS[l.ruta]?.media }));
-const otras = LINEAS.slice(2);
+const prio = LINEAS.filter((l) => l.principal).map((l) => ({ ...l, media: FOTOS[l.ruta] || PAGINAS[l.ruta]?.media }));
+const otras = LINEAS.filter((l) => !l.principal);
 const eslabones = [
-  { n: 'Instalación eléctrica', r: '/servicios/instalacion-y-dimensionamiento/', t: 'El cimiento de todo. Desde la acometida hasta el último contacto, la continuidad y la seguridad deben ser confiables.' },
-  { n: 'Planta de emergencia', r: '/servicios/plantas-de-emergencia/', t: 'Respaldo ante falla de red. Una segunda fuente de energía que controlas tú, a libre demanda.' },
+  { n: 'Instalación eléctrica', r: '/servicios/instalacion-y-dimensionamiento/', t: 'La base de todo. Desde la acometida hasta el último contacto, la continuidad y la seguridad deben ser confiables.' },
+  { n: 'Planta de emergencia', r: '/productos/plantas-de-emergencia/', t: 'Respaldo ante falla de red. Una segunda fuente de energía disponible cuando la operación lo requiera.' },
   { n: 'UPS', r: '/productos/ups/', t: 'Protección ante disturbios eléctricos. Servidores y equipos digitales reciben una senoidal pura, con o sin redundancia.' },
   { n: 'Baterías', r: '/productos/baterias-industriales/', t: 'El momento de verdad. En una interrupción, todo depende de ellas: hay que mantenerlas y sustituirlas a tiempo.' },
   { n: 'Aire acondicionado de precisión', r: '/productos/aire-de-precision/', t: 'Control térmico crítico. La integridad del site y la vida de las baterías dependen de la temperatura y la humedad.' },
@@ -31,7 +31,7 @@ const testimonios = [
   { q: 'CBPS es una empresa seria y fiel con sus clientes. Hemos adquirido UPS y su apoyo ha sido incondicional.', n: 'Ing. Edwind Mancilla', c: 'Gerente de Mantenimiento e Infraestructura, Afianzadora Aserta' },
 ];
 const marcas = [
-  ['Generac', '/servicios/plantas-de-emergencia/generac/'], ['IGSA', '/servicios/plantas-de-emergencia/igsa/'], ['PLANELEC', '/servicios/plantas-de-emergencia/planelec/'],
+  ['Generac', '/productos/plantas-de-emergencia/generac/'], ['IGSA', '/productos/plantas-de-emergencia/igsa/'], ['PLANELEC', '/productos/plantas-de-emergencia/planelec/'],
   ['Eaton', '/productos/ups/eaton/'], ['Vertiv', '/productos/ups/vertiv/'], ['CyberPower', '/productos/ups/cyberpower/'], ['ABB', '/productos/ups/abb/'], ['Industronic', '/productos/ups/industronic/'], ['Powest', '/productos/ups/powest/'],
   ['CSB', '/productos/baterias-industriales/csb/'], ['C&D', '/productos/baterias-industriales/c-and-d/'], ['EnerSys', '/productos/baterias-industriales/enersys/'], ['Kaise', '/productos/baterias-industriales/kaise/'], ['Invermexa', '/productos/baterias-industriales/invermexa/'], ['LTH', '/productos/baterias-industriales/lth/'], ['América', '/productos/baterias-industriales/america/'], ['Trojan', '/productos/baterias-industriales/trojan/'], ['Crown', '/productos/baterias-industriales/crown/'],
   ['STULZ', '/productos/aire-de-precision/stulz/'], ['HiRef', '/productos/aire-de-precision/hiref/'], ['VOGAR', '/productos/reguladores-de-voltaje/vogar/'], ['Power All', '/productos/reguladores-de-voltaje/power-all/'], ['RPSM', '/productos/reguladores-de-voltaje/rpsm/'],
@@ -39,19 +39,19 @@ const marcas = [
 // logos recortados en /marcas/ (alto 96 px); la home usa /marcas/x2/ (76 px = 2× de los 38 px que se muestran)
 const LOGOS = { 'Generac': ['generac', 431], 'PLANELEC': ['planelec', 617], 'Eaton': ['eaton', 343], 'Vertiv': ['vertiv', 388], 'CyberPower': ['cyberpower', 515], 'ABB': ['abb', 250], 'Industronic': ['industronic', 392], 'Powest': ['powest', 386], 'CSB': ['csb', 180], 'C&D': ['c-and-d', 205], 'EnerSys': ['enersys', 186], 'Kaise': ['kaise', 197], 'Crown': ['crown', 126], 'STULZ': ['stulz', 205], 'HiRef': ['hiref', 461], 'VOGAR': ['vogar', 331], 'Power All': ['power-all', 269], 'RPSM': ['rpsm', 98], 'IGSA': ['igsa', 95], 'LTH': ['lth', 237], 'América': ['america', 418], 'Trojan': ['trojan', 279], 'Invermexa': ['invermexa', 621] };
 const filaA = marcas.slice(0, 12), filaB = marcas.slice(12);
-const problema = 'Hay operaciones donde un microcorte representa minutos de pérdida. En otras significa detener producción, comprometer información o poner en riesgo la continuidad. La diferencia entre una solución que parcha y un sistema que protege está en diseñarlo completo. Eso es lo que hacemos en CBPS.';
+const problema = 'Hay operaciones donde un microcorte representa minutos de pérdida. En otras significa detener producción, comprometer información o poner en riesgo la continuidad. La diferencia entre una solución provisional y una solución diseñada para garantizar la continuidad operativa está en diseñar el sistema completo. Eso es lo que hacemos en CBPS.';
 const fecha = (iso) => iso ? new Date(iso).toLocaleDateString('es-MX', { month: 'long', year: 'numeric', timeZone: 'America/Mexico_City' }) : '';
 const recientes = POSTS.slice(0, 4);
 const schema = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: 'CBPS', url: `${PROD}/`, inLanguage: 'es-MX' }];
 ---
-<Base title="CBPS | Plantas de emergencia, UPS y baterías industriales" desc="CBPS protege cargas críticas: suministro, dimensionamiento, instalación y mantenimiento de plantas de emergencia, UPS y baterías industriales en México." ruta="/" canon="/" schema={schema}>
+<Base title="CBPS | Plantas de emergencia, UPS y baterías industriales" desc="CBPS protege cargas críticas: suministro, instalación y mantenimiento de plantas de emergencia, UPS, baterías industriales y aire acondicionado de precisión." ruta="/" canon="/" schema={schema}>
 
   <section class="hero" aria-labelledby="hero-t">
     <div class="wrap hero__grid">
       <div class="hero__txt">
         <p class="kicker hero__k">Critical Business Power Systems</p>
-        <h1 id="hero-t">Plantas de emergencia, UPS y baterías para cargas críticas</h1>
-        <p class="lead">Protección de cargas críticas diseñada con ingeniería: las tres líneas integradas en un solo sistema. Antes de recomendar un equipo, entendemos qué está realmente en riesgo en tu operación.</p>
+        <h1 id="hero-t">Plantas de emergencia, UPS, baterías y aire acondicionado de precisión para cargas críticas</h1>
+        <p class="lead">Protección de cargas críticas diseñada con ingeniería: las cuatro líneas integradas en un solo sistema. Antes de recomendar un equipo, entendemos qué está realmente en riesgo en tu operación.</p>
         <div class="btns">
           <a class="btn btn--wa" href={waCotizar()} target="_blank" rel="noopener" data-ev="whatsapp"><Icono n="wa" />Cotizar por WhatsApp</a>
           <a class="btn btn--ghost-light" href={waOrientacion()} target="_blank" rel="noopener" data-ev="whatsapp-orientacion">Pedir orientación técnica</a>
@@ -67,15 +67,15 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: 'C
   <section class="brandband" aria-labelledby="marcas-t">
     <div class="wrap brandband__head">
       <h2 id="marcas-t">Solo marcas comprometidas con sus clientes</h2>
-      <p>Existen decenas de marcas para cada segmento. En CBPS solo trabajamos con las que consideramos comprometidas con los clientes y que vale la pena recomendar por experiencia, calidad y servicio.</p>
+      <p>Existen decenas de marcas para cada segmento. En CBPS solo trabajamos con las que, por experiencia, calidad y servicio, consideramos comprometidas con los clientes y que vale la pena recomendar.</p>
     </div>
     <div class="marq" style="--dur:46s">
       <ul class="marq__track">{filaA.map(([n, r]) => <li><a href={u(r)} class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/x2/${LOGOS[n][0]}.webp`)} loading="lazy" alt={n} width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</a></li>)}</ul>
-      <ul class="marq__track" aria-hidden="true">{filaA.map(([n]) => <li><span class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/x2/${LOGOS[n][0]}.webp`)} loading="lazy" alt="" width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</span></li>)}</ul>
+      <ul class="marq__track" aria-hidden="true">{filaA.map(([n, r]) => <li><a href={u(r)} tabindex="-1" class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/x2/${LOGOS[n][0]}.webp`)} loading="lazy" alt="" width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</a></li>)}</ul>
     </div>
     <div class="marq marq--rev" style="--dur:40s">
       <ul class="marq__track">{filaB.map(([n, r]) => <li><a href={u(r)} class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/x2/${LOGOS[n][0]}.webp`)} loading="lazy" alt={n} width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</a></li>)}</ul>
-      <ul class="marq__track" aria-hidden="true">{filaB.map(([n]) => <li><span class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/x2/${LOGOS[n][0]}.webp`)} loading="lazy" alt="" width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</span></li>)}</ul>
+      <ul class="marq__track" aria-hidden="true">{filaB.map(([n, r]) => <li><a href={u(r)} tabindex="-1" class={LOGOS[n] ? 'is-logo' : undefined}>{LOGOS[n] ? <img src={u(`/marcas/x2/${LOGOS[n][0]}.webp`)} loading="lazy" alt="" width={Math.round(LOGOS[n][1] * 38 / 96)} height="38" decoding="async" /> : n}</a></li>)}</ul>
     </div>
   </section>
 
@@ -115,11 +115,11 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: 'C
     <div class="wrap">
       <div class="sec-head rv">
         <p class="kicker">Encuentra la solución que necesitas</p>
-        <h2 id="lineas-t">Plantas, UPS y baterías: las tres líneas que sostienen tu operación</h2>
+        <h2 id="lineas-t">Plantas, UPS, baterías y aire de precisión: las cuatro líneas que sostienen tu operación</h2>
       </div>
       <div class="prio">
         {prio.map((l, i) => (
-          <article class={`prio__it rv${i === 0 ? ' prio__it--big' : ''}`} style={`--d:${i * 90}ms`} data-spot>
+          <article class="prio__it rv" style={`--d:${i * 90}ms`} data-spot>
             <a href={u(l.ruta)} class="prio__img" tabindex="-1" aria-hidden="true">{l.media && <img src={u('/img/' + l.media.src)} alt="" width={l.media.w} height={l.media.h} loading="lazy" decoding="async" />}</a>
             <div class="prio__tx">
               <h3><a href={u(l.ruta)}>{l.nombre}</a></h3>
@@ -130,7 +130,7 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: 'C
         ))}
       </div>
       <div class="otras">
-        <h3 class="rv">Otras líneas para proteger cargas críticas</h3>
+        <h3 class="rv">Otras soluciones para proteger cargas críticas</h3>
         <ul class="rows" data-stagger>{otras.map((l) => <li><a href={u(l.ruta)}><strong>{l.nombre}</strong><span>{l.resumen}</span><Icono n="flecha" /></a></li>)}</ul>
       </div>
     </div>
@@ -276,12 +276,12 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: 'C
   .sec-head { max-width: 780px; margin-bottom: 40px; }
   .sec-head--row { max-width: none; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; }
   .prio { display: grid; gap: 20px; }
-  @media (min-width: 900px) { .prio { grid-template-columns: 1.2fr 1fr; grid-template-rows: auto auto; } .prio__it--big { grid-row: span 2; } }
+  @media (min-width: 900px) { .prio { grid-template-columns: 1fr 1fr; } } /* 4 líneas con el mismo peso (auditoría de CBPS: aire de precisión al nivel de las demás) */
   .prio__it { --mx: 50%; --my: 0%; position: relative; isolation: isolate; min-width: 0; background: var(--surface); border-radius: var(--r-l); overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow); transition: transform 500ms var(--ease-out), box-shadow 500ms var(--ease-out); }
   .prio__it::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit; background: radial-gradient(420px circle at var(--mx) var(--my), rgba(21, 134, 188, 0.13), transparent 45%); opacity: 0; transition: opacity 400ms ease; }
   .prio__it::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 4px; z-index: 3; background: linear-gradient(90deg, var(--blue), var(--green)); transform: scaleX(0); transform-origin: 0 50%; transition: transform 600ms var(--ease-out); }
   @media (hover: hover) { .prio__it:hover { transform: translateY(-6px); box-shadow: var(--shadow-up); } .prio__it:hover::after { opacity: 1; } .prio__it:hover::before { transform: none; } }
-  .prio__img { position: relative; display: block; flex: 1 1 auto; min-height: 240px; background: #0b0f14; overflow: hidden; }
+  .prio__img { position: relative; display: block; flex: none; aspect-ratio: 16 / 8; min-height: 0; background: #0b0f14; overflow: hidden; }
   .prio__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-out); }
   .prio__it--big .prio__img { min-height: clamp(260px, 32vw, 420px); }
   @media (hover: hover) { .prio__it:hover .prio__img img { transform: scale(1.05); } }

@@ -3,6 +3,10 @@ import { u, NEGOCIO, waCotizar } from '../lib/site.js';
 import { LINEAS, SERVICIOS } from '../lib/nav.js';
 import Icono from './Icono.astro';
 const anio = 2026;
+const { ruta = '/' } = Astro.props;
+// tema del mensaje de WhatsApp según la sección (la línea de producto o el servicio en que está el visitante)
+const sec = LINEAS.find((l) => ruta.startsWith(l.ruta)) || SERVICIOS.find((s) => ruta.startsWith(s.ruta));
+const tema = sec?.corto || '';
 ---
 <footer class="ftr">
   <div class="wrap">
@@ -11,14 +15,14 @@ const anio = 2026;
         <span style="display:inline-block;background:#fbfcfd;border-radius:8px;padding:10px 12px;margin-bottom:16px"><img src={u('/logo-cbps.webp')} alt="CBPS Critical Business Power Systems" width="150" height="60" loading="lazy" style="width:150px" /></span>
         <p style="max-width:34ch">No solo vendemos productos: diseñamos sistemas de protección para cargas críticas.</p>
         <address>
-          {NEGOCIO.calle}<br />{NEGOCIO.ciudad}, {NEGOCIO.estado}, CP {NEGOCIO.cp}<br />
+          {NEGOCIO.calle}<br />{NEGOCIO.ciudad}, {NEGOCIO.estado}, C. P. {NEGOCIO.cp}<br />
           <a href={`tel:${NEGOCIO.tel}`} data-ev="telefono">{NEGOCIO.telVisible}</a><br />
-          <a href={waCotizar()} target="_blank" rel="noopener" data-ev="whatsapp">WhatsApp {NEGOCIO.telVisible}</a>
+          <a href={waCotizar(tema, ruta)} target="_blank" rel="noopener" data-ev="whatsapp">WhatsApp {NEGOCIO.telVisible}</a>
         </address>
       </div>
       <div>
         <h2>Productos</h2>
-        <ul>{LINEAS.map((l) => <li><a href={u(l.ruta)}>{l.nombre}</a></li>)}<li><a href={u('/productos/tableros-de-transferencia/')}>Tableros de transferencia</a></li></ul>
+        <ul>{LINEAS.map((l) => <li><a href={u(l.ruta)}>{l.nombre}</a></li>)}</ul>
       </div>
       <div>
         <h2>Servicios</h2>
@@ -43,7 +47,8 @@ const anio = 2026;
   </div>
 </footer>
 <div class="mbar" id="mbar" aria-label="Contacto rápido">
-  <a class="btn btn--wa" href={waCotizar()} target="_blank" rel="noopener" data-ev="whatsapp"><Icono n="wa" />WhatsApp</a>
+  <a class="btn btn--wa" href={waCotizar(tema, ruta)} target="_blank" rel="noopener" data-ev="whatsapp"><Icono n="wa" />WhatsApp</a>
   <a class="btn btn--ghost" href={`tel:${NEGOCIO.tel}`} data-ev="telefono"><Icono n="tel" />Llamar</a>
   <a class="btn" href="#cotizar" data-ev="ir-formulario"><Icono n="doc" />Cotizar</a>
 </div>
+<a class="wabub" href={waCotizar(tema, ruta)} target="_blank" rel="noopener" data-ev="whatsapp-burbuja" aria-label="Escribir a CBPS por WhatsApp"><Icono n="wa" /><span>¿Te ayudamos?</span></a>

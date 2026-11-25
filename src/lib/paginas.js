@@ -1,8 +1,9 @@
 import fuenteRescatada from '../data/fuente.json';
-import { corregirFuente, ajustesFinales } from '../data/correcciones.js';
+import { corregirFuente, ajustesFinales, completarListas } from '../data/correcciones.js';
 import { ESCRITAS } from '../data/escritas.js';
 import BLOG_TEXTO from '../data/blog-texto.json';
 import { ARBOL } from './nav.js';
+import { aplicarEditorial } from '../data/editorial.js';
 
 // contenido rescatado + correcciones de la revisión del 12-nov (src/data/correcciones.js)
 const fuente = corregirFuente(fuenteRescatada);
@@ -50,12 +51,12 @@ if (PAGINAS['/contacto/']) {
   c.faqs = [
     q('¿Qué productos ofrecen para la protección de cargas críticas?', 'Plantas de emergencia, sistemas UPS, baterías industriales, aire acondicionado de precisión, reguladores de voltaje, supresores de picos y convertidores de frecuencia, además de servicios de instalación, mantenimiento y renta.'),
     q('¿Cómo puedo saber qué producto es el adecuado para mi empresa?', 'Nuestro equipo te asesora en la selección según las necesidades específicas de tu operación. Escríbenos por WhatsApp o llena el formulario con el equipo, la capacidad o la falla.'),
-    q('¿Ofrecen servicios de instalación y mantenimiento?', 'Sí. CBPS ofrece instalación y mantenimiento para que tus sistemas de protección de energía funcionen correctamente en todo momento.'),
+    q('¿Ofrecen servicios de instalación y mantenimiento?', 'Sí. CBPS ofrece instalación y mantenimiento para que tus sistemas de protección de energía funcionen correctamente.'),
     q('¿Qué garantías tienen sus productos?', 'La garantía varía según el tipo de equipo y el fabricante. Te la indicamos por escrito en cada cotización.'),
     q('¿Cómo contacto al soporte técnico?', 'Por WhatsApp al 55 2171 0020 o con el formulario de esta página.'),
   ];
   c.sections = [
-    { h: 'Dónde estamos', body: [ { t: 'p', x: 'Av. Churubusco 303, int. 8, Ciudad de México, CDMX, CP 03340.' }, { t: 'p', x: 'WhatsApp y teléfono: 55 2171 0020.' } ] },
+    { h: 'Dónde estamos', body: [ { t: 'p', x: 'Av. Churubusco 303, interior 8, Ciudad de México, CDMX, C. P. 03340.' }, { t: 'p', x: 'WhatsApp y teléfono: 55 2171 0020.' } ] },
     { h: 'Qué puedes esperar', body: [ { t: 'h3', x: 'Soluciones personalizadas' }, { t: 'p', x: 'Ofrecemos soluciones adaptadas a las necesidades específicas de tu industria.' }, { t: 'h3', x: 'Soporte técnico' }, { t: 'p', x: 'Contamos con un equipo de expertos para brindarte soporte técnico.' } ] },
     { h: 'Preguntas frecuentes sobre CBPS', body: c.faqs },
   ];
@@ -72,6 +73,10 @@ for (const [ruta, doc] of Object.entries(BLOG_TEXTO)) {
   p.sections = [...propias, ...delDoc, enlace];
   p.words = doc.sections.flatMap((s) => s.body).reduce((n, b) => n + [b.x || '', ...(b.items || []), ...(b.rows || []).flat()].join(' ').split(/\s+/).filter(Boolean).length, 0);
 }
+// revisión editorial de la auditoría de CBPS (src/data/editorial.json)
+aplicarEditorial(PAGINAS);
+completarListas(PAGINAS);
+
 // nombre corto para menús y migas
 for (const r of Object.keys(PAGINAS)) if (!ARBOL[r] && !r.startsWith('/blog/')) ARBOL[r] = { nombre: PAGINAS[r].h1, padre: '/' };
 
