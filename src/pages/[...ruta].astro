@@ -6,7 +6,7 @@ import Icono from '../components/Icono.astro';
 import Foto from '../components/Foto.astro';
 import { existsSync } from 'node:fs';
 import { PAGINAS, POSTS, VIEJAS } from '../lib/paginas.js';
-import { ARBOL, migas, hermanos, hijos, LINEAS, SERVICIOS, MATRIZ } from '../lib/nav.js';
+import { ARBOL, migas, hermanos, hijos, LINEAS, SERVICIOS, MATRIZ, SERVICIOS_MATRIZ } from '../lib/nav.js';
 import { u, PROD, PREVIEW, waCotizar, waOrientacion } from '../lib/site.js';
 import { slug, tc } from '../lib/util.js';
 
@@ -39,7 +39,34 @@ const PAG_SERV = {
   ups: { 'Mantenimiento preventivo': '/servicios/mantenimiento/ups/', 'Mantenimiento correctivo': '/servicios/reparacion-y-modernizacion/ups/', 'Actualización de infraestructura': '/servicios/reparacion-y-modernizacion/ups/', 'Renta': '/servicios/renta-y-financiamiento-de-ups-trifasico/', 'Reemplazo de batería': '/servicios/sustitucion-de-bancos-de-baterias/' },
   baterias: { 'Reemplazo de batería': '/servicios/sustitucion-de-bancos-de-baterias/' },
 };
-const servLinea = lineaM ? MATRIZ[lineaM.matriz].map((s) => ({ s, r: PAG_SERV[lineaM.matriz]?.[s] })) : [];
+// reunión con CBPS 25-nov: primero lo que pesa comercialmente (instalación, mantenimiento…); flete y maniobra al final
+const PRIORIDAD = ['Instalación', 'Mantenimiento preventivo', 'Mantenimiento correctivo', 'Diagnóstico', 'Actualización de infraestructura', 'Renta', 'Reemplazo de batería', 'Arranque', 'Configuración', 'Capacitaciones', 'Reubicación', 'Desinstalación', 'Visitas de reconocimiento', 'Visita de levantamiento', 'Flete', 'Maniobra'];
+const porPrioridad = (a, b) => PRIORIDAD.indexOf(a) - PRIORIDAD.indexOf(b);
+const servLinea = lineaM ? [...MATRIZ[lineaM.matriz]].sort(porPrioridad).map((s) => ({ s, r: PAG_SERV[lineaM.matriz]?.[s] })) : [];
+// matriz completa (productos × servicios) en la página general de servicios
+const lineasMatriz = ruta === '/servicios/' ? LINEAS.filter((l) => l.matriz) : [];
+const servMatriz = [...SERVICIOS_MATRIZ].sort(porPrioridad);
+// fichas técnicas en PDF visibles en su línea (reunión 25-nov: los PDF van visibles en la página)
+const PDF = {
+  c33: ['Ficha técnica planta CBPS Silent Prime C-33 (33 kW)', '/wp-content/uploads/2026/07/PE-CBPS-C-33.pdf'],
+  c75: ['Ficha técnica planta CBPS Silent Prime C-75 (75 kW)', '/wp-content/uploads/2026/07/PE-CBPS-C-75.pdf'],
+  c220: ['Ficha técnica planta CBPS Silent Prime C-220 (220 kW)', '/wp-content/uploads/2026/07/PE-CBPS-C-220.pdf'],
+  gxt5: ['Folleto UPS Vertiv Liebert GXT5 (3 a 10 kVA)', '/wp-content/uploads/2026/10/Brochure-GXT5-3KL630RT2UXL-GXT5-5000HVRT5UXLN-GXT5-8000HVRT5UXLN-GXT5-10kHVRT5UXLN.pdf'],
+  respaldo: ['Guía: tiempos de respaldo en los UPS', '/wp-content/uploads/2023/08/tiempos-de-respaldo-en-los-ups-docx.pdf'],
+  inv12: ['Ficha técnica batería Invermexa INV12-9.0 (12 V, 9 Ah)', '/wp-content/uploads/2026/05/INV12-9.0.pdf'],
+  crownCiclo: ['Catálogo Crown: baterías de ciclo profundo comerciales', '/wp-content/uploads/2024/10/Deep-Cycle-Batteries-1.pdf'],
+  crownManual: ['Manual de servicio de baterías industriales Crown (inglés)', '/wp-content/uploads/2025/07/Industrial-CrownBattery-Service-Manual-1.pdf'],
+};
+const DESCARGAS = {
+  '/productos/plantas-de-emergencia/': ['c33', 'c75', 'c220'], '/productos/plantas-de-emergencia/cbps/': ['c33', 'c75', 'c220'],
+  '/productos/ups/': ['gxt5', 'respaldo'], '/productos/ups/vertiv/': ['gxt5'],
+  '/productos/baterias-industriales/': ['inv12', 'crownCiclo', 'crownManual'], '/productos/baterias-industriales/baterias-para-ups/': ['inv12', 'respaldo'],
+  '/productos/baterias-industriales/invermexa/': ['inv12'], '/productos/baterias-industriales/baterias-de-ciclo-profundo/': ['crownCiclo'],
+  '/productos/baterias-industriales/crown/': ['crownCiclo', 'crownManual'],
+};
+const descargas = (DESCARGAS[ruta] || []).map((k) => ({ t: PDF[k][0], f: PDF[k][1] }));
+// formulario arriba en páginas comerciales (reunión 25-nov: el formulario en el primer pantallazo, la información debajo)
+const formArriba = esProducto || esServicio;
 // marcas que CBPS pidió agregar y aún no tienen página propia, y accesorios de la línea
 const nodo = (function buscar(lista) { for (const n of lista) { if (n.ruta === ruta) return n; const k = n.hijos && buscar(n.hijos); if (k) return k; } return null; })(LINEAS);
 const marcasSinPagina = nodo?.marcas || [];
@@ -109,6 +136,8 @@ const etiqueta = esPost ? 'Blog Electric Leaders' : esProducto ? (linea && linea
     </div>
   </div>
 
+  {formArriba && <Cotizar tema={tema} ruta={ruta} />}
+
   {kids.length > 0 && (
     <section class="band band--white" aria-labelledby="k-t" style="padding-block:48px 56px">
       <div class="wrap">
@@ -133,7 +162,23 @@ const etiqueta = esPost ? 'Blog Electric Leaders' : esProducto ? (linea && linea
   ) : (
     <div class="wrap doc">
       <article>
+        {descargas.length > 0 && (
+          <section class="sec" aria-labelledby="pdf-t">
+            <h2 id="pdf-t" style="font-size:var(--step-2)">Fichas técnicas y descargas</h2>
+            <ul>{descargas.map((d) => <li><a href={u(d.f)} target="_blank" rel="noopener" data-ev="descarga-pdf">{d.t}</a> (PDF)</li>)}</ul>
+          </section>
+        )}
         <Secciones secciones={p.sections} titulo={p.h1} />
+        {lineasMatriz.length > 0 && (
+          <section class="sec" aria-labelledby="mtz-t">
+            <h2 id="mtz-t" style="font-size:var(--step-2)">Servicios por producto</h2>
+            <p>Qué servicio ofrece CBPS para cada línea de producto, además del suministro del equipo.</p>
+            <div class="tbl"><table>
+              <thead><tr><th scope="col">Servicio</th>{lineasMatriz.map((l) => <th scope="col"><a href={u(l.ruta)} style="color:inherit">{l.corto}</a></th>)}</tr></thead>
+              <tbody>{servMatriz.map((s) => <tr><th scope="row">{s}</th>{lineasMatriz.map((l) => <td>{MATRIZ[l.matriz].includes(s) ? <span aria-label="Sí">✓</span> : <span aria-label="No" style="color:var(--line)">—</span>}</td>)}</tr>)}</tbody>
+            </table></div>
+          </section>
+        )}
         {marcasSinPagina.length > 0 && (
           <section class="sec" aria-labelledby="mar-t">
             <h2 id="mar-t" style="font-size:var(--step-2)">{nodo?.hijos?.length ? 'Otras marcas que maneja CBPS en esta línea' : 'Marcas que maneja CBPS en esta línea'}</h2>
@@ -187,6 +232,6 @@ const etiqueta = esPost ? 'Blog Electric Leaders' : esProducto ? (linea && linea
       </aside>
     </div>
   )}
-  <Cotizar tema={tema} ruta={ruta} />
+  {!formArriba && <Cotizar tema={tema} ruta={ruta} />}
 </Base>
 )}
